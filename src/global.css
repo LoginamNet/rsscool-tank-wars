@@ -1,0 +1,108 @@
+/* normalize.css ------------------------------------------------- */
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+*,*:before,
+*:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+:focus,
+:active {
+    outline: none;
+}
+
+a:focus,
+a:active {
+    outline: none;
+}
+
+nav,
+footer,
+header,
+aside {
+    display: block;
+}
+
+html,
+body {
+    width: 100%;
+    font-size: 100%;
+    line-height: 1;
+    font-size: 14px;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+h1 {
+    color: rgb(250, 119, 71);
+    font-size: 3rem;
+    text-align: end;
+}
+
+input,
+button,
+textarea {
+    font-family:inherit;
+    border-radius: 5px;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+button {
+    background-color: transparent;
+    padding: 5px;
+    cursor: pointer;
+}
+
+button:disabled {
+    filter: grayscale(1);
+    cursor: default;
+}
+
+button::-moz-focus-inner {
+    padding:0;
+    border:0;
+}
+
+a, 
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul li,
+tr td {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+input:disabled {
+    background-color: rgb(219, 219, 219);
+}
+
+/* global ------------------------------------------------- */
