@@ -104,10 +104,10 @@ export class Player {
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1) {
             if (this.projectileTrajectory[this.projectileTrajectory.length - 1].y > 600) {
                 this.ctx.fillStyle = 'purple';
-                this.ctx.fillRect(
-                    this.projectileTrajectory[this.projectileTrajectory.length - 1].x - 5,
-                    this.projectileTrajectory[this.projectileTrajectory.length - 1].y - 10,
-                    10,
+                drawCanvasArc(
+                    this.ctx,
+                    this.projectileTrajectory[this.projectileTrajectory.length - 1].x + 5,
+                    this.projectileTrajectory[this.projectileTrajectory.length - 1].y,
                     10
                 );
             }
