@@ -1,7 +1,8 @@
 /* imports ------------------------------------------------- */
 
+import { x } from './components/app';
 import './global.css';
 
 /* functions ------------------------------------------------- */
 
-console.log('TANK WARS');
+x();
