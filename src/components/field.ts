@@ -20,7 +20,7 @@ export class Field {
                 img.data[i] = parseInt(colorFly[1] + colorFly[2], 16);
                 img.data[i + 1] = parseInt(colorFly[3] + colorFly[4], 16);
                 img.data[i + 2] = parseInt(colorFly[5] + colorFly[6], 16);
-            } else {
+            } else if (img.data[i] === 0) {
                 img.data[i] = parseInt(colorGround[1] + colorGround[2], 16);
                 img.data[i + 1] = parseInt(colorGround[3] + colorGround[4], 16);
                 img.data[i + 2] = parseInt(colorGround[5] + colorGround[6], 16);
@@ -37,7 +37,9 @@ export class Field {
 
     generate() {
         this.clear();
-        this.loadMap();
+        window.addEventListener('load', () => {
+            this.loadMap();
+        });
     }
 
     export() {
