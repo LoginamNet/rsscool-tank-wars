@@ -4,6 +4,7 @@ import { map1 } from './maps/map';
 export class Field {
     canvas = document.createElement('canvas');
     context = this.canvas.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D;
+    data = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
     constructor() {
         this.canvas.width = CANVAS_WIDTH;
         this.canvas.height = CANVAS_HEIGHT;
@@ -39,10 +40,25 @@ export class Field {
         this.clear();
         window.addEventListener('load', () => {
             this.loadMap();
+            console.log(this.findGround(390));
         });
     }
 
     export() {
         return this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    findGround(x: number): number {
+        const imgData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height).data;
+        for (let i = x * 4; i < imgData.length; i += CANVAS_WIDTH * 4) {
+            if (
+                imgData[i] === parseInt(CANVAS_GROUND[1] + CANVAS_GROUND[2], 16) &&
+                imgData[i + 1] === parseInt(CANVAS_GROUND[3] + CANVAS_GROUND[4], 16) &&
+                imgData[i + 2] === parseInt(CANVAS_GROUND[5] + CANVAS_GROUND[6], 16)
+            ) {
+                return Math.floor(i / (CANVAS_WIDTH * 4));
+            }
+        }
+        return CANVAS_HEIGHT as number;
     }
 }

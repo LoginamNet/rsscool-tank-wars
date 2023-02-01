@@ -6,7 +6,7 @@ export function x() {
     const canvas = <HTMLCanvasElement>checkedQuerySelector(document, '.canvas');
     const ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
 
-    const pl = new Player(ctx, 390, 590);
+    const pl = new Player(ctx, 30, 590);
 
     const field = new Field();
     field.generate();
@@ -55,6 +55,7 @@ export function x() {
     function update() {
         clean();
         renderField(field.export()); //drawing ground and sky
+        pl.yPosition = field.findGround(pl.xPosition);
         pl.drawPlayer();
         pl.drawProjectilePath();
         pl.drawPlayerProjectile();
