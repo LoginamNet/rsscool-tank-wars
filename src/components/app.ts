@@ -15,30 +15,31 @@ export function x() {
 
     start();
 
-    const curentPl = playerState[1];
+    const curentPl = playerState[0];
 
     function setControlKeys() {
         document.addEventListener('keydown', (event) => {
-            switch (event.code) {
-                case 'ArrowUp':
-                    curentPl.angleUp();
-                    break;
-                case 'ArrowDown':
-                    curentPl.angleDown();
-                    break;
-                case 'ArrowLeft':
-                    curentPl.powerDown();
-                    break;
-                case 'ArrowRight':
-                    curentPl.powerUp();
-                    break;
-                case 'Space':
-                    if (!curentPl.isFired) {
+            if (!curentPl.isFired) {
+                curentPl.projectileTrajectory = [];
+                switch (event.code) {
+                    case 'ArrowUp':
+                        curentPl.angleUp();
+                        break;
+                    case 'ArrowDown':
+                        curentPl.angleDown();
+                        break;
+                    case 'ArrowLeft':
+                        curentPl.powerDown();
+                        break;
+                    case 'ArrowRight':
+                        curentPl.powerUp();
+                        break;
+                    case 'Space':
                         curentPl.fireProjectile(playerState);
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }
@@ -59,19 +60,18 @@ export function x() {
 
     function update() {
         curentPl.setAngle();
-        if (!curentPl.drawHit(playerState)) {
+
+        if (!curentPl.drawHit(playerState) && !curentPl.drawTerrainHit()) {
             clean();
             for (const player of playerState) {
                 player.drawPlayer();
             }
             curentPl.drawPlayerProjectile();
             curentPl.drawProjectilePath();
-        } else {
-            setTimeout(() => {
-                for (const player of playerState) {
-                    player.drawPlayer();
-                }
-            }, 1000);
+        }
+
+        for (const player of playerState) {
+            player.drawPlayer();
         }
 
         window.requestAnimationFrame(update);
