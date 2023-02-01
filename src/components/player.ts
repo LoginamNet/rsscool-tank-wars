@@ -146,28 +146,28 @@ export class Player {
                     10
                 );
             }
-
-            return true;
         }
     }
 
     drawHit(playerState: Player[]) {
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 && this.isTargetHit(playerState)) {
-            for (const player of playerState) {
-                if (player.isHitted) {
-                    playerState.splice(playerState.indexOf(player), 1);
-                }
-            }
-
             this.ctx.fillStyle = 'red';
             drawCanvasArc(
                 this.ctx,
-                this.projectileTrajectory[this.projectileTrajectory.length - 2].x + 5,
-                this.projectileTrajectory[this.projectileTrajectory.length - 2].y,
+                this.projectileTrajectory[this.projectileTrajectory.length - 1].x + 5,
+                this.projectileTrajectory[this.projectileTrajectory.length - 1].y,
                 10
             );
 
-            return true;
+            setTimeout(() => {
+                for (const player of playerState) {
+                    if (player.isHitted) {
+                        playerState.splice(playerState.indexOf(player), 1);
+                    }
+                }
+
+                this.projectileTrajectory = [];
+            }, 1000);
         }
     }
 

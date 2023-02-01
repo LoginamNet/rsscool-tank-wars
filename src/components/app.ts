@@ -60,19 +60,14 @@ export function x() {
 
     function update() {
         curentPl.setAngle();
-
-        if (!curentPl.drawHit(playerState) && !curentPl.drawTerrainHit()) {
-            clean();
-            for (const player of playerState) {
-                player.drawPlayer();
-            }
-            curentPl.drawPlayerProjectile();
-            curentPl.drawProjectilePath();
-        }
-
+        clean();
         for (const player of playerState) {
             player.drawPlayer();
         }
+        curentPl.drawPlayerProjectile();
+        curentPl.drawProjectilePath();
+        curentPl.drawHit(playerState);
+        curentPl.drawTerrainHit();
 
         window.requestAnimationFrame(update);
     }
