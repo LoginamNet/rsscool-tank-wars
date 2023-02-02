@@ -75,7 +75,7 @@ export class Player {
         } while (
             xCoordinate >= -20 &&
             xCoordinate <= 810 &&
-            yCoordinate <= 600 &&
+            !this.isTerrainHit() &&
             !this.isTargetHit(playerState)?.isHitted
         );
     }
@@ -104,22 +104,22 @@ export class Player {
         }
     }
 
-    // isTerrainHit(field: Field) {
-    //     const canvas = field.canvas;
-    //     const ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
+    isTerrainHit() {
+        const canvas = this.field.canvas;
+        const ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
 
-    //     for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
-    //         const pixel = ctx.getImageData(this.projectileTrajectory[i].x, this.projectileTrajectory[i].y, 1, 1).data;
-    //         if (pixel[0] !== 75) {
-    //             return true;
-    //         }
-    //     }
-    // }
+        for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
+            const pixel = ctx.getImageData(this.projectileTrajectory[i].x, this.projectileTrajectory[i].y, 1, 1).data;
+            if (pixel[0] === 19) {
+                return true;
+            }
+        }
+    }
 
     // isTerrainHit() {
     //     for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
-    //         // const x = this.field.findGround(Math.round(this.projectileTrajectory[i].x));
     //         if (this.projectileTrajectory[i].y > this.field.findGround(Math.round(this.projectileTrajectory[i].x))) {
+    //             console.log(1);
     //             return true;
     //         }
     //     }
@@ -142,15 +142,6 @@ export class Player {
                             item.isHitted = true;
                         }
                     });
-
-                    setTimeout(() => {
-                        for (const player of playerState) {
-                            if (player.isHitted) {
-                                playerState.splice(playerState.indexOf(player), 1);
-                                this.projectileTrajectory = [];
-                            }
-                        }
-                    }, 1000);
                     return player;
                 }
             }
@@ -188,6 +179,15 @@ export class Player {
                 this.projectileTrajectory[this.projectileTrajectory.length - 1].y,
                 10
             );
+
+            setTimeout(() => {
+                for (const player of playerState) {
+                    if (player.isHitted) {
+                        playerState.splice(playerState.indexOf(player), 1);
+                        this.projectileTrajectory = [];
+                    }
+                }
+            }, 1000);
         }
     }
 
