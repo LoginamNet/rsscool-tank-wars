@@ -1,12 +1,16 @@
 import { Player } from './player';
 import { playerState } from './state';
 import { checkedQuerySelector } from './utils';
+import { Field } from './field';
 
 export function x() {
     const canvas = <HTMLCanvasElement>checkedQuerySelector(document, '.canvas');
     const ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
 
-    const p1 = new Player(ctx, 390, 590);
+    const field = new Field();
+    field.generate();
+
+    const p1 = new Player(ctx, 30, 590);
     playerState.push(p1);
     const p2 = new Player(ctx, 650, 590);
     playerState.push(p2);
@@ -61,6 +65,8 @@ export function x() {
     function update() {
         curentPl.setAngle();
         clean();
+        renderField(field.export()); //drawing ground and sky
+        curentPl.yPosition = field.findGround(curentPl.xPosition);
         for (const player of playerState) {
             player.drawPlayer();
         }
@@ -70,5 +76,9 @@ export function x() {
         curentPl.drawTerrainHit();
 
         window.requestAnimationFrame(update);
+    }
+
+    function renderField(field: ImageData) {
+        ctx.putImageData(field, 0, 0);
     }
 }
