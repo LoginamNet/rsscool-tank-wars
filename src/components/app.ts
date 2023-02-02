@@ -10,11 +10,11 @@ export function x() {
     const field = new Field();
     field.generate();
 
-    const p1 = new Player(ctx, 30, 590);
+    const p1 = new Player(ctx, field, 350, 590);
     playerState.push(p1);
-    const p2 = new Player(ctx, 650, 590);
+    const p2 = new Player(ctx, field, 650, 590);
     playerState.push(p2);
-    const p3 = new Player(ctx, 70, 530);
+    const p3 = new Player(ctx, field, 70, 530);
     playerState.push(p3);
 
     start();
@@ -66,9 +66,9 @@ export function x() {
         curentPl.setAngle();
         clean();
         renderField(field.export()); //drawing ground and sky
-        curentPl.yPosition = field.findGround(curentPl.xPosition);
         for (const player of playerState) {
             player.drawPlayer();
+            player.yPosition = field.findGround(player.xPosition) - 10;
         }
         curentPl.drawPlayerProjectile();
         curentPl.drawProjectilePath();
