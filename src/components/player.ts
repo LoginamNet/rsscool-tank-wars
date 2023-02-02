@@ -1,5 +1,5 @@
 import { Field } from './field';
-import { checkedQuerySelector, drawCanvasArc } from './utils';
+import { checkedQuerySelector, drawCanvasArc, degToRad } from './utils';
 
 export class Player {
     angle: number;
@@ -145,8 +145,41 @@ export class Player {
     }
 
     drawPlayer() {
-        this.ctx.fillStyle = 'black';
-        this.ctx.fillRect(this.initialPositionX, this.initialPositionY, 10, 10);
+        // wheels
+        const step = 10;
+        let x = this.initialPositionX;
+        for (let i = 0; i < 4; i++) {
+            this.ctx.beginPath();
+            this.ctx.arc(x, this.initialPositionY, 3, degToRad(0), degToRad(360));
+            this.ctx.fillStyle = '#000000';
+            this.ctx.fill();
+            this.ctx.stroke();
+            x += step;
+        }
+
+        // tank hull
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.initialPositionX - 7, this.initialPositionY);
+        this.ctx.lineTo(this.initialPositionX - 3, this.initialPositionY - 6);
+        this.ctx.lineTo(this.initialPositionX + 33, this.initialPositionY - 6);
+        this.ctx.lineTo(this.initialPositionX + 37, this.initialPositionY);
+        this.ctx.strokeStyle = '#000000';
+        this.ctx.stroke();
+
+        // tank tower
+        this.ctx.beginPath();
+        this.ctx.arc(this.initialPositionX + 15, this.initialPositionY - 7, 10, degToRad(180), degToRad(0));
+        this.ctx.fillStyle = '#000000';
+        this.ctx.fill();
+        this.ctx.stroke();
+
+        // tank gun
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.initialPositionX + 15, this.initialPositionY - 9);
+        this.ctx.lineTo(this.initialPositionX + 40, this.initialPositionY - 20);
+        this.ctx.lineWidth = 3;
+        this.ctx.strokeStyle = '#000000';
+        this.ctx.stroke();
     }
 
     drawTerrainHit() {

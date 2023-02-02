@@ -12,7 +12,7 @@ export class Game {
     p2 = new Player(this.ctx, this.field, 650, 590);
     p3 = new Player(this.ctx, this.field, 70, 530);
     players: Player[] = [this.p1, this.p2, this.p3];
-    curentPl = this.players[0];
+    curentPl = this.players[1];
 
     constructor() {
         this.canvas.width = CANVAS_WIDTH;
@@ -67,7 +67,7 @@ export class Game {
         this.renderField(this.field.export()); //drawing ground and sky
         for (const player of this.players) {
             player.drawPlayer();
-            player.initialPositionY = this.field.findGround(player.initialPositionX) - 10;
+            player.initialPositionY = this.field.findGround(player.initialPositionX) - 5;
         }
         this.curentPl.drawPlayerProjectile();
         this.curentPl.drawProjectilePath();
