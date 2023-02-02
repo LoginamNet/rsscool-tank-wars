@@ -1,8 +1,9 @@
 /* imports ------------------------------------------------- */
 
-import { x } from './components/app';
+import { App } from './components/app';
 import './global.css';
 
 /* functions ------------------------------------------------- */
 
-x();
+const app = new App();
+app.render();

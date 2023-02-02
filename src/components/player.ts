@@ -2,30 +2,21 @@ import { Field } from './field';
 import { checkedQuerySelector, drawCanvasArc } from './utils';
 
 export class Player {
-    field: Field;
-    ctx: CanvasRenderingContext2D;
-    xPosition: number;
-    yPosition: number;
     angle: number;
-    power: number;
-    projectileTrajectory: { x: number; y: number }[];
-    currentTrajectoryIndex: number;
-    intervalId: number;
-    isFired: boolean;
-    isHitted: boolean;
+    power = 100;
+    projectileTrajectory: { x: number; y: number }[] = [];
+    currentTrajectoryIndex = 0;
+    intervalId = 0;
+    isFired = false;
+    isHitted = false;
 
-    constructor(ctx: CanvasRenderingContext2D, field: Field, xInitialPosition: number, yInitialPosition: number) {
-        this.ctx = ctx;
-        this.field = field;
-        this.xPosition = xInitialPosition;
-        this.yPosition = yInitialPosition;
-        this.angle = this.xPosition > 400 ? 135 : 45;
-        this.power = 100;
-        this.projectileTrajectory = [];
-        this.currentTrajectoryIndex = 0;
-        this.intervalId = 0;
-        this.isFired = false;
-        this.isHitted = false;
+    constructor(
+        private ctx: CanvasRenderingContext2D,
+        private field: Field,
+        public initialPositionX: number,
+        public initialPositionY: number
+    ) {
+        this.angle = initialPositionX > 400 ? 135 : 45;
     }
 
     setAngle() {
@@ -64,10 +55,10 @@ export class Player {
         let time = 0;
         const g = -9.8 / 100;
         do {
-            xCoordinate = this.xPosition + (this.power / 20) * Math.cos((this.angle / 180) * Math.PI) * time;
+            xCoordinate = this.initialPositionX + (this.power / 20) * Math.cos((this.angle / 180) * Math.PI) * time;
 
             yCoordinate =
-                this.yPosition -
+                this.initialPositionY -
                 ((this.power / 20) * Math.sin((this.angle / 180) * Math.PI) * time + 0.5 * g * Math.pow(time, 2));
 
             this.projectileTrajectory.push({ x: xCoordinate, y: yCoordinate });
@@ -129,16 +120,16 @@ export class Player {
         for (const player of playerState) {
             for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
                 if (
-                    this.projectileTrajectory[i].x > player.xPosition - 8 &&
-                    this.projectileTrajectory[i].x < player.xPosition + 8 &&
-                    this.projectileTrajectory[i].y > player.yPosition - 8 &&
-                    this.projectileTrajectory[i].y < player.yPosition + 8 &&
-                    this.xPosition !== player.xPosition
+                    this.projectileTrajectory[i].x > player.initialPositionX - 8 &&
+                    this.projectileTrajectory[i].x < player.initialPositionX + 8 &&
+                    this.projectileTrajectory[i].y > player.initialPositionY - 8 &&
+                    this.projectileTrajectory[i].y < player.initialPositionY + 8 &&
+                    this.initialPositionX !== player.initialPositionX
                 ) {
                     this.ctx.fillStyle = 'orange';
-                    drawCanvasArc(this.ctx, player.xPosition, player.yPosition, 15);
+                    drawCanvasArc(this.ctx, player.initialPositionX, player.initialPositionY, 15);
                     playerState.map((item) => {
-                        if (item.xPosition === player.xPosition) {
+                        if (item.initialPositionX === player.initialPositionX) {
                             item.isHitted = true;
                         }
                     });
@@ -155,7 +146,7 @@ export class Player {
 
     drawPlayer() {
         this.ctx.fillStyle = 'black';
-        this.ctx.fillRect(this.xPosition, this.yPosition, 10, 10);
+        this.ctx.fillRect(this.initialPositionX, this.initialPositionY, 10, 10);
     }
 
     drawTerrainHit() {
