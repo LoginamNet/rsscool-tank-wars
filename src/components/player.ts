@@ -109,15 +109,6 @@ export class Player {
         }
     }
 
-    // isTerrainHit() {
-    //     for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
-    //         if (this.projectileTrajectory[i].y > this.field.findGround(Math.round(this.projectileTrajectory[i].x))) {
-    //             console.log(1);
-    //             return true;
-    //         }
-    //     }
-    // }
-
     isTargetHit(playerState: Player[]) {
         for (const player of playerState) {
             for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
@@ -206,14 +197,12 @@ export class Player {
                 10
             );
 
-            setTimeout(() => {
-                for (const player of playerState) {
-                    if (player.isHitted) {
-                        playerState.splice(playerState.indexOf(player), 1);
-                        this.projectileTrajectory = [];
-                    }
+            for (const player of playerState) {
+                if (player.isHitted) {
+                    playerState.splice(playerState.indexOf(player), 1);
+                    this.projectileTrajectory = [];
                 }
-            }, 700);
+            }
         }
     }
 

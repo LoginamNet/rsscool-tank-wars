@@ -1,7 +1,6 @@
 import { checkedQuerySelector } from './utils';
 import { Field } from './field';
 import { Player } from './player';
-import { Page } from './pages';
 
 export class Game {
     canvas = <HTMLCanvasElement>checkedQuerySelector(document, 'canvas');
@@ -11,8 +10,9 @@ export class Game {
     p1 = new Player(this.ctx, this.field, 350, 590);
     p2 = new Player(this.ctx, this.field, 650, 590);
     p3 = new Player(this.ctx, this.field, 70, 530);
-    players: Player[] = [this.p1, this.p2, this.p3];
-    curentPl = this.players[1];
+    p4 = new Player(this.ctx, this.field, 490, 530);
+    players: Player[] = [this.p1, this.p2, this.p3, this.p4];
+    curentPl = this.players[0];
 
     setControlKeys() {
         document.addEventListener('keydown', (event) => {
@@ -82,10 +82,8 @@ export class Game {
         const i = this.players.indexOf(this.curentPl);
 
         if (this.curentPl.isTerrainHit() && !this.curentPl.isTargetHit(this.players) && !this.curentPl.isFired) {
-            setTimeout(() => {
-                this.curentPl.projectileTrajectory = [];
-                this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
-            }, 700);
+            this.curentPl.projectileTrajectory = [];
+            this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
         }
     }
 }
