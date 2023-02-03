@@ -32,7 +32,6 @@ export class Game {
                         this.curentPl.powerUp();
                         break;
                     case 'Space':
-                        console.log(this.curentPl.isFired);
                         this.curentPl.fireProjectile(this.players);
                         break;
                     default:

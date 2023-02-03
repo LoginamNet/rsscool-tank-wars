@@ -48,7 +48,7 @@ export class Player {
         powerText.innerHTML = 'Power: ' + this.power;
     }
 
-    private calculateTrajectory(playerState: Player[]) {
+    private calculateTrajectory(players: Player[]) {
         this.projectileTrajectory = [];
         let xCoordinate = 0;
         let yCoordinate = 0;
@@ -69,7 +69,7 @@ export class Player {
             xCoordinate >= -20 &&
             xCoordinate <= 810 &&
             !this.isTerrainHit() &&
-            !this.isTargetHit(playerState)?.isHitted
+            !this.isTargetHit(players)?.isHitted
         );
     }
 
@@ -109,8 +109,8 @@ export class Player {
         }
     }
 
-    isTargetHit(playerState: Player[]) {
-        for (const player of playerState) {
+    isTargetHit(players: Player[]) {
+        for (const player of players) {
             for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
                 if (
                     this.projectileTrajectory[i].x > player.initialPositionX - 2.5 &&
@@ -121,7 +121,7 @@ export class Player {
                 ) {
                     this.ctx.fillStyle = 'orange';
                     drawCanvasArc(this.ctx, player.initialPositionX + 15, player.initialPositionY - 5, 25);
-                    playerState.map((item) => {
+                    players.map((item) => {
                         if (item.initialPositionX === player.initialPositionX) {
                             item.isHitted = true;
                         }
@@ -132,8 +132,8 @@ export class Player {
         }
     }
 
-    fireProjectile(playerState: Player[]) {
-        this.calculateTrajectory(playerState);
+    fireProjectile(players: Player[]) {
+        this.calculateTrajectory(players);
         this.shoot();
     }
 
@@ -187,8 +187,8 @@ export class Player {
         }
     }
 
-    drawHit(playerState: Player[]) {
-        if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 && this.isTargetHit(playerState)) {
+    drawHit(players: Player[]) {
+        if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 && this.isTargetHit(players)) {
             this.ctx.fillStyle = 'red';
             drawCanvasArc(
                 this.ctx,
@@ -197,9 +197,9 @@ export class Player {
                 10
             );
 
-            for (const player of playerState) {
+            for (const player of players) {
                 if (player.isHitted) {
-                    playerState.splice(playerState.indexOf(player), 1);
+                    players.splice(players.indexOf(player), 1);
                     this.projectileTrajectory = [];
                 }
             }
