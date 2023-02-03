@@ -55,10 +55,12 @@ export class Player {
         let time = 0;
         const g = -9.8 / 100;
         do {
-            xCoordinate = this.initialPositionX + (this.power / 20) * Math.cos((this.angle / 180) * Math.PI) * time;
+            xCoordinate =
+                this.initialPositionX + 15 + (this.power / 20) * Math.cos((this.angle / 180) * Math.PI) * time;
 
             yCoordinate =
                 this.initialPositionY -
+                13 -
                 ((this.power / 20) * Math.sin((this.angle / 180) * Math.PI) * time + 0.5 * g * Math.pow(time, 2));
 
             this.projectileTrajectory.push({ x: xCoordinate, y: yCoordinate });
@@ -120,14 +122,14 @@ export class Player {
         for (const player of playerState) {
             for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
                 if (
-                    this.projectileTrajectory[i].x > player.initialPositionX - 8 &&
-                    this.projectileTrajectory[i].x < player.initialPositionX + 8 &&
-                    this.projectileTrajectory[i].y > player.initialPositionY - 8 &&
-                    this.projectileTrajectory[i].y < player.initialPositionY + 8 &&
+                    this.projectileTrajectory[i].x > player.initialPositionX - 2.5 &&
+                    this.projectileTrajectory[i].x < player.initialPositionX + 34 &&
+                    this.projectileTrajectory[i].y > player.initialPositionY - 10 &&
+                    this.projectileTrajectory[i].y < player.initialPositionY + 2.5 &&
                     this.initialPositionX !== player.initialPositionX
                 ) {
                     this.ctx.fillStyle = 'orange';
-                    drawCanvasArc(this.ctx, player.initialPositionX, player.initialPositionY, 15);
+                    drawCanvasArc(this.ctx, player.initialPositionX + 15, player.initialPositionY - 5, 25);
                     playerState.map((item) => {
                         if (item.initialPositionX === player.initialPositionX) {
                             item.isHitted = true;
@@ -187,7 +189,7 @@ export class Player {
             this.ctx.fillStyle = 'red';
             drawCanvasArc(
                 this.ctx,
-                this.projectileTrajectory[this.projectileTrajectory.length - 1].x + 5,
+                this.projectileTrajectory[this.projectileTrajectory.length - 1].x,
                 this.projectileTrajectory[this.projectileTrajectory.length - 1].y - 5,
                 10
             );
@@ -199,7 +201,7 @@ export class Player {
             this.ctx.fillStyle = 'red';
             drawCanvasArc(
                 this.ctx,
-                this.projectileTrajectory[this.projectileTrajectory.length - 1].x + 5,
+                this.projectileTrajectory[this.projectileTrajectory.length - 1].x,
                 this.projectileTrajectory[this.projectileTrajectory.length - 1].y - 5,
                 10
             );
@@ -211,7 +213,7 @@ export class Player {
                         this.projectileTrajectory = [];
                     }
                 }
-            }, 1000);
+            }, 700);
         }
     }
 
@@ -220,15 +222,15 @@ export class Player {
         if (this.currentTrajectoryIndex && this.projectileTrajectory[this.currentTrajectoryIndex] !== undefined) {
             drawCanvasArc(
                 this.ctx,
-                this.projectileTrajectory[this.currentTrajectoryIndex].x + 2.5,
-                this.projectileTrajectory[this.currentTrajectoryIndex].y - 2.5,
-                5
+                this.projectileTrajectory[this.currentTrajectoryIndex].x,
+                this.projectileTrajectory[this.currentTrajectoryIndex].y,
+                3
             );
         }
     }
 
     drawProjectilePath() {
-        this.ctx.fillStyle = 'gray';
+        this.ctx.fillStyle = 'white';
         if (this.currentTrajectoryIndex) {
             for (let i = 0; i < this.currentTrajectoryIndex; i++) {
                 if (this.projectileTrajectory[i] !== undefined) {
