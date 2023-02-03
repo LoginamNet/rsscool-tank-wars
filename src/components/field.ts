@@ -15,7 +15,7 @@ export class Field {
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    private repaiting(img: ImageData, colorFly: string, colorGround: string) {
+    private repainting(img: ImageData, colorFly: string, colorGround: string) {
         for (let i = 0; i < img.data.length; i += 4) {
             if (img.data[i] === 255) {
                 img.data[i] = parseInt(colorFly[1] + colorFly[2], 16);
@@ -32,7 +32,7 @@ export class Field {
     private loadMap() {
         this.context.drawImage(map1, 0, 0);
         const imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
-        this.repaiting(imageData, CANVAS_FLY, CANVAS_GROUND);
+        this.repainting(imageData, CANVAS_FLY, CANVAS_GROUND);
         this.context.putImageData(imageData, 0, 0);
     }
 

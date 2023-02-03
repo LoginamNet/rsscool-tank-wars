@@ -32,3 +32,7 @@ export function drawCanvasArc(ctx: CanvasRenderingContext2D, xPosition: number, 
     ctx.fill();
     ctx.closePath();
 }
+
+// function of convertation from degrees to radian
+
+export const degToRad = (n: number) => (n / 180) * Math.PI;
