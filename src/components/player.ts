@@ -188,7 +188,7 @@ export class Player {
             drawCanvasArc(
                 this.ctx,
                 this.projectileTrajectory[this.projectileTrajectory.length - 1].x + 5,
-                this.projectileTrajectory[this.projectileTrajectory.length - 1].y,
+                this.projectileTrajectory[this.projectileTrajectory.length - 1].y - 5,
                 10
             );
         }
@@ -200,7 +200,7 @@ export class Player {
             drawCanvasArc(
                 this.ctx,
                 this.projectileTrajectory[this.projectileTrajectory.length - 1].x + 5,
-                this.projectileTrajectory[this.projectileTrajectory.length - 1].y,
+                this.projectileTrajectory[this.projectileTrajectory.length - 1].y - 5,
                 10
             );
 
@@ -217,12 +217,11 @@ export class Player {
 
     drawPlayerProjectile() {
         this.ctx.fillStyle = 'red';
-
         if (this.currentTrajectoryIndex && this.projectileTrajectory[this.currentTrajectoryIndex] !== undefined) {
             drawCanvasArc(
                 this.ctx,
-                this.projectileTrajectory[this.currentTrajectoryIndex].x + 5,
-                this.projectileTrajectory[this.currentTrajectoryIndex].y + 5,
+                this.projectileTrajectory[this.currentTrajectoryIndex].x + 2.5,
+                this.projectileTrajectory[this.currentTrajectoryIndex].y - 2.5,
                 5
             );
         }
@@ -233,7 +232,7 @@ export class Player {
         if (this.currentTrajectoryIndex) {
             for (let i = 0; i < this.currentTrajectoryIndex; i++) {
                 if (this.projectileTrajectory[i] !== undefined) {
-                    drawCanvasArc(this.ctx, this.projectileTrajectory[i].x + 5, this.projectileTrajectory[i].y + 5, 1);
+                    drawCanvasArc(this.ctx, this.projectileTrajectory[i].x, this.projectileTrajectory[i].y, 1);
                 }
             }
         }
