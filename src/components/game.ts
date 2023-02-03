@@ -1,7 +1,7 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../common/constants';
 import { checkedQuerySelector } from './utils';
 import { Field } from './field';
 import { Player } from './player';
+import { Page } from './pages';
 
 export class Game {
     canvas = <HTMLCanvasElement>checkedQuerySelector(document, 'canvas');
@@ -13,11 +13,6 @@ export class Game {
     p3 = new Player(this.ctx, this.field, 70, 530);
     players: Player[] = [this.p1, this.p2, this.p3];
     curentPl = this.players[1];
-
-    constructor() {
-        this.canvas.width = CANVAS_WIDTH;
-        this.canvas.height = CANVAS_HEIGHT;
-    }
 
     setControlKeys() {
         document.addEventListener('keydown', (event) => {
@@ -37,6 +32,7 @@ export class Game {
                         this.curentPl.powerUp();
                         break;
                     case 'Space':
+                        console.log(this.curentPl.isFired);
                         this.curentPl.fireProjectile(this.players);
                         break;
                     default:
@@ -73,11 +69,23 @@ export class Game {
         this.curentPl.drawProjectilePath();
         this.curentPl.drawHit(this.players);
         this.curentPl.drawTerrainHit();
+        this.checkHit();
 
         window.requestAnimationFrame(this.update.bind(this));
     }
 
     renderField(field: ImageData) {
         this.ctx.putImageData(field, 0, 0);
+    }
+
+    checkHit() {
+        const i = this.players.indexOf(this.curentPl);
+
+        if (this.curentPl.isTerrainHit() && !this.curentPl.isTargetHit(this.players) && !this.curentPl.isFired) {
+            setTimeout(() => {
+                this.curentPl.projectileTrajectory = [];
+                this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
+            }, 700);
+        }
     }
 }

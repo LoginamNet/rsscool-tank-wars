@@ -82,9 +82,9 @@ export class Player {
 
     private nextProjectilePosition() {
         this.currentTrajectoryIndex++;
+        console.log(this.isFired);
 
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1) {
-            console.log(this.projectileTrajectory[this.projectileTrajectory.length - 1]);
             this.endShot();
         }
     }

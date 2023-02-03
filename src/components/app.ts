@@ -1,9 +1,12 @@
 import { Game } from './game';
+import { Page } from './pages';
 
 export class App {
-    game = new Game();
+    page = new Page();
 
     render() {
-        this.game.start();
+        this.page.renderGame();
+        const game = new Game();
+        game.start();
     }
 }
