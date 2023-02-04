@@ -2,6 +2,7 @@ import { Field } from './field';
 import { checkedQuerySelector, drawCanvasArc, degToRad } from './utils';
 
 export class Player {
+    name: string;
     angle: number;
     power = 100;
     projectileTrajectory: { x: number; y: number }[] = [];
@@ -9,14 +10,18 @@ export class Player {
     intervalId = 0;
     isFired = false;
     isHitted = false;
+    static players: Player[] = [];
 
     constructor(
         private ctx: CanvasRenderingContext2D,
         private field: Field,
         public initialPositionX: number,
-        public initialPositionY: number
+        public initialPositionY: number,
+        public nameStr: string
     ) {
+        this.name = nameStr;
         this.angle = initialPositionX > 400 ? 135 : 45;
+        Player.players.push(this);
     }
 
     setAngle() {
@@ -203,6 +208,7 @@ export class Player {
                     this.projectileTrajectory = [];
                 }
             }
+            this.drawWinner();
         }
     }
 
@@ -226,6 +232,25 @@ export class Player {
                     drawCanvasArc(this.ctx, this.projectileTrajectory[i].x, this.projectileTrajectory[i].y, 1);
                 }
             }
+        }
+    }
+
+    private checkWinner() {
+        const alive = Player.players.filter((item) => {
+            if (!item.isHitted) {
+                return true;
+            }
+        });
+        if (alive.length === 1) {
+            return alive[0];
+        } else {
+            return false;
+        }
+    }
+
+    drawWinner() {
+        if (this.checkWinner() !== false) {
+            alert(`Winner is ${(this.checkWinner() as Player).name}`);
         }
     }
 }
