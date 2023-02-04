@@ -11,7 +11,7 @@ export class Game {
     p2 = new Player(this.ctx, this.field, 650, 590, 'Modest');
     p3 = new Player(this.ctx, this.field, 70, 530, 'Sigizmund');
     p4 = new Player(this.ctx, this.field, 490, 530, 'Arcadiy');
-    players: Player[] = [this.p1, this.p2, this.p3, this.p4];
+    players = Player.players;
     curentPl = this.players[0];
 
     setControlKeys() {
