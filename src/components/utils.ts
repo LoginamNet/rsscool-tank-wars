@@ -1,3 +1,4 @@
+import { CANVAS_GROUND } from '../common/constants';
 /* functions ------------------------------------------------- */
 
 // get element by selector
@@ -36,3 +37,15 @@ export function drawCanvasArc(ctx: CanvasRenderingContext2D, xPosition: number, 
 // function of convertation from degrees to radian
 
 export const degToRad = (n: number) => (n / 180) * Math.PI;
+
+// function cheks pixel is ground
+
+export function isGround(pixel: ImageData) {
+    if (
+        pixel.data[0] === parseInt(CANVAS_GROUND[1] + CANVAS_GROUND[2], 16) &&
+        pixel.data[1] === parseInt(CANVAS_GROUND[3] + CANVAS_GROUND[4], 16) &&
+        pixel.data[2] === parseInt(CANVAS_GROUND[5] + CANVAS_GROUND[6], 16)
+    ) {
+        return true;
+    }
+}

@@ -1,5 +1,5 @@
 import { Field } from './field';
-import { checkedQuerySelector, drawCanvasArc, degToRad } from './utils';
+import { checkedQuerySelector, drawCanvasArc, degToRad, isGround } from './utils';
 
 export class Player {
     name: string;
@@ -107,8 +107,8 @@ export class Player {
         const ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
 
         for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
-            const pixel = ctx.getImageData(this.projectileTrajectory[i].x, this.projectileTrajectory[i].y, 1, 1).data;
-            if (pixel[0] === 19) {
+            const pixel = ctx.getImageData(this.projectileTrajectory[i].x, this.projectileTrajectory[i].y, 1, 1);
+            if (isGround(pixel)) {
                 return true;
             }
         }
