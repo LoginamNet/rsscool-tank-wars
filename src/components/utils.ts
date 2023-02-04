@@ -1,4 +1,4 @@
-import { CANVAS_GROUND } from '../common/constants';
+import { CANVAS_GROUND, CANVAS_WIDTH } from '../common/constants';
 /* functions ------------------------------------------------- */
 
 // get element by selector
@@ -46,6 +46,12 @@ export function isGround(pixel: ImageData) {
         pixel.data[1] === parseInt(CANVAS_GROUND[3] + CANVAS_GROUND[4], 16) &&
         pixel.data[2] === parseInt(CANVAS_GROUND[5] + CANVAS_GROUND[6], 16)
     ) {
+        return true;
+    }
+}
+
+export function isOutsidePlayZone(x: number) {
+    if (x < 0 || x > CANVAS_WIDTH) {
         return true;
     }
 }

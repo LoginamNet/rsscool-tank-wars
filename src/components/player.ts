@@ -1,5 +1,5 @@
 import { Field } from './field';
-import { checkedQuerySelector, drawCanvasArc, degToRad, isGround } from './utils';
+import { checkedQuerySelector, drawCanvasArc, degToRad, isGround, isOutsidePlayZone } from './utils';
 
 export class Player {
     name: string;
@@ -111,6 +111,9 @@ export class Player {
             if (isGround(pixel)) {
                 return true;
             }
+            if (isOutsidePlayZone(this.projectileTrajectory[i].x)) {
+                return true;
+            }
         }
     }
 
@@ -181,7 +184,10 @@ export class Player {
     }
 
     drawTerrainHit() {
-        if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1) {
+        if (
+            this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 &&
+            isOutsidePlayZone(this.projectileTrajectory[this.projectileTrajectory.length - 1].x)
+        ) {
             this.ctx.fillStyle = 'red';
             drawCanvasArc(
                 this.ctx,

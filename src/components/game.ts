@@ -20,16 +20,16 @@ export class Game {
                 this.curentPl.projectileTrajectory = [];
                 switch (event.code) {
                     case 'ArrowUp':
-                        this.curentPl.angleUp();
+                        this.curentPl.powerUp();
                         break;
                     case 'ArrowDown':
-                        this.curentPl.angleDown();
-                        break;
-                    case 'ArrowLeft':
                         this.curentPl.powerDown();
                         break;
+                    case 'ArrowLeft':
+                        this.curentPl.angleUp();
+                        break;
                     case 'ArrowRight':
-                        this.curentPl.powerUp();
+                        this.curentPl.angleDown();
                         break;
                     case 'Space':
                         this.curentPl.fireProjectile(this.players);
@@ -69,7 +69,6 @@ export class Game {
         this.curentPl.drawHit(this.players);
         this.curentPl.drawTerrainHit();
         this.checkHit();
-
         window.requestAnimationFrame(this.update.bind(this));
     }
 
