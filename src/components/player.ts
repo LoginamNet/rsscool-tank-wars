@@ -1,5 +1,6 @@
 import { Field } from './field';
 import { checkedQuerySelector, drawCanvasArc, degToRad, isGround, isOutsidePlayZone } from './utils';
+import { expl } from './explosion';
 
 export class Player {
     name: string;
@@ -10,7 +11,14 @@ export class Player {
     intervalId = 0;
     isFired = false;
     isHitted = false;
+    positionX: number;
+    positionY: number;
+    static tick = 0;
+    static xExplosion = 0;
+    static yExplosion = 0;
     static players: Player[] = [];
+    static animationExplosionFlag = false;
+    static ctx: CanvasRenderingContext2D;
 
     constructor(
         private ctx: CanvasRenderingContext2D,
@@ -22,6 +30,8 @@ export class Player {
         this.name = nameStr;
         this.angle = initialPositionX > 400 ? 135 : 45;
         Player.players.push(this);
+        this.positionX = initialPositionX;
+        this.positionY = initialPositionY;
     }
 
     setAngle() {
@@ -82,13 +92,10 @@ export class Player {
         this.currentTrajectoryIndex = 0;
         this.isFired = true;
         this.intervalId = window.setInterval(this.nextProjectilePosition.bind(this), 10);
-        console.log('shoot');
     }
 
     private nextProjectilePosition() {
         this.currentTrajectoryIndex++;
-        console.log(this.isFired);
-
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1) {
             this.endShot();
         }
@@ -127,8 +134,8 @@ export class Player {
                     this.projectileTrajectory[i].y < player.initialPositionY + 2.5 &&
                     this.initialPositionX !== player.initialPositionX
                 ) {
-                    this.ctx.fillStyle = 'orange';
-                    drawCanvasArc(this.ctx, player.initialPositionX + 15, player.initialPositionY - 5, 25);
+                    // this.ctx.fillStyle = 'orange';
+                    // drawCanvasArc(this.ctx, player.initialPositionX + 15, player.initialPositionY - 5, 25);
                     players.map((item) => {
                         if (item.initialPositionX === player.initialPositionX) {
                             item.isHitted = true;
@@ -200,21 +207,25 @@ export class Player {
 
     drawHit(players: Player[]) {
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 && this.isTargetHit(players)) {
-            this.ctx.fillStyle = 'red';
-            drawCanvasArc(
-                this.ctx,
-                this.projectileTrajectory[this.projectileTrajectory.length - 1].x,
-                this.projectileTrajectory[this.projectileTrajectory.length - 1].y - 5,
-                10
-            );
+            //this.ctx.fillStyle = 'red';
+            // drawCanvasArc(
+            //     this.ctx,
+            //     this.projectileTrajectory[this.projectileTrajectory.length - 1].x,
+            //     this.projectileTrajectory[this.projectileTrajectory.length - 1].y,
+            //     10
+            // );
+
+            Player.animationExplosionFlag = true;
+            Player.ctx = this.ctx;
 
             for (const player of players) {
                 if (player.isHitted) {
+                    Player.xExplosion = player.positionX;
+                    Player.yExplosion = player.positionY;
                     players.splice(players.indexOf(player), 1);
                     this.projectileTrajectory = [];
                 }
             }
-            this.drawWinner();
         }
     }
 
@@ -241,7 +252,46 @@ export class Player {
         }
     }
 
-    private checkWinner() {
+    static drawExplosion() {
+        const image = [
+            [0, 0],
+            [30, 0],
+            [60, 0],
+            [90, 0],
+            [0, 30],
+            [30, 30],
+            [60, 30],
+            [90, 30],
+            [0, 60],
+            [30, 60],
+            [60, 60],
+            [90, 60],
+            [0, 90],
+            [30, 90],
+            [60, 90],
+        ];
+        const tickFrame = Math.floor(Player.tick / 10);
+
+        Player.ctx.drawImage(
+            expl,
+            image[tickFrame][0],
+            image[tickFrame][1],
+            30,
+            30,
+            Player.xExplosion - 10,
+            Player.yExplosion - 40,
+            45,
+            45
+        );
+        Player.tick++;
+        if (Math.floor(this.tick / 10) === 15) {
+            this.tick = 0;
+            Player.animationExplosionFlag = false;
+            Player.drawWinner();
+        }
+    }
+
+    private static checkWinner() {
         const alive = Player.players.filter((item) => {
             if (!item.isHitted) {
                 return true;
@@ -254,7 +304,7 @@ export class Player {
         }
     }
 
-    drawWinner() {
+    static drawWinner() {
         if (this.checkWinner() !== false) {
             alert(`Winner is ${(this.checkWinner() as Player).name}`);
         }

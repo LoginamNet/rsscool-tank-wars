@@ -40,7 +40,6 @@ export class Field {
         this.clear();
         window.addEventListener('load', () => {
             this.loadMap();
-            console.log(this.findGround(390));
         });
     }
 

@@ -63,12 +63,17 @@ export class Game {
         for (const player of this.players) {
             player.drawPlayer();
             player.initialPositionY = this.field.findGround(player.initialPositionX) - 5;
+            player.positionY = player.initialPositionY + 5;
         }
         this.curentPl.drawPlayerProjectile();
         this.curentPl.drawProjectilePath();
         this.curentPl.drawHit(this.players);
         this.curentPl.drawTerrainHit();
         this.checkHit();
+        if (Player.animationExplosionFlag) {
+            Player.drawExplosion();
+        }
+
         window.requestAnimationFrame(this.update.bind(this));
     }
 
