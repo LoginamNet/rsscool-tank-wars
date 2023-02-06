@@ -15,8 +15,8 @@ export class Player {
     positionX: number;
     positionY: number;
     static tick = 0;
-    static xExplosion = 0;
-    static yExplosion = 0;
+    static explosionX = 0;
+    static explosionY = 0;
     static players: Player[] = [];
     static animationExplosionFlag = false;
     static ctx: CanvasRenderingContext2D;
@@ -257,8 +257,8 @@ export class Player {
 
             for (const player of players) {
                 if (player.isHitted) {
-                    Player.xExplosion = player.positionX;
-                    Player.yExplosion = player.positionY;
+                    Player.explosionX = player.positionX;
+                    Player.explosionY = player.positionY;
                     players.splice(players.indexOf(player), 1);
                     this.projectileTrajectory = [];
                 }
@@ -322,8 +322,8 @@ export class Player {
             image[tickFrame][1],
             30,
             30,
-            Player.xExplosion - 10,
-            Player.yExplosion - 40,
+            Player.explosionX - 10,
+            Player.explosionY - 40,
             45,
             45
         );
