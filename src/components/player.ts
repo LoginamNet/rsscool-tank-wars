@@ -289,6 +289,13 @@ export class Player {
         }
     }
 
+    drawFire() {
+        this.drawPlayerProjectile();
+        this.drawProjectilePath();
+        this.drawHit(Player.players);
+        this.drawTerrainHit();
+    }
+
     static drawExplosion() {
         const image = [
             [0, 0],

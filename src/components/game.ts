@@ -65,10 +65,7 @@ export class Game {
             player.initialPositionY = this.field.findGround(player.initialPositionX) - 5;
             player.positionY = player.initialPositionY + 5;
         }
-        this.curentPl.drawPlayerProjectile();
-        this.curentPl.drawProjectilePath();
-        this.curentPl.drawHit(this.players);
-        this.curentPl.drawTerrainHit();
+        this.curentPl.drawFire();
         this.checkHit();
         if (Player.animationExplosionFlag) {
             Player.drawExplosion();
