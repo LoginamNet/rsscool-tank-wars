@@ -39,6 +39,7 @@ export function drawCanvasArc(ctx: CanvasRenderingContext2D, xPosition: number, 
 export const degToRad = (n: number) => (n / 180) * Math.PI;
 
 // function cheks pixel is ground
+// compare pixel RGB-channels and constant CANVAS_GROUND RGB-channels
 
 export function isGround(pixel: ImageData) {
     if (
