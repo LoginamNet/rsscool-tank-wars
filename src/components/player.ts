@@ -1,3 +1,4 @@
+import { LENGTH_GUN } from '../common/constants';
 import { Field } from './field';
 import { checkedQuerySelector, drawCanvasArc, degToRad, isGround, isOutsidePlayZone } from './utils';
 import { expl } from './explosion';
@@ -5,7 +6,7 @@ import { expl } from './explosion';
 export class Player {
     name: string;
     angle: number;
-    power = 100;
+    power = 50;
     projectileTrajectory: { x: number; y: number }[] = [];
     currentTrajectoryIndex = 0;
     intervalId = 0;
@@ -40,27 +41,59 @@ export class Player {
     }
 
     angleUp() {
-        this.angle++;
+        if (this.angle <= 180) {
+            this.angle++;
+        }
+        if (this.angle === 180 || this.angle === 181) {
+            this.angle = 180;
+        }
         const angleText = checkedQuerySelector(document, '.angle');
         angleText.innerHTML = 'Angle: ' + this.angle;
     }
 
     angleDown() {
-        this.angle--;
+        if (this.angle >= 0) {
+            this.angle--;
+        }
+        if (this.angle === 0 || this.angle === -1) {
+            this.angle = 0;
+        }
         const angleText = checkedQuerySelector(document, '.angle');
         angleText.innerHTML = 'Angle: ' + this.angle;
     }
 
     powerUp() {
-        this.power++;
+        if (this.power <= 100) {
+            this.power++;
+        }
+        if (this.power === 100 || this.power === 101) {
+            this.power = 100;
+        }
         const powerText = checkedQuerySelector(document, '.power');
         powerText.innerHTML = 'Power: ' + this.power;
     }
 
     powerDown() {
-        this.power--;
+        if (this.power >= 0) {
+            this.power--;
+        }
+        if (this.power === 0 || this.power === -1) {
+            this.power = 0;
+        }
         const powerText = checkedQuerySelector(document, '.power');
         powerText.innerHTML = 'Power: ' + this.power;
+    }
+
+    private calcAngle() {
+        return ((360 - this.angle) * Math.PI) / 180;
+    }
+
+    private calcXCoords() {
+        return this.initialPositionX + 15 + Math.cos(this.calcAngle()) * LENGTH_GUN;
+    }
+
+    private calcYCoords() {
+        return this.initialPositionY - 9 + Math.sin(this.calcAngle()) * LENGTH_GUN;
     }
 
     private calculateTrajectory(players: Player[]) {
@@ -70,13 +103,11 @@ export class Player {
         let time = 0;
         const g = -9.8 / 100;
         do {
-            xCoordinate =
-                this.initialPositionX + 15 + (this.power / 20) * Math.cos((this.angle / 180) * Math.PI) * time;
+            xCoordinate = this.calcXCoords() + (this.power / 10) * Math.cos((this.angle / 180) * Math.PI) * time;
 
             yCoordinate =
-                this.initialPositionY -
-                13 -
-                ((this.power / 20) * Math.sin((this.angle / 180) * Math.PI) * time + 0.5 * g * Math.pow(time, 2));
+                this.calcYCoords() -
+                ((this.power / 10) * Math.sin((this.angle / 180) * Math.PI) * time + 0.5 * g * Math.pow(time, 2));
 
             this.projectileTrajectory.push({ x: xCoordinate, y: yCoordinate });
             time++;
@@ -90,8 +121,14 @@ export class Player {
 
     private shoot() {
         this.currentTrajectoryIndex = 0;
-        this.isFired = true;
         this.intervalId = window.setInterval(this.nextProjectilePosition.bind(this), 10);
+        if (this.power === 0) {
+            clearInterval(this.intervalId);
+            this.intervalId = 0;
+            this.isFired = false;
+        } else {
+            this.isFired = true;
+        }
     }
 
     private nextProjectilePosition() {
@@ -184,7 +221,7 @@ export class Player {
         // tank gun
         this.ctx.beginPath();
         this.ctx.moveTo(this.initialPositionX + 15, this.initialPositionY - 9);
-        this.ctx.lineTo(this.initialPositionX + 40, this.initialPositionY - 20);
+        this.ctx.lineTo(this.calcXCoords(), this.calcYCoords());
         this.ctx.lineWidth = 3;
         this.ctx.strokeStyle = '#000000';
         this.ctx.stroke();

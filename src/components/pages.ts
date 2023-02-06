@@ -13,7 +13,7 @@ export class Page {
         </div>
         <div id= "game-data">
             <div class="angle" >Angle: 45</div>
-            <div class="power" >Power: 100</div>
+            <div class="power" >Power: 50</div>
         </div>
         `;
     }
