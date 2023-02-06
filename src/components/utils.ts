@@ -51,7 +51,5 @@ export function isGround(pixel: ImageData) {
 }
 
 export function isOutsidePlayZone(x: number) {
-    if (x < 0 || x > CANVAS_WIDTH) {
-        return true;
-    }
+    return x < 0 || x > CANVAS_WIDTH;
 }
