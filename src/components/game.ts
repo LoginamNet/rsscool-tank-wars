@@ -62,8 +62,8 @@ export class Game {
         this.renderField(this.field.export()); //drawing ground and sky
         for (const player of this.players) {
             player.drawPlayer();
-            player.initialPositionY = this.field.findGround(player.initialPositionX) - 5;
-            player.positionY = player.initialPositionY + 5;
+            player.initialTankPositionY = this.field.findGround(player.initialTankPositionX) - 5;
+            player.positionY = player.initialTankPositionY + 5;
         }
         this.curentPl.drawFire();
         this.checkHit();

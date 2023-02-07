@@ -1,4 +1,4 @@
-import { LENGTH_GUN } from '../common/constants';
+import { LENGTH_GUN, POWER_GUN } from '../common/constants';
 import { Field } from './field';
 import { checkedQuerySelector, drawCanvasArc, degToRad, isGround, isOutsidePlayZone } from './utils';
 import { expl } from './explosion';
@@ -6,7 +6,7 @@ import { expl } from './explosion';
 export class Player {
     name: string;
     angle: number;
-    power = 50;
+    power = POWER_GUN;
     projectileTrajectory: { x: number; y: number }[] = [];
     currentTrajectoryIndex = 0;
     intervalId = 0;
@@ -24,15 +24,15 @@ export class Player {
     constructor(
         private ctx: CanvasRenderingContext2D,
         private field: Field,
-        public initialPositionX: number,
-        public initialPositionY: number,
+        public initialTankPositionX: number,
+        public initialTankPositionY: number,
         public nameStr: string
     ) {
         this.name = nameStr;
-        this.angle = initialPositionX > 400 ? 135 : 45;
+        this.angle = initialTankPositionX > 400 ? 135 : 45;
         Player.players.push(this);
-        this.positionX = initialPositionX;
-        this.positionY = initialPositionY;
+        this.positionX = initialTankPositionX;
+        this.positionY = initialTankPositionY;
     }
 
     setAngle() {
@@ -41,45 +41,25 @@ export class Player {
     }
 
     angleUp() {
-        if (this.angle <= 180) {
-            this.angle++;
-        }
-        if (this.angle === 180 || this.angle === 181) {
-            this.angle = 180;
-        }
+        this.angle < 180 ? this.angle++ : (this.angle = 180);
         const angleText = checkedQuerySelector(document, '.angle');
         angleText.innerHTML = 'Angle: ' + this.angle;
     }
 
     angleDown() {
-        if (this.angle >= 0) {
-            this.angle--;
-        }
-        if (this.angle === 0 || this.angle === -1) {
-            this.angle = 0;
-        }
+        this.angle > 0 ? this.angle-- : (this.angle = 0);
         const angleText = checkedQuerySelector(document, '.angle');
         angleText.innerHTML = 'Angle: ' + this.angle;
     }
 
     powerUp() {
-        if (this.power <= 100) {
-            this.power++;
-        }
-        if (this.power === 100 || this.power === 101) {
-            this.power = 100;
-        }
+        this.power < 100 ? this.power++ : (this.power = 100);
         const powerText = checkedQuerySelector(document, '.power');
         powerText.innerHTML = 'Power: ' + this.power;
     }
 
     powerDown() {
-        if (this.power >= 0) {
-            this.power--;
-        }
-        if (this.power === 0 || this.power === -1) {
-            this.power = 0;
-        }
+        this.power > 0 ? this.power-- : (this.power = 0);
         const powerText = checkedQuerySelector(document, '.power');
         powerText.innerHTML = 'Power: ' + this.power;
     }
@@ -89,11 +69,11 @@ export class Player {
     }
 
     private calcXCoords() {
-        return this.initialPositionX + 15 + Math.cos(this.calcAngle()) * LENGTH_GUN;
+        return this.initialTankPositionX + 15 + Math.cos(this.calcAngle()) * LENGTH_GUN;
     }
 
     private calcYCoords() {
-        return this.initialPositionY - 9 + Math.sin(this.calcAngle()) * LENGTH_GUN;
+        return this.initialTankPositionY - 9 + Math.sin(this.calcAngle()) * LENGTH_GUN;
     }
 
     private calculateTrajectory(players: Player[]) {
@@ -165,16 +145,16 @@ export class Player {
         for (const player of players) {
             for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
                 if (
-                    this.projectileTrajectory[i].x > player.initialPositionX - 2.5 &&
-                    this.projectileTrajectory[i].x < player.initialPositionX + 34 &&
-                    this.projectileTrajectory[i].y > player.initialPositionY - 10 &&
-                    this.projectileTrajectory[i].y < player.initialPositionY + 2.5 &&
-                    this.initialPositionX !== player.initialPositionX
+                    this.projectileTrajectory[i].x > player.initialTankPositionX - 2.5 &&
+                    this.projectileTrajectory[i].x < player.initialTankPositionX + 34 &&
+                    this.projectileTrajectory[i].y > player.initialTankPositionY - 10 &&
+                    this.projectileTrajectory[i].y < player.initialTankPositionY + 2.5 &&
+                    this.initialTankPositionX !== player.initialTankPositionX
                 ) {
                     // this.ctx.fillStyle = 'orange';
                     // drawCanvasArc(this.ctx, player.initialPositionX + 15, player.initialPositionY - 5, 25);
                     players.map((item) => {
-                        if (item.initialPositionX === player.initialPositionX) {
+                        if (item.initialTankPositionX === player.initialTankPositionX) {
                             item.isHitted = true;
                         }
                     });
@@ -192,10 +172,10 @@ export class Player {
     drawPlayer() {
         // wheels
         const step = 10;
-        let x = this.initialPositionX;
+        let x = this.initialTankPositionX;
         for (let i = 0; i < 4; i++) {
             this.ctx.beginPath();
-            this.ctx.arc(x, this.initialPositionY, 3, degToRad(0), degToRad(360));
+            this.ctx.arc(x, this.initialTankPositionY, 3, degToRad(0), degToRad(360));
             this.ctx.fillStyle = '#000000';
             this.ctx.fill();
             this.ctx.stroke();
@@ -204,23 +184,23 @@ export class Player {
 
         // tank hull
         this.ctx.beginPath();
-        this.ctx.moveTo(this.initialPositionX - 7, this.initialPositionY);
-        this.ctx.lineTo(this.initialPositionX - 3, this.initialPositionY - 6);
-        this.ctx.lineTo(this.initialPositionX + 33, this.initialPositionY - 6);
-        this.ctx.lineTo(this.initialPositionX + 37, this.initialPositionY);
+        this.ctx.moveTo(this.initialTankPositionX - 7, this.initialTankPositionY);
+        this.ctx.lineTo(this.initialTankPositionX - 3, this.initialTankPositionY - 6);
+        this.ctx.lineTo(this.initialTankPositionX + 33, this.initialTankPositionY - 6);
+        this.ctx.lineTo(this.initialTankPositionX + 37, this.initialTankPositionY);
         this.ctx.strokeStyle = '#000000';
         this.ctx.stroke();
 
         // tank tower
         this.ctx.beginPath();
-        this.ctx.arc(this.initialPositionX + 15, this.initialPositionY - 7, 10, degToRad(180), degToRad(0));
+        this.ctx.arc(this.initialTankPositionX + 15, this.initialTankPositionY - 7, 10, degToRad(180), degToRad(0));
         this.ctx.fillStyle = '#000000';
         this.ctx.fill();
         this.ctx.stroke();
 
         // tank gun
         this.ctx.beginPath();
-        this.ctx.moveTo(this.initialPositionX + 15, this.initialPositionY - 9);
+        this.ctx.moveTo(this.initialTankPositionX + 15, this.initialTankPositionY - 9);
         this.ctx.lineTo(this.calcXCoords(), this.calcYCoords());
         this.ctx.lineWidth = 3;
         this.ctx.strokeStyle = '#000000';

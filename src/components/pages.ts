@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../common/constants';
+import { CANVAS_HEIGHT, CANVAS_WIDTH, POWER_GUN } from '../common/constants';
 import { checkedQuerySelector } from './utils';
 
 export class Page {
@@ -11,7 +11,7 @@ export class Page {
         </div>
         <div id= "game-data">
             <div class="angle" >Angle: 45</div>
-            <div class="power" >Power: 50</div>
+            <div class="power" >Power: ${POWER_GUN}</div>
         </div>
         `;
     }

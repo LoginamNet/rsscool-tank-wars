@@ -21,7 +21,7 @@ const baseConfig = {
                 exclude: /node_modules/,
             },
             {
-                test: /\.(png|svg|jpg|jpeg|webp|gif|ico|gif)$/i,
+                test: /\.(png|svg|jpg|jpeg|webp|gif|ico|gif|wav|mp3)$/i,
                 type: 'asset/resource',
             },
         ],
@@ -41,14 +41,14 @@ const baseConfig = {
         }),
         new CleanWebpackPlugin(),
         new ESLintPlugin({ extensions: ['ts', 'js'] }),
-        // new CopyPlugin({
-        //     patterns: [
-        //         {
-        //             from: path.resolve(__dirname, 'src', 'assets'),
-        //             to: path.resolve(__dirname, 'dist', 'assets'),
-        //         },
-        //     ],
-        // }),
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, 'src', 'assets'),
+                    to: path.resolve(__dirname, 'dist', 'assets'),
+                },
+            ],
+        }),
         new NetlifyPlugin({
             redirects: [
                 {
