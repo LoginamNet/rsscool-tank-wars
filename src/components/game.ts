@@ -1,6 +1,7 @@
 import { checkedQuerySelector } from './utils';
 import { Field } from './field';
 import { Player } from './player';
+import { Sounds } from './audio';
 
 export class Game {
     canvas = <HTMLCanvasElement>checkedQuerySelector(document, 'canvas');
@@ -13,6 +14,7 @@ export class Game {
     p4 = new Player(this.ctx, this.field, 490, 530, 'Arcadiy');
     players = Player.players;
     curentPl = this.players[0];
+    sound = new Sounds();
 
     setControlKeys() {
         document.addEventListener('keydown', (event) => {
@@ -21,18 +23,23 @@ export class Game {
                 switch (event.code) {
                     case 'ArrowUp':
                         this.curentPl.powerUp();
+                        this.sound.scrollGun();
                         break;
                     case 'ArrowDown':
                         this.curentPl.powerDown();
+                        this.sound.scrollGun();
                         break;
                     case 'ArrowLeft':
                         this.curentPl.angleUp();
+                        this.sound.scrollGun();
                         break;
                     case 'ArrowRight':
                         this.curentPl.angleDown();
+                        this.sound.scrollGun();
                         break;
                     case 'Space':
                         this.curentPl.fireProjectile(this.players);
+                        this.sound.shotTank();
                         break;
                     default:
                         break;
