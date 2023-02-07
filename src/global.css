@@ -33,12 +33,20 @@ aside {
 html,
 body {
     width: 100%;
+    font-family: 'Press Start 2P', cursive;
     font-size: 100%;
     line-height: 1;
     font-size: 14px;
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 h1 {
@@ -103,10 +111,4 @@ input[type='number'] {
 
 input:disabled {
     background-color: rgb(219, 219, 219);
-}
-
-/* global ------------------------------------------------- */
-
-.canvas {
-    border: 1px solid green;
 }

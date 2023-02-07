@@ -41,6 +41,34 @@ export class Game {
         });
     }
 
+    setGameButtons() {
+        document.addEventListener('click', (event) => {
+            if (!this.curentPl.isFired) {
+                this.curentPl.projectileTrajectory = [];
+                const target = <HTMLElement>event.target;
+                switch (true) {
+                    case target.classList.contains('cross__arrow_up'):
+                        this.curentPl.powerUp();
+                        break;
+                    case target.classList.contains('cross__arrow_down'):
+                        this.curentPl.powerDown();
+                        break;
+                    case target.classList.contains('cross__arrow_left'):
+                        this.curentPl.angleUp();
+                        break;
+                    case target.classList.contains('cross__arrow_right'):
+                        this.curentPl.angleDown();
+                        break;
+                    case target.classList.contains('launch__button'):
+                        this.curentPl.fireProjectile(this.players);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
     clean() {
         this.ctx.clearRect(0, 0, 800, 600);
     }
@@ -49,6 +77,7 @@ export class Game {
         this.clean();
         this.field.generate();
         this.setControlKeys();
+        this.setGameButtons();
         for (const player of this.players) {
             player.drawPlayer();
         }
@@ -57,7 +86,7 @@ export class Game {
     }
 
     update() {
-        this.curentPl.setAngle();
+        this.curentPl.setPlayerInfo();
         this.clean();
         this.renderField(this.field.export()); //drawing ground and sky
         for (const player of this.players) {

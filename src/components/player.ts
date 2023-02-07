@@ -1,6 +1,7 @@
 import { LENGTH_GUN } from '../common/constants';
-import { Field } from './field';
 import { checkedQuerySelector, drawCanvasArc, degToRad, isGround, isOutsidePlayZone } from './utils';
+import { Field } from './field';
+import { Page } from './pages';
 import { expl } from './explosion';
 
 export class Player {
@@ -35,9 +36,12 @@ export class Player {
         this.positionY = initialPositionY;
     }
 
-    setAngle() {
+    setPlayerInfo() {
         const angleText = checkedQuerySelector(document, '.angle');
+        const powerText = checkedQuerySelector(document, '.power');
+
         angleText.innerHTML = 'Angle: ' + this.angle;
+        powerText.innerHTML = 'Power: ' + this.power;
     }
 
     angleUp() {
@@ -350,7 +354,7 @@ export class Player {
 
     static drawWinner() {
         if (this.checkWinner() !== false) {
-            alert(`Winner is ${(this.checkWinner() as Player).name}`);
+            Page.renderWinner(Player.players[0]);
         }
     }
 }

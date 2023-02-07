@@ -1,0 +1,10 @@
+.home__screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+.home__screen_start {
+    color: white;
+}

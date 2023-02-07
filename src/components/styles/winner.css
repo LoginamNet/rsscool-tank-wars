@@ -1,0 +1,13 @@
+.winner__screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    background-color: black;
+}
+
+.winner__screen_restart {
+    color: white;
+}

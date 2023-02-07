@@ -38,9 +38,7 @@ export class Field {
 
     generate() {
         this.clear();
-        window.addEventListener('load', () => {
-            this.loadMap();
-        });
+        this.loadMap();
     }
 
     export() {
