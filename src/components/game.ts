@@ -14,60 +14,94 @@ export class Game {
     players = Player.players;
     curentPl = this.players[0];
 
-    setControlKeys() {
-        document.addEventListener('keydown', (event) => {
-            if (!this.curentPl.isFired) {
-                this.curentPl.projectileTrajectory = [];
-                switch (event.code) {
-                    case 'ArrowUp':
-                        this.curentPl.powerUp();
-                        break;
-                    case 'ArrowDown':
-                        this.curentPl.powerDown();
-                        break;
-                    case 'ArrowLeft':
-                        this.curentPl.angleUp();
-                        break;
-                    case 'ArrowRight':
-                        this.curentPl.angleDown();
-                        break;
-                    case 'Space':
-                        this.curentPl.fireProjectile(this.players);
-                        break;
-                    default:
-                        break;
-                }
+    private addKeys = (event: KeyboardEvent) => {
+        if (!this.curentPl.isFired) {
+            this.curentPl.projectileTrajectory = [];
+            switch (event.code) {
+                case 'ArrowUp':
+                    this.curentPl.powerUp();
+                    break;
+                case 'ArrowDown':
+                    this.curentPl.powerDown();
+                    break;
+                case 'ArrowLeft':
+                    this.curentPl.angleUp();
+                    break;
+                case 'ArrowRight':
+                    this.curentPl.angleDown();
+                    break;
+                case 'Space':
+                    this.curentPl.fireProjectile(this.players);
+                    break;
+                default:
+                    break;
             }
-        });
+        }
+    };
+
+    setControlKeys() {
+        document.removeEventListener('keydown', this.addKeys);
+        document.addEventListener('keydown', this.addKeys);
     }
 
-    setGameButtons() {
-        document.addEventListener('click', (event) => {
-            if (!this.curentPl.isFired) {
-                this.curentPl.projectileTrajectory = [];
-                const target = <HTMLElement>event.target;
-                switch (true) {
-                    case target.classList.contains('cross__arrow_up'):
-                        this.curentPl.powerUp();
-                        break;
-                    case target.classList.contains('cross__arrow_down'):
-                        this.curentPl.powerDown();
-                        break;
-                    case target.classList.contains('cross__arrow_left'):
-                        this.curentPl.angleUp();
-                        break;
-                    case target.classList.contains('cross__arrow_right'):
-                        this.curentPl.angleDown();
-                        break;
-                    case target.classList.contains('launch__button'):
-                        this.curentPl.fireProjectile(this.players);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
+    removeControlKeys() {
+        document.removeEventListener('keydown', this.addKeys);
     }
+
+    // setControlKeys() {
+    //     document.addEventListener('keydown', (event) => {
+    //         if (!this.curentPl.isFired) {
+    //             this.curentPl.projectileTrajectory = [];
+    //             switch (event.code) {
+    //                 case 'ArrowUp':
+    //                     this.curentPl.powerUp();
+    //                     break;
+    //                 case 'ArrowDown':
+    //                     this.curentPl.powerDown();
+    //                     break;
+    //                 case 'ArrowLeft':
+    //                     this.curentPl.angleUp();
+    //                     break;
+    //                 case 'ArrowRight':
+    //                     this.curentPl.angleDown();
+    //                     break;
+    //                 case 'Space':
+    //                     this.curentPl.fireProjectile(this.players);
+    //                     break;
+    //                 default:
+    //                     break;
+    //             }
+    //         }
+    //     });
+    // }
+
+    // setGameButtons() {
+    //     document.addEventListener('click', (event) => {
+    //         if (!this.curentPl.isFired) {
+    //             this.curentPl.projectileTrajectory = [];
+    //             const target = <HTMLElement>event.target;
+    //             switch (true) {
+    //                 case target.classList.contains('cross__arrow_up'):
+    //                     this.curentPl.powerUp();
+    //                     break;
+    //                 case target.classList.contains('cross__arrow_down'):
+    //                     this.curentPl.powerDown();
+    //                     break;
+    //                 case target.classList.contains('cross__arrow_left'):
+    //                     this.curentPl.angleUp();
+    //                     break;
+    //                 case target.classList.contains('cross__arrow_right'):
+    //                     this.curentPl.angleDown();
+    //                     break;
+    //                 case target.classList.contains('launch__button'):
+    //                     this.curentPl.fireProjectile(this.players);
+    //                     break;
+    //                 default:
+    //                     break;
+    //             }
+    //         }
+    //     });
+    // }
 
     clean() {
         this.ctx.clearRect(0, 0, 800, 600);
@@ -77,7 +111,8 @@ export class Game {
         this.clean();
         this.field.generate();
         this.setControlKeys();
-        this.setGameButtons();
+        // this.setControlKeys();
+        // this.setGameButtons();
         for (const player of this.players) {
             player.drawPlayer();
         }
@@ -113,6 +148,8 @@ export class Game {
         if (this.curentPl.isTerrainHit() && !this.curentPl.isTargetHit(this.players) && !this.curentPl.isFired) {
             this.curentPl.projectileTrajectory = [];
             this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
+        } else if (this.players.length === 1) {
+            this.removeControlKeys();
         }
     }
 }
