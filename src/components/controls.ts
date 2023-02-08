@@ -50,6 +50,9 @@ export class Controls {
             case target.classList.contains('options_buttons_pause'):
                 Page.renderGame();
                 break;
+            case target.classList.contains('options_buttons_settings'):
+                Page.renderHome();
+                break;
             case target.classList.contains('launch__button'):
                 this.mainMenuFire();
                 break;

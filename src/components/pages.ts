@@ -51,6 +51,7 @@ export class Page {
         const screen = checkedQuerySelector(document, '.game__screen');
         const template = `
         <div class="home__screen" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px">
+            <h1 class="home__screen_title">TANK WARS</h1>
             <div class="home__screen_menu">
                 <div class="home__screen_mode home__menu_item menu_item_selected">
                 <span>GAME MODE:</span>

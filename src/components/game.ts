@@ -137,6 +137,7 @@ export class Game {
     }
 
     start() {
+        console.log(this.players);
         this.clean();
         this.field.generate();
         this.setControlKeys();

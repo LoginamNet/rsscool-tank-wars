@@ -335,6 +335,7 @@ export class Player {
     static drawWinner() {
         if (this.checkWinner() !== false) {
             Page.renderWinner(Player.players[0]);
+            Player.players = [];
         }
     }
 }
