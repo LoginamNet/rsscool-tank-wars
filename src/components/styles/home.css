@@ -5,6 +5,51 @@
     background-color: black;
 }
 
-.home__screen_start {
+.home__screen_menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
     color: white;
+}
+
+.home__screen_mode,
+.home__screen_players,
+.home__screen_sound {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+}
+
+.menu_item_selected {
+    background-color: beige;
+    color: black;
+}
+
+.home__menu_switchers {
+    display: flex;
+    gap: 10px;
+}
+
+.home__menu_switcher {
+    color: gainsboro;
+}
+
+.menu_switcher_selected {
+    color: coral;
+}
+
+.home__screen_rules,
+.home__screen_start {
+    width: 100%;
+    padding: 10px;
+    border-radius: 0;
+}
+
+.home__screen_rules:not(.menu_item_selected),
+.home__screen_start:not(.menu_item_selected) {
+    color: white;
+    cursor: default;
 }
