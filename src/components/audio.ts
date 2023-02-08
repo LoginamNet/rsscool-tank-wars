@@ -1,6 +1,17 @@
 export class Sounds {
     constructor() {}
 
+    play(name: string, num = 0.3) {
+        const audio = new Audio(`../assets/готовая/${name}.mp3`);
+        audio.volume = +`${num}`;
+        audio.play();
+    }
+
+    stop(name: string) {
+        const audio = new Audio(`../assets/готовая/${name}.mp3`);
+        audio.pause();
+    }
+
     openMus() {
         const music = new Audio('../assets/audio.mp3');
         music.volume = 0.3;
@@ -20,7 +31,7 @@ export class Sounds {
     }
 
     bangTank() {
-        const bang = new Audio('../assets/bang_tank.mp3');
+        const bang = new Audio('../assets/готовая/bang-tank.mp3');
         bang.volume = 0.3;
         bang.play();
     }
@@ -31,14 +42,8 @@ export class Sounds {
         shot.play();
     }
 
-    damageTank() {
-        const dmgTank = new Audio('../assets/damage_po_tanku.mp3');
-        dmgTank.volume = 0.3;
-        dmgTank.play();
-    }
-
     damageLand() {
-        const dmgLand = new Audio('../assets/damage_po_zemle.mp3');
+        const dmgLand = new Audio('../assets/готовая/damage-po-zemle.mp3');
         // dmgLand.volume = 0.3;
         dmgLand.play();
     }

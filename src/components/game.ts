@@ -23,23 +23,23 @@ export class Game {
                 switch (event.code) {
                     case 'ArrowUp':
                         this.curentPl.powerUp();
-                        this.sound.scrollGun();
+                        this.sound.play('scroll_gun', 0.5);
                         break;
                     case 'ArrowDown':
                         this.curentPl.powerDown();
-                        this.sound.scrollGun();
+                        this.sound.play('scroll_gun', 0.5);
                         break;
                     case 'ArrowLeft':
                         this.curentPl.angleUp();
-                        this.sound.scrollGun();
+                        this.sound.play('scroll_gun', 0.5);
                         break;
                     case 'ArrowRight':
                         this.curentPl.angleDown();
-                        this.sound.scrollGun();
+                        this.sound.play('scroll_gun', 0.5);
                         break;
                     case 'Space':
                         this.curentPl.fireProjectile(this.players);
-                        this.sound.shotTank();
+                        this.sound.play('shot-tank');
                         break;
                     default:
                         break;
@@ -59,7 +59,6 @@ export class Game {
         for (const player of this.players) {
             player.drawPlayer();
         }
-
         window.requestAnimationFrame(this.update.bind(this));
     }
 
@@ -76,6 +75,8 @@ export class Game {
         this.checkHit();
         if (Player.animationExplosionFlag) {
             Player.drawExplosion();
+            // this.sound.play('bang-tank', 0.3);
+            this.sound.bangTank();
         }
 
         window.requestAnimationFrame(this.update.bind(this));
