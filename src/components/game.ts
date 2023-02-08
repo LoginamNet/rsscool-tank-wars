@@ -76,7 +76,7 @@ export class Game {
         if (Player.animationExplosionFlag) {
             Player.drawExplosion();
             // this.sound.play('bang-tank', 0.3);
-            this.sound.bangTank();
+            // this.sound.bangTank();
         }
 
         window.requestAnimationFrame(this.update.bind(this));

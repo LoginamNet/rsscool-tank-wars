@@ -2,6 +2,7 @@ import { LENGTH_GUN, POWER_GUN } from '../common/constants';
 import { Field } from './field';
 import { checkedQuerySelector, drawCanvasArc, degToRad, isGround, isOutsidePlayZone } from './utils';
 import { expl } from './explosion';
+import { Sounds } from './audio';
 
 export class Player {
     name: string;
@@ -20,6 +21,7 @@ export class Player {
     static players: Player[] = [];
     static animationExplosionFlag = false;
     static ctx: CanvasRenderingContext2D;
+    sound = new Sounds();
 
     constructor(
         private ctx: CanvasRenderingContext2D,
@@ -241,6 +243,7 @@ export class Player {
                     Player.explosionY = player.positionY;
                     players.splice(players.indexOf(player), 1);
                     this.projectileTrajectory = [];
+                    this.sound.bangTank();
                 }
             }
         }

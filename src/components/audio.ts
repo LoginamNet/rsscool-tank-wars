@@ -2,14 +2,26 @@ export class Sounds {
     constructor() {}
 
     play(name: string, num = 0.3) {
-        const audio = new Audio(`../assets/готовая/${name}.mp3`);
+        const audio = new Audio(`../assets/${name}.mp3`);
         audio.volume = +`${num}`;
         audio.play();
     }
 
     stop(name: string) {
-        const audio = new Audio(`../assets/готовая/${name}.mp3`);
+        const audio = new Audio(`../assets/${name}.mp3`);
         audio.pause();
+    }
+
+    allStop() {
+        const arr = ['audio', 'click', 'scroll_gun', 'bang-tank', 'shot-tank', 'damage-po-zemle'];
+        const audio = new Audio();
+        arr.forEach((el) => {
+          console.log(el);
+            audio.src = `../assets/${el}.mp3`;
+            console.log(audio.src);
+            audio.pause();
+            console.log(audio.pause());
+        });
     }
 
     openMus() {
@@ -31,19 +43,19 @@ export class Sounds {
     }
 
     bangTank() {
-        const bang = new Audio('../assets/готовая/bang-tank.mp3');
+        const bang = new Audio('../assets/bang-tank.mp3');
         bang.volume = 0.3;
         bang.play();
     }
 
     shotTank() {
-        const shot = new Audio('../assets/готовая/shot-tank.mp3');
+        const shot = new Audio('../assets/shot-tank.mp3');
         shot.volume = 0.3;
         shot.play();
     }
 
     damageLand() {
-        const dmgLand = new Audio('../assets/готовая/damage-po-zemle.mp3');
+        const dmgLand = new Audio('../assets/damage-po-zemle.mp3');
         // dmgLand.volume = 0.3;
         dmgLand.play();
     }
