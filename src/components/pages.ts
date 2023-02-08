@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../common/constants';
+import { CANVAS_HEIGHT, CANVAS_WIDTH, POWER_GUN } from '../common/constants';
 import { checkedQuerySelector } from './utils';
 import { Game } from './game';
 import { Player } from './player';
