@@ -3,8 +3,10 @@ import { checkedQuerySelector } from './utils';
 import { Game } from './game';
 import { Player } from './player';
 import { Controls } from './controls';
+import { State } from './state';
 import './styles/console.css';
 import './styles/home.css';
+import './styles/game.css';
 import './styles/winner.css';
 import './styles/instructions.css';
 
@@ -89,6 +91,7 @@ export class Page {
         `;
 
         screen.innerHTML = template;
+        State.settings.screen = 'HOME';
         Controls.setMainMenuControls();
     }
 
@@ -97,6 +100,28 @@ export class Page {
         const template = `
         <div class="game__screen_game">
             <canvas class="canvas" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+            <div class="game__menu_container game__menu_hidden" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px"">
+                <div class="game__menu">
+                    <div class="home__screen_sound home__menu_item item menu_item_selected">
+                        <span>SOUNDS:</span>
+                        <div class="home__menu_switchers">
+                            <div class="home__menu_switcher menu_switcher_selected">ON</div>
+                            <div class="home__menu_switcher">OFF</div>
+                        </div>
+                    </div>
+                    <div class="home__screen_language home__menu_item">
+                        <span>LANGUAGE:</span>
+                        <div class="home__menu_switchers">
+                            <div class="home__menu_switcher menu_switcher_selected">EN</div>
+                            <div class="home__menu_switcher">РУС</div>
+                        </div>
+                    </div>
+                    <button class="home__screen_rules home__menu_item">HOW TO PLAY</button>
+                    <button class="home__screen_rules home__menu_item">BACK TO GAME</button>
+                    <button class="home__screen_rules home__menu_item">BACK TO MAIN MENU</button>
+                </div>
+            </div>
+        </div>
         </div>
         <div class="game__screen_data">
             <div class="data__controls">
@@ -108,6 +133,7 @@ export class Page {
 
         Controls.removeMainMenuControls();
         screen.innerHTML = template;
+        State.settings.screen = 'GAME';
         const game = new Game();
         game.start();
     }
@@ -122,6 +148,7 @@ export class Page {
         `;
 
         screen.innerHTML = template;
+        State.settings.screen = 'WINNER';
 
         const start = checkedQuerySelector(document, '.winner__screen_restart');
         start.addEventListener('click', () => {

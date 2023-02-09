@@ -77,61 +77,6 @@ export class Game {
         document.removeEventListener('click', this.addButtons);
     }
 
-    // setControlKeys() {
-    //     document.addEventListener('keydown', (event) => {
-    //         if (!this.curentPl.isFired) {
-    //             this.curentPl.projectileTrajectory = [];
-    //             switch (event.code) {
-    //                 case 'ArrowUp':
-    //                     this.curentPl.powerUp();
-    //                     break;
-    //                 case 'ArrowDown':
-    //                     this.curentPl.powerDown();
-    //                     break;
-    //                 case 'ArrowLeft':
-    //                     this.curentPl.angleUp();
-    //                     break;
-    //                 case 'ArrowRight':
-    //                     this.curentPl.angleDown();
-    //                     break;
-    //                 case 'Space':
-    //                     this.curentPl.fireProjectile(this.players);
-    //                     break;
-    //                 default:
-    //                     break;
-    //             }
-    //         }
-    //     });
-    // }
-
-    // setGameButtons() {
-    //     document.addEventListener('click', (event) => {
-    //         if (!this.curentPl.isFired) {
-    //             this.curentPl.projectileTrajectory = [];
-    //             const target = <HTMLElement>event.target;
-    //             switch (true) {
-    //                 case target.classList.contains('cross__arrow_up'):
-    //                     this.curentPl.powerUp();
-    //                     break;
-    //                 case target.classList.contains('cross__arrow_down'):
-    //                     this.curentPl.powerDown();
-    //                     break;
-    //                 case target.classList.contains('cross__arrow_left'):
-    //                     this.curentPl.angleUp();
-    //                     break;
-    //                 case target.classList.contains('cross__arrow_right'):
-    //                     this.curentPl.angleDown();
-    //                     break;
-    //                 case target.classList.contains('launch__button'):
-    //                     this.curentPl.fireProjectile(this.players);
-    //                     break;
-    //                 default:
-    //                     break;
-    //             }
-    //         }
-    //     });
-    // }
-
     clean() {
         this.ctx.clearRect(0, 0, 800, 600);
     }

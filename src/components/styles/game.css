@@ -1,0 +1,28 @@
+.game__screen_game {
+    position: relative;
+}
+
+.game__menu_container {
+    z-index: 200;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+.game__menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    color: white;
+}
+
+.game__menu_hidden {
+    display: none;
+}

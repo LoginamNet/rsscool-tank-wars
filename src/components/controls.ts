@@ -7,16 +7,16 @@ export class Controls {
         event.preventDefault();
         switch (event.code) {
             case 'ArrowUp':
-                this.mainMenuUp();
+                this.menuUp();
                 break;
             case 'ArrowDown':
-                this.mainMenuDown();
+                this.menuDown();
                 break;
             case 'ArrowLeft':
-                this.mainMenuLeft();
+                this.menuLeft();
                 break;
             case 'ArrowRight':
-                this.mainMenuRight();
+                this.menuRight();
                 break;
             case 'Enter':
                 Page.renderGame();
@@ -37,16 +37,16 @@ export class Controls {
         const target = <HTMLElement>event.target;
         switch (true) {
             case target.classList.contains('cross__arrow_up'):
-                this.mainMenuUp();
+                this.menuUp();
                 break;
             case target.classList.contains('cross__arrow_down'):
-                this.mainMenuDown();
+                this.menuDown();
                 break;
             case target.classList.contains('cross__arrow_left'):
-                this.mainMenuLeft();
+                this.menuLeft();
                 break;
             case target.classList.contains('cross__arrow_right'):
-                this.mainMenuRight();
+                this.menuRight();
                 break;
             case target.classList.contains('options_buttons_pause'):
                 Page.renderGame();
@@ -62,7 +62,7 @@ export class Controls {
         }
     };
 
-    private static mainMenuDown() {
+    private static menuDown() {
         const items = document.querySelectorAll('.home__menu_item');
         for (let i = 0; i < items.length; i++) {
             if (items[i].classList.contains('menu_item_selected')) {
@@ -79,7 +79,7 @@ export class Controls {
         }
     }
 
-    private static mainMenuUp() {
+    private static menuUp() {
         const items = document.querySelectorAll('.home__menu_item');
         for (let i = 0; i < items.length; i++) {
             if (items[i].classList.contains('menu_item_selected')) {
@@ -96,7 +96,7 @@ export class Controls {
         }
     }
 
-    private static mainMenuLeft() {
+    private static menuLeft() {
         const item = checkedQuerySelector(document, '.menu_item_selected');
         const options = item.querySelectorAll('.home__menu_switcher');
         for (let i = 0; i < options.length; i++) {
@@ -116,7 +116,7 @@ export class Controls {
         }
     }
 
-    private static mainMenuRight() {
+    private static menuRight() {
         const item = checkedQuerySelector(document, '.menu_item_selected');
         const options = item.querySelectorAll('.home__menu_switcher');
         for (let i = 0; i < options.length; i++) {

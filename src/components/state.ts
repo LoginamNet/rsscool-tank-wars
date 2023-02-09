@@ -2,6 +2,7 @@ import { checkedQuerySelector } from './utils';
 
 export class State {
     static settings = {
+        screen: 'HOME',
         mode: 'PvP',
         players: '4',
         sound: 'ON',
