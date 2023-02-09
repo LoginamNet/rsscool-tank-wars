@@ -23,7 +23,8 @@
 
 .home__screen_mode,
 .home__screen_players,
-.home__screen_sound {
+.home__screen_sound,
+.home__screen_language {
     display: flex;
     justify-content: space-between;
     width: 100%;

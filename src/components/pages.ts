@@ -75,6 +75,13 @@ export class Page {
                         <div class="home__menu_switcher">OFF</div>
                     </div>
                 </div>
+                <div class="home__screen_language home__menu_item">
+                    <span>LANGUAGE:</span>
+                    <div class="home__menu_switchers">
+                        <div class="home__menu_switcher menu_switcher_selected">EN</div>
+                        <div class="home__menu_switcher">РУС</div>
+                    </div>
+                </div>
                 <button class="home__screen_rules home__menu_item">HOW TO PLAY</button>
                 <button class="home__screen_start home__menu_item">START GAME</button>
             </div>

@@ -1,5 +1,6 @@
 import { checkedQuerySelector } from './utils';
 import { Page } from './pages';
+import { State } from './state';
 
 export class Controls {
     private static addMainMenuKeys = (event: KeyboardEvent) => {
@@ -103,10 +104,12 @@ export class Controls {
                 if (i === 0) {
                     options[i].classList.remove('menu_switcher_selected');
                     options[options.length - 1].classList.add('menu_switcher_selected');
+                    State.setSettings();
                     return;
                 } else {
                     options[i].classList.remove('menu_switcher_selected');
                     options[i - 1].classList.add('menu_switcher_selected');
+                    State.setSettings();
                     return;
                 }
             }
@@ -121,10 +124,12 @@ export class Controls {
                 if (i === options.length - 1) {
                     options[i].classList.remove('menu_switcher_selected');
                     options[0].classList.add('menu_switcher_selected');
+                    State.setSettings();
                     return;
                 } else {
                     options[i].classList.remove('menu_switcher_selected');
                     options[i + 1].classList.add('menu_switcher_selected');
+                    State.setSettings();
                     return;
                 }
             }
