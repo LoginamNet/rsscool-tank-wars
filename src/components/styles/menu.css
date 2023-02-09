@@ -31,6 +31,14 @@
     color: gainsboro;
 }
 
+.menu__switcher {
+    color: gainsboro;
+}
+
+.menu__item_selected .menu__switcher:not(.menu__switcher_selected) {
+    color: black;
+}
+
 .menu__switcher_selected {
     color: coral;
 }
@@ -41,7 +49,7 @@
     border-radius: 0;
 }
 
-.screen__menu button:not(.menu_item_selected) {
+.screen__menu button:not(.menu__item_selected) {
     color: white;
     cursor: default;
 }
