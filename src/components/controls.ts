@@ -32,7 +32,7 @@ export class Controls {
         }
     };
 
-    private static addMainMenuButtons = (event: Event) => {
+    static addMainMenuButtons = (event: Event) => {
         event.preventDefault();
         const target = <HTMLElement>event.target;
         switch (true) {
@@ -62,53 +62,53 @@ export class Controls {
         }
     };
 
-    private static menuDown() {
-        const items = document.querySelectorAll('.home__menu_item');
+    static menuDown() {
+        const items = document.querySelectorAll('.menu__item');
         for (let i = 0; i < items.length; i++) {
-            if (items[i].classList.contains('menu_item_selected')) {
+            if (items[i].classList.contains('menu__item_selected')) {
                 if (i === items.length - 1) {
-                    items[i].classList.remove('menu_item_selected');
-                    items[0].classList.add('menu_item_selected');
+                    items[i].classList.remove('menu__item_selected');
+                    items[0].classList.add('menu__item_selected');
                     return;
                 } else {
-                    items[i].classList.remove('menu_item_selected');
-                    items[i + 1].classList.add('menu_item_selected');
+                    items[i].classList.remove('menu__item_selected');
+                    items[i + 1].classList.add('menu__item_selected');
                     return;
                 }
             }
         }
     }
 
-    private static menuUp() {
-        const items = document.querySelectorAll('.home__menu_item');
+    static menuUp() {
+        const items = document.querySelectorAll('.menu__item');
         for (let i = 0; i < items.length; i++) {
-            if (items[i].classList.contains('menu_item_selected')) {
+            if (items[i].classList.contains('menu__item_selected')) {
                 if (i === 0) {
-                    items[i].classList.remove('menu_item_selected');
-                    items[items.length - 1].classList.add('menu_item_selected');
+                    items[i].classList.remove('menu__item_selected');
+                    items[items.length - 1].classList.add('menu__item_selected');
                     return;
                 } else {
-                    items[i].classList.remove('menu_item_selected');
-                    items[i - 1].classList.add('menu_item_selected');
+                    items[i].classList.remove('menu__item_selected');
+                    items[i - 1].classList.add('menu__item_selected');
                     return;
                 }
             }
         }
     }
 
-    private static menuLeft() {
-        const item = checkedQuerySelector(document, '.menu_item_selected');
-        const options = item.querySelectorAll('.home__menu_switcher');
+    static menuLeft() {
+        const item = checkedQuerySelector(document, '.menu__item_selected');
+        const options = item.querySelectorAll('.menu__switcher');
         for (let i = 0; i < options.length; i++) {
-            if (options[i].classList.contains('menu_switcher_selected')) {
+            if (options[i].classList.contains('menu__switcher_selected')) {
                 if (i === 0) {
-                    options[i].classList.remove('menu_switcher_selected');
-                    options[options.length - 1].classList.add('menu_switcher_selected');
+                    options[i].classList.remove('menu__switcher_selected');
+                    options[options.length - 1].classList.add('menu__switcher_selected');
                     State.setSettings();
                     return;
                 } else {
-                    options[i].classList.remove('menu_switcher_selected');
-                    options[i - 1].classList.add('menu_switcher_selected');
+                    options[i].classList.remove('menu__switcher_selected');
+                    options[i - 1].classList.add('menu__switcher_selected');
                     State.setSettings();
                     return;
                 }
@@ -116,19 +116,19 @@ export class Controls {
         }
     }
 
-    private static menuRight() {
-        const item = checkedQuerySelector(document, '.menu_item_selected');
-        const options = item.querySelectorAll('.home__menu_switcher');
+    static menuRight() {
+        const item = checkedQuerySelector(document, '.menu__item_selected');
+        const options = item.querySelectorAll('.menu__switcher');
         for (let i = 0; i < options.length; i++) {
-            if (options[i].classList.contains('menu_switcher_selected')) {
+            if (options[i].classList.contains('menu__switcher_selected')) {
                 if (i === options.length - 1) {
-                    options[i].classList.remove('menu_switcher_selected');
-                    options[0].classList.add('menu_switcher_selected');
+                    options[i].classList.remove('menu__switcher_selected');
+                    options[0].classList.add('menu__switcher_selected');
                     State.setSettings();
                     return;
                 } else {
-                    options[i].classList.remove('menu_switcher_selected');
-                    options[i + 1].classList.add('menu_switcher_selected');
+                    options[i].classList.remove('menu__switcher_selected');
+                    options[i + 1].classList.add('menu__switcher_selected');
                     State.setSettings();
                     return;
                 }
@@ -137,7 +137,7 @@ export class Controls {
     }
 
     private static mainMenuFire() {
-        const item = checkedQuerySelector(document, '.menu_item_selected');
+        const item = checkedQuerySelector(document, '.menu__item_selected');
         switch (true) {
             case item.innerText === 'HOW TO PLAY':
                 Page.renderInstructions();

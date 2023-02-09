@@ -1,0 +1,47 @@
+.screen__menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    color: white;
+}
+
+.menu__item_mode,
+.menu__item_players,
+.menu__item_sound,
+.menu__item_language {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+}
+
+.menu__item_selected {
+    background-color: beige;
+    color: black;
+}
+
+.menu__switchers {
+    display: flex;
+    gap: 10px;
+}
+
+.menu__switcher {
+    color: gainsboro;
+}
+
+.menu__switcher_selected {
+    color: coral;
+}
+
+.screen__menu button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 0;
+}
+
+.screen__menu button:not(.menu_item_selected) {
+    color: white;
+    cursor: default;
+}

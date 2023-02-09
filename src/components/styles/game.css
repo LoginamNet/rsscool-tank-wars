@@ -14,15 +14,6 @@
     background-color: black;
 }
 
-.game__menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-    color: white;
-}
-
 .game__menu_hidden {
     display: none;
 }

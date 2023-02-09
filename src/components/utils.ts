@@ -25,6 +25,20 @@ export function appendEl(parent: HTMLElement, element: HTMLElement): void {
     parent.append(element);
 }
 
+// toggle class of an element by selectors
+
+export function toggleElClass(elClass: string, toggleClass: string): void {
+    const el = checkedQuerySelector(document, `.${elClass}`);
+    el.classList.toggle(toggleClass);
+}
+
+// check if elenent contains selector
+
+export function checkElClass(elClass: string, checkedClass: string): boolean {
+    const el = checkedQuerySelector(document, `.${elClass}`);
+    return el.classList.contains(checkedClass);
+}
+
 // draw circle wirh canvas arc method
 
 export function drawCanvasArc(ctx: CanvasRenderingContext2D, xPosition: number, yPosition: number, radius: number) {

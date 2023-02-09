@@ -8,6 +8,7 @@ import './styles/console.css';
 import './styles/home.css';
 import './styles/game.css';
 import './styles/winner.css';
+import './styles/menu.css';
 import './styles/instructions.css';
 
 export class Page {
@@ -54,38 +55,38 @@ export class Page {
         const template = `
         <div class="home__screen" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px">
             <h1 class="home__screen_title">TANK WARS</h1>
-            <div class="home__screen_menu">
-                <div class="home__screen_mode home__menu_item menu_item_selected">
+            <div class="screen__menu">
+                <div class="menu__item_mode menu__item menu__item_selected">
                 <span>GAME MODE:</span>
-                <div class="home__menu_switchers">
-                    <div class="home__menu_switcher menu_switcher_selected">PvE</div>
-                    <div class="home__menu_switcher">PvP</div>
+                <div class="menu__switchers">
+                    <div class="menu__switcher menu__switcher_selected">PvE</div>
+                    <div class="menu__switcher">PvP</div>
                 </div>
                 </div>
-                <div class="home__screen_players home__menu_item">
+                <div class="menu__item_players menu__item">
                     <span>PvP PLAYERS:</span>
-                    <div class="home__menu_switchers">
-                        <div class="home__menu_switcher">2</div>
-                        <div class="home__menu_switcher">3</div>
-                        <div class="home__menu_switcher menu_switcher_selected">4</div>
+                    <div class="menu__switchers">
+                        <div class="menu__switcher">2</div>
+                        <div class="menu__switcher">3</div>
+                        <div class="menu__switcher menu__switcher_selected">4</div>
                     </div>
                 </div>
-                <div class="home__screen_sound home__menu_item">
+                <div class="menu__item_sound menu__item">
                     <span>SOUNDS:</span>
-                    <div class="home__menu_switchers">
-                        <div class="home__menu_switcher menu_switcher_selected">ON</div>
-                        <div class="home__menu_switcher">OFF</div>
+                    <div class="menu__switchers">
+                        <div class="menu__switcher menu__switcher_selected">ON</div>
+                        <div class="menu__switcher">OFF</div>
                     </div>
                 </div>
-                <div class="home__screen_language home__menu_item">
+                <div class="menu__item_language menu__item">
                     <span>LANGUAGE:</span>
-                    <div class="home__menu_switchers">
-                        <div class="home__menu_switcher menu_switcher_selected">EN</div>
-                        <div class="home__menu_switcher">РУС</div>
+                    <div class="menu__switchers">
+                        <div class="menu__switcher menu__switcher_selected">EN</div>
+                        <div class="menu__switcher">РУС</div>
                     </div>
                 </div>
-                <button class="home__screen_rules home__menu_item">HOW TO PLAY</button>
-                <button class="home__screen_start home__menu_item">START GAME</button>
+                <button class="menu__item">HOW TO PLAY</button>
+                <button class="menu__item">START GAME</button>
             </div>
         </div>
         `;
@@ -101,24 +102,24 @@ export class Page {
         <div class="game__screen_game">
             <canvas class="canvas" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
             <div class="game__menu_container game__menu_hidden" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px"">
-                <div class="game__menu">
-                    <div class="home__screen_sound home__menu_item item menu_item_selected">
+                <div class="screen__menu">
+                    <div class="menu__item_sound menu__item item menu__item_selected">
                         <span>SOUNDS:</span>
-                        <div class="home__menu_switchers">
-                            <div class="home__menu_switcher menu_switcher_selected">ON</div>
-                            <div class="home__menu_switcher">OFF</div>
+                        <div class="menu__switchers">
+                            <div class="menu__switcher menu__switcher_selected">ON</div>
+                            <div class="menu__switcher">OFF</div>
                         </div>
                     </div>
-                    <div class="home__screen_language home__menu_item">
+                    <div class="menu__item_language menu__item">
                         <span>LANGUAGE:</span>
-                        <div class="home__menu_switchers">
-                            <div class="home__menu_switcher menu_switcher_selected">EN</div>
-                            <div class="home__menu_switcher">РУС</div>
+                        <div class="menu__switchers">
+                            <div class="menu__switcher menu__switcher_selected">EN</div>
+                            <div class="menu__switcher">РУС</div>
                         </div>
                     </div>
-                    <button class="home__screen_rules home__menu_item">HOW TO PLAY</button>
-                    <button class="home__screen_rules home__menu_item">BACK TO GAME</button>
-                    <button class="home__screen_rules home__menu_item">BACK TO MAIN MENU</button>
+                    <button class="menu__item">HOW TO PLAY</button>
+                    <button class="menu__item">BACK TO GAME</button>
+                    <button class="menu__item">BACK TO MAIN MENU</button>
                 </div>
             </div>
         </div>
@@ -173,7 +174,7 @@ export class Page {
                     <li class="instructions__list_item">Kbrd TAB/Button SETTINGS - open settings menu</li>
                 </ul>
             </div>
-            <button class="button__back menu_item_selected">BACK TO MENU</button>
+            <button class="button__back menu__item_selected">BACK TO MENU</button>
         </div>
         `;
 

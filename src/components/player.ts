@@ -315,27 +315,6 @@ export class Player {
         if (Math.floor(this.tick / 10) === 15) {
             this.tick = 0;
             Player.animationExplosionFlag = false;
-            Player.drawWinner();
-        }
-    }
-
-    private static checkWinner() {
-        const alive = Player.players.filter((item) => {
-            if (!item.isHitted) {
-                return true;
-            }
-        });
-        if (alive.length === 1) {
-            return alive[0];
-        } else {
-            return false;
-        }
-    }
-
-    static drawWinner() {
-        if (this.checkWinner() !== false) {
-            Page.renderWinner(Player.players[0]);
-            Player.players = [];
         }
     }
 }
