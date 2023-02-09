@@ -6,13 +6,17 @@ export class Page {
 
     renderGame() {
         this.body.innerHTML = `
-        <div class="game">
-            <canvas class="canvas" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
-        </div>
         <div id= "game-data">
             <div class="angle" >Angle: 45</div>
             <div class="power" >Power: ${POWER_GUN}</div>
         </div>
+        <div class="game">
+            <canvas class="canvas canvas_background" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+            <canvas class="canvas canvas_tank" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+            <canvas class="canvas canvas_animation" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+            <canvas class="canvas canvas_ui" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+        </div>
+        
         `;
     }
 }

@@ -6,7 +6,8 @@
     border: 0;
 }
 
-*,*:before,
+*,
+*:before,
 *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -50,7 +51,7 @@ h1 {
 input,
 button,
 textarea {
-    font-family:inherit;
+    font-family: inherit;
     border-radius: 5px;
 }
 
@@ -70,11 +71,11 @@ button:disabled {
 }
 
 button::-moz-focus-inner {
-    padding:0;
-    border:0;
+    padding: 0;
+    border: 0;
 }
 
-a, 
+a,
 a:visited {
     text-decoration: none;
 }
@@ -106,7 +107,26 @@ input:disabled {
 }
 
 /* global ------------------------------------------------- */
+.game {
+    position: relative;
+}
 
 .canvas {
+    position: absolute;
+    left: 0px;
+    top: 0px;
     border: 1px solid green;
+}
+
+.canvas_background {
+    z-index: 10;
+}
+.canvas_tank {
+    z-index: 20;
+}
+.canvas_animation {
+    z-index: 30;
+}
+.canvas_ui {
+    z-index: 40;
 }

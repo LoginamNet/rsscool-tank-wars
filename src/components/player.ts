@@ -1,6 +1,8 @@
 import { LENGTH_GUN, POWER_GUN } from '../common/constants';
 import { Field } from './field';
-import { checkedQuerySelector, drawCanvasArc, degToRad, isGround, isOutsidePlayZone } from './utils';
+import { Tank } from './tank';
+import { Ui } from './ui';
+import { checkedQuerySelector, drawCanvasArc, isGround, isOutsidePlayZone } from './utils';
 import { expl } from './explosion';
 
 export class Player {
@@ -14,11 +16,14 @@ export class Player {
     isHitted = false;
     positionX: number;
     positionY: number;
+    tank: Tank;
+    ui: Ui;
     static tick = 0;
     static explosionX = 0;
     static explosionY = 0;
     static players: Player[] = [];
     static animationExplosionFlag = false;
+    static animationFlag = false;
     static ctx: CanvasRenderingContext2D;
 
     constructor(
@@ -33,11 +38,18 @@ export class Player {
         Player.players.push(this);
         this.positionX = initialTankPositionX;
         this.positionY = initialTankPositionY;
+        this.tank = new Tank(this.positionX, this.positionY);
+        this.ui = new Ui();
     }
 
     setAngle() {
         const angleText = checkedQuerySelector(document, '.angle');
         angleText.innerHTML = 'Angle: ' + this.angle;
+    }
+
+    setPower() {
+        const angleText = checkedQuerySelector(document, '.power');
+        angleText.innerHTML = 'Power: ' + this.power;
     }
 
     angleUp() {
@@ -123,6 +135,7 @@ export class Player {
             clearInterval(this.intervalId);
             this.intervalId = 0;
             this.isFired = false;
+            Player.animationFlag = false;
         }
     }
 
@@ -158,6 +171,7 @@ export class Player {
                             item.isHitted = true;
                         }
                     });
+
                     return player;
                 }
             }
@@ -170,41 +184,47 @@ export class Player {
     }
 
     drawPlayer() {
-        // wheels
-        const step = 10;
-        let x = this.initialTankPositionX;
-        for (let i = 0; i < 4; i++) {
-            this.ctx.beginPath();
-            this.ctx.arc(x, this.initialTankPositionY, 3, degToRad(0), degToRad(360));
-            this.ctx.fillStyle = '#000000';
-            this.ctx.fill();
-            this.ctx.stroke();
-            x += step;
-        }
+        // // wheels
+        // const step = 10;
+        // let x = this.initialTankPositionX;
+        // for (let i = 0; i < 4; i++) {
+        //     this.ctx.beginPath();
+        //     this.ctx.arc(x, this.initialTankPositionY, 3, degToRad(0), degToRad(360));
+        //     this.ctx.fillStyle = '#000000';
+        //     this.ctx.fill();
+        //     this.ctx.stroke();
+        //     x += step;
+        // }
+        // // tank hull
+        // this.ctx.beginPath();
+        // this.ctx.moveTo(this.initialTankPositionX - 7, this.initialTankPositionY);
+        // this.ctx.lineTo(this.initialTankPositionX - 3, this.initialTankPositionY - 6);
+        // this.ctx.lineTo(this.initialTankPositionX + 33, this.initialTankPositionY - 6);
+        // this.ctx.lineTo(this.initialTankPositionX + 37, this.initialTankPositionY);
+        // this.ctx.strokeStyle = '#000000';
+        // this.ctx.stroke();
+        // // tank tower
+        // this.ctx.beginPath();
+        // this.ctx.arc(this.initialTankPositionX + 15, this.initialTankPositionY - 7, 10, degToRad(180), degToRad(0));
+        // this.ctx.fillStyle = '#000000';
+        // this.ctx.fill();
+        // this.ctx.stroke();
+        // // tank gun
+        // this.ctx.beginPath();
+        // this.ctx.moveTo(this.initialTankPositionX + 15, this.initialTankPositionY - 9);
+        // this.ctx.lineTo(this.calcXCoords(), this.calcYCoords());
+        // this.ctx.lineWidth = 3;
+        // this.ctx.strokeStyle = '#000000';
+        // this.ctx.stroke();
 
-        // tank hull
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.initialTankPositionX - 7, this.initialTankPositionY);
-        this.ctx.lineTo(this.initialTankPositionX - 3, this.initialTankPositionY - 6);
-        this.ctx.lineTo(this.initialTankPositionX + 33, this.initialTankPositionY - 6);
-        this.ctx.lineTo(this.initialTankPositionX + 37, this.initialTankPositionY);
-        this.ctx.strokeStyle = '#000000';
-        this.ctx.stroke();
+        this.tank.initialTankPositionX = this.positionX;
+        this.tank.initialTankPositionY = this.positionY;
+        this.tank.drawBodyTank();
+        this.tank.drawTankGun(this.calcXCoords(), this.calcYCoords());
+    }
 
-        // tank tower
-        this.ctx.beginPath();
-        this.ctx.arc(this.initialTankPositionX + 15, this.initialTankPositionY - 7, 10, degToRad(180), degToRad(0));
-        this.ctx.fillStyle = '#000000';
-        this.ctx.fill();
-        this.ctx.stroke();
-
-        // tank gun
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.initialTankPositionX + 15, this.initialTankPositionY - 9);
-        this.ctx.lineTo(this.calcXCoords(), this.calcYCoords());
-        this.ctx.lineWidth = 3;
-        this.ctx.strokeStyle = '#000000';
-        this.ctx.stroke();
+    clearPlayers() {
+        this.tank.clearTanks();
     }
 
     drawTerrainHit() {
@@ -241,6 +261,7 @@ export class Player {
                     Player.explosionY = player.positionY;
                     players.splice(players.indexOf(player), 1);
                     this.projectileTrajectory = [];
+                    this.updatePlayers();
                 }
             }
         }
@@ -295,7 +316,7 @@ export class Player {
             [60, 90],
         ];
         const tickFrame = Math.floor(Player.tick / 10);
-
+        Player.animationFlag = true;
         Player.ctx.drawImage(
             expl,
             image[tickFrame][0],
@@ -311,6 +332,7 @@ export class Player {
         if (Math.floor(this.tick / 10) === 15) {
             this.tick = 0;
             Player.animationExplosionFlag = false;
+            Player.animationFlag = false;
             Player.drawWinner();
         }
     }
@@ -332,5 +354,17 @@ export class Player {
         if (this.checkWinner() !== false) {
             alert(`Winner is ${(this.checkWinner() as Player).name}`);
         }
+    }
+
+    updatePlayers() {
+        this.clearPlayers();
+        for (const player of Player.players) {
+            player.drawPlayer();
+        }
+        this.updatePlayersUi();
+    }
+
+    private updatePlayersUi() {
+        this.ui.renderTanksName(Player.players);
     }
 }

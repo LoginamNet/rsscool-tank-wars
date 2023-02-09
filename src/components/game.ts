@@ -3,7 +3,7 @@ import { Field } from './field';
 import { Player } from './player';
 
 export class Game {
-    canvas = <HTMLCanvasElement>checkedQuerySelector(document, 'canvas');
+    canvas = <HTMLCanvasElement>checkedQuerySelector(document, '.canvas_animation');
     ctx = this.canvas.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D;
     data = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
     field = new Field();
@@ -21,18 +21,28 @@ export class Game {
                 switch (event.code) {
                     case 'ArrowUp':
                         this.curentPl.powerUp();
+                        this.curentPl.setPower();
                         break;
                     case 'ArrowDown':
                         this.curentPl.powerDown();
+                        this.curentPl.setPower();
                         break;
                     case 'ArrowLeft':
                         this.curentPl.angleUp();
+                        this.curentPl.setAngle();
+                        this.updateTanks();
                         break;
                     case 'ArrowRight':
                         this.curentPl.angleDown();
+                        this.curentPl.setAngle();
+                        this.updateTanks();
                         break;
                     case 'Space':
-                        this.curentPl.fireProjectile(this.players);
+                        if (!Player.animationFlag) {
+                            Player.animationFlag = true;
+                            window.requestAnimationFrame(this.updateAnimation.bind(this));
+                            this.curentPl.fireProjectile(this.players);
+                        }
                         break;
                     default:
                         break;
@@ -47,35 +57,22 @@ export class Game {
 
     start() {
         this.clean();
-        this.field.generate();
+        this.field.generate(this.setPositionTank, this.players, this.field); //drawing ground and sky and setTank
         this.setControlKeys();
-        for (const player of this.players) {
-            player.drawPlayer();
-        }
-
-        window.requestAnimationFrame(this.update.bind(this));
     }
 
-    update() {
-        this.curentPl.setAngle();
+    updateAnimation() {
         this.clean();
-        this.renderField(this.field.export()); //drawing ground and sky
-        for (const player of this.players) {
-            player.drawPlayer();
-            player.initialTankPositionY = this.field.findGround(player.initialTankPositionX) - 5;
-            player.positionY = player.initialTankPositionY + 5;
-        }
         this.curentPl.drawFire();
         this.checkHit();
         if (Player.animationExplosionFlag) {
             Player.drawExplosion();
         }
-
-        window.requestAnimationFrame(this.update.bind(this));
-    }
-
-    renderField(field: ImageData) {
-        this.ctx.putImageData(field, 0, 0);
+        if (Player.animationFlag) {
+            window.requestAnimationFrame(this.updateAnimation.bind(this));
+        } else {
+            this.clean();
+        }
     }
 
     checkHit() {
@@ -85,5 +82,17 @@ export class Game {
             this.curentPl.projectileTrajectory = [];
             this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
         }
+    }
+
+    setPositionTank(players: Player[], field: Field) {
+        for (const player of players) {
+            player.initialTankPositionY = field.findGround(player.initialTankPositionX);
+            player.positionY = player.initialTankPositionY;
+        }
+        players[0].updatePlayers();
+    }
+
+    updateTanks() {
+        this.curentPl.updatePlayers();
     }
 }
