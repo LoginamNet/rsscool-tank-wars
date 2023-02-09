@@ -12,7 +12,7 @@ export class Page {
         <div id= "game-data">
             <div class="angle" >Angle: 45</div>
             <div class="power" >Power: ${POWER_GUN}</div>
-            <button class="button"> OFF </button>
+            <button class="stop__mus">STOP</button>
         </div>
         `;
     }

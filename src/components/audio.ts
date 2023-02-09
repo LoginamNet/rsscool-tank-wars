@@ -1,10 +1,12 @@
 export class Sounds {
+    audio = new Audio();
     constructor() {}
 
     play(name: string, num = 0.3) {
-        const audio = new Audio(`../assets/${name}.mp3`);
-        audio.volume = +`${num}`;
-        audio.play();
+        // const audio = new Audio(`../assets/${name}.mp3`);
+        this.audio.src = `../assets/${name}.mp3`;
+        this.audio.volume = +`${num}`;
+        this.audio.play();
     }
 
     stop(name: string) {
@@ -13,21 +15,21 @@ export class Sounds {
     }
 
     allStop() {
-        const arr = ['audio', 'click', 'scroll_gun', 'bang-tank', 'shot-tank', 'damage-po-zemle'];
-        const audio = new Audio();
+        const arr = ['music', 'click', 'scroll_gun', 'bang-tank', 'shot-tank', 'damage-po-zemle'];
+        // const audio = new Audio();
+        this.audio.muted = true;
+
         arr.forEach((el) => {
-          console.log(el);
-            audio.src = `../assets/${el}.mp3`;
-            console.log(audio.src);
-            audio.pause();
-            console.log(audio.pause());
+            this.audio.src = `../assets/${el}.mp3`;
+            console.log(this.audio.src = `../assets/${el}.mp3`);
+            this.audio.muted = true;
         });
     }
 
     openMus() {
-        const music = new Audio('../assets/audio.mp3');
-        music.volume = 0.3;
-        music.play();
+        const audio = new Audio('../assets/music.mp3');
+        audio.volume = 0.3;
+        audio.play();
     }
 
     clickButton() {
