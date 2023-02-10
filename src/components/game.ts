@@ -20,57 +20,72 @@ export class Game {
         event.preventDefault();
         if (!this.curentPl.isFired) {
             this.curentPl.projectileTrajectory = [];
-            switch (event.code) {
-                case 'ArrowUp':
-                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                        this.curentPl.powerUp();
-                        this.curentPl.setPlayerInfo();
-                    } else {
-                        Controls.menuUp();
-                    }
-                    break;
-                case 'ArrowDown':
-                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                        this.curentPl.powerDown();
-                        this.curentPl.setPlayerInfo();
-                    } else {
-                        Controls.menuDown();
-                    }
-                    break;
-                case 'ArrowLeft':
-                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                        this.curentPl.angleUp();
-                        this.curentPl.setPlayerInfo();
-                        this.updateTanks();
-                    } else {
-                        Controls.menuRight();
-                    }
-                    break;
-                case 'ArrowRight':
-                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                        this.curentPl.angleDown();
-                        this.curentPl.setPlayerInfo();
-                        this.updateTanks();
-                    } else {
-                        Controls.menuLeft();
-                    }
-                    break;
-                case 'Space':
-                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                        if (!Player.animationFlag) {
-                            Player.animationFlag = true;
-                            window.requestAnimationFrame(this.updateAnimation.bind(this));
-                            this.curentPl.fireProjectile(this.players);
+            if (checkElClass('info__screen', 'info__screen_hidden')) {
+                switch (event.code) {
+                    case 'ArrowUp':
+                        if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                            this.curentPl.powerUp();
+                            this.curentPl.setPlayerInfo();
+                        } else {
+                            Controls.menuUp();
                         }
-                    } else {
-                        this.menuFire();
-                    }
-                    break;
-                case 'Tab':
-                    toggleElClass('game__menu_container', 'game__menu_hidden');
-                    break;
-                default:
-                    break;
+                        break;
+                    case 'ArrowDown':
+                        if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                            this.curentPl.powerDown();
+                            this.curentPl.setPlayerInfo();
+                        } else {
+                            Controls.menuDown();
+                        }
+                        break;
+                    case 'ArrowLeft':
+                        if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                            this.curentPl.angleUp();
+                            this.curentPl.setPlayerInfo();
+                            this.updateTanks();
+                        } else {
+                            Controls.menuRight();
+                        }
+                        break;
+                    case 'ArrowRight':
+                        if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                            this.curentPl.angleDown();
+                            this.curentPl.setPlayerInfo();
+                            this.updateTanks();
+                        } else {
+                            Controls.menuLeft();
+                        }
+                        break;
+                    case 'Space':
+                        if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                            if (!Player.animationFlag) {
+                                Player.animationFlag = true;
+                                window.requestAnimationFrame(this.updateAnimation.bind(this));
+                                this.curentPl.fireProjectile(this.players);
+                            }
+                        } else {
+                            this.menuFire();
+                        }
+                        break;
+                    case 'Tab':
+                        toggleElClass('game__menu_container', 'game__menu_hidden');
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                const instructions = checkedQuerySelector(document, '.info__screen');
+                switch (event.code) {
+                    case 'Space':
+                        instructions.classList.remove('info__screen_hidden');
+                        break;
+                    case 'Tab':
+                        instructions.classList.remove('info__screen_hidden');
+                        toggleElClass('game__menu_container', 'game__menu_hidden');
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     };
@@ -80,57 +95,72 @@ export class Game {
         if (!this.curentPl.isFired) {
             this.curentPl.projectileTrajectory = [];
             const target = <HTMLElement>event.target;
-            switch (true) {
-                case target.classList.contains('cross__arrow_up'):
-                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                        this.curentPl.powerUp();
-                        this.curentPl.setPlayerInfo();
-                    } else {
-                        Controls.menuUp();
-                    }
-                    break;
-                case target.classList.contains('cross__arrow_down'):
-                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                        this.curentPl.powerDown();
-                        this.curentPl.setPlayerInfo();
-                    } else {
-                        Controls.menuDown();
-                    }
-                    break;
-                case target.classList.contains('cross__arrow_left'):
-                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                        this.curentPl.angleUp();
-                        this.curentPl.setPlayerInfo();
-                        this.updateTanks();
-                    } else {
-                        Controls.menuRight();
-                    }
-                    break;
-                case target.classList.contains('cross__arrow_right'):
-                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                        this.curentPl.angleDown();
-                        this.curentPl.setPlayerInfo();
-                        this.updateTanks();
-                    } else {
-                        Controls.menuLeft();
-                    }
-                    break;
-                case target.classList.contains('launch__button'):
-                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                        if (!Player.animationFlag) {
-                            Player.animationFlag = true;
-                            window.requestAnimationFrame(this.updateAnimation.bind(this));
-                            this.curentPl.fireProjectile(this.players);
+            if (checkElClass('info__screen', 'info__screen_hidden')) {
+                switch (true) {
+                    case target.classList.contains('cross__arrow_up'):
+                        if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                            this.curentPl.powerUp();
+                            this.curentPl.setPlayerInfo();
+                        } else {
+                            Controls.menuUp();
                         }
-                    } else {
-                        this.menuFire();
-                    }
-                    break;
-                case target.classList.contains('options_buttons_settings'):
-                    toggleElClass('game__menu_container', 'game__menu_hidden');
-                    break;
-                default:
-                    break;
+                        break;
+                    case target.classList.contains('cross__arrow_down'):
+                        if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                            this.curentPl.powerDown();
+                            this.curentPl.setPlayerInfo();
+                        } else {
+                            Controls.menuDown();
+                        }
+                        break;
+                    case target.classList.contains('cross__arrow_left'):
+                        if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                            this.curentPl.angleUp();
+                            this.curentPl.setPlayerInfo();
+                            this.updateTanks();
+                        } else {
+                            Controls.menuRight();
+                        }
+                        break;
+                    case target.classList.contains('cross__arrow_right'):
+                        if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                            this.curentPl.angleDown();
+                            this.curentPl.setPlayerInfo();
+                            this.updateTanks();
+                        } else {
+                            Controls.menuLeft();
+                        }
+                        break;
+                    case target.classList.contains('launch__button'):
+                        if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                            if (!Player.animationFlag) {
+                                Player.animationFlag = true;
+                                window.requestAnimationFrame(this.updateAnimation.bind(this));
+                                this.curentPl.fireProjectile(this.players);
+                            }
+                        } else {
+                            this.menuFire();
+                        }
+                        break;
+                    case target.classList.contains('options_buttons_settings'):
+                        toggleElClass('game__menu_container', 'game__menu_hidden');
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                const instructions = checkedQuerySelector(document, '.info__screen');
+                switch (true) {
+                    case target.classList.contains('launch__button'):
+                        instructions.classList.remove('info__screen_hidden');
+                        break;
+                    case target.classList.contains('options_buttons_settings'):
+                        instructions.classList.remove('info__screen_hidden');
+                        toggleElClass('game__menu_container', 'game__menu_hidden');
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     };

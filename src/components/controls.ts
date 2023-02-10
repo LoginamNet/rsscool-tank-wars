@@ -1,4 +1,4 @@
-import { checkedQuerySelector } from './utils';
+import { checkedQuerySelector, toggleElClass } from './utils';
 import { Page } from './pages';
 import { State } from './state';
 
@@ -32,7 +32,7 @@ export class Controls {
         }
     };
 
-    static addMainMenuButtons = (event: Event) => {
+    private static addMainMenuButtons = (event: Event) => {
         event.preventDefault();
         const target = <HTMLElement>event.target;
         switch (true) {
@@ -164,5 +164,54 @@ export class Controls {
     static removeMainMenuControls() {
         document.removeEventListener('keydown', this.addMainMenuKeys);
         document.removeEventListener('click', this.addMainMenuButtons);
+    }
+
+    private static addInstructionsKeys = (event: KeyboardEvent) => {
+        event.preventDefault();
+        switch (event.code) {
+            case 'Enter':
+                this.removeInstructionsControls();
+                break;
+            case 'Space':
+                this.removeInstructionsControls();
+                break;
+            case 'Tab':
+                this.removeInstructionsControls();
+                break;
+            default:
+                break;
+        }
+    };
+
+    private static addInstructionsButtons = (event: Event) => {
+        event.preventDefault();
+        const target = <HTMLElement>event.target;
+        switch (true) {
+            case target.classList.contains('options_buttons_pause'):
+                this.removeInstructionsControls();
+                break;
+            case target.classList.contains('options_buttons_settings'):
+                this.removeInstructionsControls();
+                break;
+            case target.classList.contains('launch__button'):
+                this.removeInstructionsControls();
+                break;
+            default:
+                break;
+        }
+    };
+
+    static setInstructionsControls() {
+        if (State.settings.screen === 'HOME') this.removeMainMenuControls();
+        document.addEventListener('keydown', this.addInstructionsKeys);
+        document.addEventListener('click', this.addInstructionsButtons);
+        toggleElClass('info__screen', 'info__screen_hidden');
+    }
+
+    static removeInstructionsControls() {
+        document.removeEventListener('keydown', this.addInstructionsKeys);
+        document.removeEventListener('click', this.addInstructionsButtons);
+        if (State.settings.screen === 'HOME') this.setMainMenuControls();
+        toggleElClass('info__screen', 'info__screen_hidden');
     }
 }

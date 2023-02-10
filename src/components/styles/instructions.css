@@ -1,7 +1,7 @@
 .instructions__screen {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     gap: 10px;
     padding: 30px;
@@ -24,8 +24,10 @@
     padding: 5px 0;
 }
 
-.button__back {
-    width: 100%;
+.instructions__button_back {
+    align-self: center;
+    width: 60%;
+    padding: 10px;
     background-color: beige;
     color: black;
     border-radius: 0;
