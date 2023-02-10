@@ -40,10 +40,8 @@ export class Field {
 
     generate(callback: (arg: Player[], field: Field) => void, arg: Player[], field: Field) {
         this.clear();
-        window.addEventListener('load', () => {
-            this.loadMap();
-            callback(arg, field);
-        });
+        this.loadMap();
+        callback(arg, field);
     }
 
     findGround(x: number): number {

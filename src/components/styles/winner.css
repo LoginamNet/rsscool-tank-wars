@@ -3,9 +3,23 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 30px;
     color: white;
     background-color: black;
+}
+
+.winner__image_container {
+    aspect-ratio: 1/1;
+    width: 20%;
+}
+
+.winner__image {
+    aspect-ratio: 1/1;
+    width: 100%;
+    background-image: url(../../assets/images/trophie.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .winner__screen_restart {

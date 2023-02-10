@@ -47,6 +47,7 @@ export class Player {
         const powerText = checkedQuerySelector(document, '.power');
 
         angleText.innerHTML = 'Angle: ' + this.angle;
+        powerText.innerHTML = 'Power: ' + this.power;
     }
 
     setPower() {
@@ -335,26 +336,6 @@ export class Player {
             this.tick = 0;
             Player.animationExplosionFlag = false;
             Player.animationFlag = false;
-            Player.drawWinner();
-        }
-    }
-
-    private static checkWinner() {
-        const alive = Player.players.filter((item) => {
-            if (!item.isHitted) {
-                return true;
-            }
-        });
-        if (alive.length === 1) {
-            return alive[0];
-        } else {
-            return false;
-        }
-    }
-
-    static drawWinner() {
-        if (this.checkWinner() !== false) {
-            alert(`Winner is ${(this.checkWinner() as Player).name}`);
         }
     }
 

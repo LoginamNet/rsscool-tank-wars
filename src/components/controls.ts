@@ -19,7 +19,7 @@ export class Controls {
                 this.menuRight();
                 break;
             case 'Enter':
-                Page.renderGame();
+                State.settings.screen === 'HOME' ? Page.renderGame() : Page.renderHome();
                 break;
             case 'Space':
                 this.mainMenuFire();
@@ -49,7 +49,7 @@ export class Controls {
                 this.menuRight();
                 break;
             case target.classList.contains('options_buttons_pause'):
-                Page.renderGame();
+                State.settings.screen === 'HOME' ? Page.renderGame() : Page.renderHome();
                 break;
             case target.classList.contains('options_buttons_settings'):
                 Page.renderHome();
@@ -146,6 +146,9 @@ export class Controls {
                 Page.renderGame();
                 break;
             case item.innerText === 'BACK TO MENU':
+                Page.renderHome();
+                break;
+            case item.innerText === 'RESTART GAME':
                 Page.renderHome();
                 break;
             default:

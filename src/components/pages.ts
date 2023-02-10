@@ -91,6 +91,7 @@ export class Page {
         </div>
         `;
 
+        Controls.removeMainMenuControls();
         screen.innerHTML = template;
         State.settings.screen = 'HOME';
         Controls.setMainMenuControls();
@@ -100,7 +101,7 @@ export class Page {
         const screen = checkedQuerySelector(document, '.game__screen');
         const template = `
         <div class="game__screen_game">
-            <div class="game">
+            <div class="game__canvas" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px">
                 <canvas class="canvas canvas_background" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
                 <canvas class="canvas canvas_tank" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
                 <canvas class="canvas canvas_animation" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
@@ -148,18 +149,19 @@ export class Page {
         const screen = checkedQuerySelector(document, '.game__screen');
         const template = `
         <div class="winner__screen" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px">
+            <div class="winner__image_container">
+                <div class="winner__image"></div>
+            </div>
             <div>And the winner is ${currentPl.name}</div>
-            <button class="winner__screen_restart">RESTART GAME?</button>
+            <div class="screen__menu">
+                <button class="menu__item menu__item_selected">RESTART GAME</button>
+            </div>
         </div>
         `;
 
         screen.innerHTML = template;
         State.settings.screen = 'WINNER';
-
-        const start = checkedQuerySelector(document, '.winner__screen_restart');
-        start.addEventListener('click', () => {
-            this.renderHome();
-        });
+        Controls.setMainMenuControls();
     }
 
     static renderInstructions() {

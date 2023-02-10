@@ -113,28 +113,3 @@ input[type='number'] {
 input:disabled {
     background-color: rgb(219, 219, 219);
 }
-
-/* global ------------------------------------------------- */
-.game {
-    position: relative;
-}
-
-.canvas {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    border: 1px solid green;
-}
-
-.canvas_background {
-    z-index: 10;
-}
-.canvas_tank {
-    z-index: 20;
-}
-.canvas_animation {
-    z-index: 30;
-}
-.canvas_ui {
-    z-index: 40;
-}

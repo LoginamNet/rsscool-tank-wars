@@ -15,43 +15,153 @@ export class Game {
     p4 = new Player(this.ctx, this.field, 490, 530, 'Arcadiy');
     players = Player.players;
     curentPl = this.players[0];
-    frame = 0;
 
-    setControlKeys() {
-        document.addEventListener('keydown', (event) => {
-            if (!this.curentPl.isFired) {
-                this.curentPl.projectileTrajectory = [];
-                switch (event.code) {
-                    case 'ArrowUp':
+    private addKeys = (event: KeyboardEvent) => {
+        event.preventDefault();
+        if (!this.curentPl.isFired) {
+            this.curentPl.projectileTrajectory = [];
+            switch (event.code) {
+                case 'ArrowUp':
+                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                         this.curentPl.powerUp();
-                        this.curentPl.setPower();
-                        break;
-                    case 'ArrowDown':
+                        this.curentPl.setPlayerInfo();
+                    } else {
+                        Controls.menuUp();
+                    }
+                    break;
+                case 'ArrowDown':
+                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                         this.curentPl.powerDown();
-                        this.curentPl.setPower();
-                        break;
-                    case 'ArrowLeft':
+                        this.curentPl.setPlayerInfo();
+                    } else {
+                        Controls.menuDown();
+                    }
+                    break;
+                case 'ArrowLeft':
+                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                         this.curentPl.angleUp();
-                        this.curentPl.setAngle();
+                        this.curentPl.setPlayerInfo();
                         this.updateTanks();
-                        break;
-                    case 'ArrowRight':
+                    } else {
+                        Controls.menuRight();
+                    }
+                    break;
+                case 'ArrowRight':
+                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                         this.curentPl.angleDown();
-                        this.curentPl.setAngle();
+                        this.curentPl.setPlayerInfo();
                         this.updateTanks();
-                        break;
-                    case 'Space':
+                    } else {
+                        Controls.menuLeft();
+                    }
+                    break;
+                case 'Space':
+                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                         if (!Player.animationFlag) {
                             Player.animationFlag = true;
                             window.requestAnimationFrame(this.updateAnimation.bind(this));
                             this.curentPl.fireProjectile(this.players);
                         }
-                        break;
-                    default:
-                        break;
-                }
+                    } else {
+                        this.menuFire();
+                    }
+                    break;
+                case 'Tab':
+                    toggleElClass('game__menu_container', 'game__menu_hidden');
+                    break;
+                default:
+                    break;
             }
-        });
+        }
+    };
+
+    private addButtons = (event: Event) => {
+        event.preventDefault();
+        if (!this.curentPl.isFired) {
+            this.curentPl.projectileTrajectory = [];
+            const target = <HTMLElement>event.target;
+            switch (true) {
+                case target.classList.contains('cross__arrow_up'):
+                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                        this.curentPl.powerUp();
+                        this.curentPl.setPlayerInfo();
+                    } else {
+                        Controls.menuUp();
+                    }
+                    break;
+                case target.classList.contains('cross__arrow_down'):
+                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                        this.curentPl.powerDown();
+                        this.curentPl.setPlayerInfo();
+                    } else {
+                        Controls.menuDown();
+                    }
+                    break;
+                case target.classList.contains('cross__arrow_left'):
+                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                        this.curentPl.angleUp();
+                        this.curentPl.setPlayerInfo();
+                        this.updateTanks();
+                    } else {
+                        Controls.menuRight();
+                    }
+                    break;
+                case target.classList.contains('cross__arrow_right'):
+                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                        this.curentPl.angleDown();
+                        this.curentPl.setPlayerInfo();
+                        this.updateTanks();
+                    } else {
+                        Controls.menuLeft();
+                    }
+                    break;
+                case target.classList.contains('launch__button'):
+                    if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                        if (!Player.animationFlag) {
+                            Player.animationFlag = true;
+                            window.requestAnimationFrame(this.updateAnimation.bind(this));
+                            this.curentPl.fireProjectile(this.players);
+                        }
+                    } else {
+                        this.menuFire();
+                    }
+                    break;
+                case target.classList.contains('options_buttons_settings'):
+                    toggleElClass('game__menu_container', 'game__menu_hidden');
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    private menuFire() {
+        const item = checkedQuerySelector(document, '.menu__item_selected');
+        switch (true) {
+            case item.innerText === 'HOW TO PLAY':
+                Page.renderInstructions();
+                break;
+            case item.innerText === 'BACK TO GAME':
+                toggleElClass('game__menu_container', 'game__menu_hidden');
+                break;
+            case item.innerText === 'BACK TO MAIN MENU':
+                this.removeControlKeys();
+                Player.players = [];
+                Page.renderHome();
+                break;
+            default:
+                break;
+        }
+    }
+
+    setControlKeys() {
+        document.addEventListener('keydown', this.addKeys);
+        document.addEventListener('click', this.addButtons);
+    }
+
+    removeControlKeys() {
+        document.removeEventListener('keydown', this.addKeys);
+        document.removeEventListener('click', this.addButtons);
     }
 
     clean() {
@@ -63,19 +173,31 @@ export class Game {
         this.clean();
         this.field.generate(this.setPositionTank, this.players, this.field); //drawing ground and sky and setTank
         this.setControlKeys();
+        this.curentPl.setPlayerInfo();
+    }
+
+    stop() {
+        if (this.players.length === 1) {
+            this.removeControlKeys();
+            Page.renderWinner(this.players[0]);
+            Player.players = [];
+        }
     }
 
     updateAnimation() {
         this.clean();
         this.curentPl.drawFire();
         this.checkHit();
+
         if (Player.animationExplosionFlag) {
             Player.drawExplosion();
         }
+
         if (Player.animationFlag) {
             window.requestAnimationFrame(this.updateAnimation.bind(this));
         } else {
             this.clean();
+            this.stop();
         }
     }
 
@@ -85,6 +207,7 @@ export class Game {
         if (this.curentPl.isTerrainHit() && !this.curentPl.isTargetHit(this.players) && !this.curentPl.isFired) {
             this.curentPl.projectileTrajectory = [];
             this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
+            this.curentPl.setPlayerInfo();
         }
     }
 

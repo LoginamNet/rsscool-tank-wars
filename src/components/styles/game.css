@@ -2,6 +2,29 @@
     position: relative;
 }
 
+.game__canvas {
+    position: relative;
+}
+
+.canvas {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.canvas_background {
+    z-index: 10;
+}
+.canvas_tank {
+    z-index: 20;
+}
+.canvas_animation {
+    z-index: 30;
+}
+.canvas_ui {
+    z-index: 40;
+}
+
 .game__menu_container {
     z-index: 200;
     position: absolute;
