@@ -1,8 +1,10 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH, CANVAS_GROUND, CANVAS_FLY } from '../common/constants';
+import { checkedQuerySelector } from './utils';
 import { map1 } from './maps/map';
+import { Player } from './player';
 
 export class Field {
-    canvas = document.createElement('canvas');
+    canvas = <HTMLCanvasElement>checkedQuerySelector(document, '.canvas_background');
     context = this.canvas.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D;
     data = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
     constructor() {
@@ -36,15 +38,10 @@ export class Field {
         this.context.putImageData(imageData, 0, 0);
     }
 
-    generate() {
+    generate(callback: (arg: Player[], field: Field) => void, arg: Player[], field: Field) {
         this.clear();
-        window.addEventListener('load', () => {
-            this.loadMap();
-        });
-    }
-
-    export() {
-        return this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
+        this.loadMap();
+        callback(arg, field);
     }
 
     findGround(x: number): number {

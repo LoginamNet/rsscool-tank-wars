@@ -6,7 +6,8 @@
     border: 0;
 }
 
-*,*:before,
+*,
+*:before,
 *:after {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -33,12 +34,20 @@ aside {
 html,
 body {
     width: 100%;
+    font-family: 'Press Start 2P', cursive;
     font-size: 100%;
     line-height: 1;
     font-size: 14px;
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 h1 {
@@ -50,7 +59,7 @@ h1 {
 input,
 button,
 textarea {
-    font-family:inherit;
+    font-family: inherit;
     border-radius: 5px;
 }
 
@@ -70,11 +79,11 @@ button:disabled {
 }
 
 button::-moz-focus-inner {
-    padding:0;
-    border:0;
+    padding: 0;
+    border: 0;
 }
 
-a, 
+a,
 a:visited {
     text-decoration: none;
 }
@@ -103,10 +112,4 @@ input[type='number'] {
 
 input:disabled {
     background-color: rgb(219, 219, 219);
-}
-
-/* global ------------------------------------------------- */
-
-.canvas {
-    border: 1px solid green;
 }

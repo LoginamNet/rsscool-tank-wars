@@ -1,0 +1,42 @@
+.game__screen_game {
+    position: relative;
+}
+
+.game__canvas {
+    position: relative;
+}
+
+.canvas {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.canvas_background {
+    z-index: 10;
+}
+.canvas_tank {
+    z-index: 20;
+}
+.canvas_animation {
+    z-index: 30;
+}
+.canvas_ui {
+    z-index: 40;
+}
+
+.game__menu_container {
+    z-index: 200;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+.game__menu_hidden {
+    display: none;
+}

@@ -1,0 +1,33 @@
+.instructions__screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 30px;
+    color: white;
+    background-color: black;
+}
+
+.instructions__conraiter {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.instructions__list {
+    border: 1px solid coral;
+    padding: 10px 15px;
+}
+
+.instructions__list_item {
+    padding: 5px 0;
+}
+
+.button__back {
+    width: 100%;
+    background-color: beige;
+    color: black;
+    border-radius: 0;
+    cursor: default;
+}
