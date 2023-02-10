@@ -47,15 +47,19 @@ export class Controls {
         switch (true) {
             case target.classList.contains('cross__arrow_up'):
                 this.menuUp();
+                this.sound.play('click', 1);
                 break;
             case target.classList.contains('cross__arrow_down'):
                 this.menuDown();
+                this.sound.play('click', 1);
                 break;
             case target.classList.contains('cross__arrow_left'):
                 this.menuLeft();
+                this.sound.play('move', 1);
                 break;
             case target.classList.contains('cross__arrow_right'):
                 this.menuRight();
+                this.sound.play('move', 1);
                 break;
             case target.classList.contains('options_buttons_pause'):
                 State.settings.screen === 'HOME' ? Page.renderGame() : Page.renderHome();

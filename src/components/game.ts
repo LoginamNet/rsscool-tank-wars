@@ -71,7 +71,7 @@ export class Game {
                             Player.animationFlag = true;
                             window.requestAnimationFrame(this.updateAnimation.bind(this));
                             this.curentPl.fireProjectile(this.players);
-                            this.sound.play('shot-tank');
+                            this.sound.play('shot_tank');
                         }
                     } else {
                         this.menuFire();
@@ -99,16 +99,20 @@ export class Game {
                     if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                         this.curentPl.powerUp();
                         this.curentPl.setPlayerInfo();
+                        this.sound.play('scroll_gun', 1);
                     } else {
                         Controls.menuUp();
+                        this.sound.play('click');
                     }
                     break;
                 case target.classList.contains('cross__arrow_down'):
                     if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                         this.curentPl.powerDown();
                         this.curentPl.setPlayerInfo();
+                        this.sound.play('scroll_gun', 1);
                     } else {
                         Controls.menuDown();
+                        this.sound.play('click');
                     }
                     break;
                 case target.classList.contains('cross__arrow_left'):
@@ -116,8 +120,10 @@ export class Game {
                         this.curentPl.angleUp();
                         this.curentPl.setPlayerInfo();
                         this.updateTanks();
+                        this.sound.play('scroll_gun', 1);
                     } else {
                         Controls.menuRight();
+                        this.sound.play('move', 1);
                     }
                     break;
                 case target.classList.contains('cross__arrow_right'):
@@ -125,8 +131,10 @@ export class Game {
                         this.curentPl.angleDown();
                         this.curentPl.setPlayerInfo();
                         this.updateTanks();
+                        this.sound.play('scroll_gun', 1);
                     } else {
                         Controls.menuLeft();
+                        this.sound.play('move', 1);
                     }
                     break;
                 case target.classList.contains('launch__button'):
