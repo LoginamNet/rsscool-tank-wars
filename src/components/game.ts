@@ -82,6 +82,7 @@ export class Game {
                     break;
                 case 'Escape':
                     toggleElClass('game__menu_container', 'game__menu_hidden');
+                    this.sound.play('move', 0.3);
                     break;
                 default:
                     break;
@@ -102,7 +103,7 @@ export class Game {
                         this.sound.play('scroll_gun', 1);
                     } else {
                         Controls.menuUp();
-                        this.sound.play('click');
+                        this.sound.play('click', 1);
                     }
                     break;
                 case target.classList.contains('cross__arrow_down'):
@@ -112,7 +113,7 @@ export class Game {
                         this.sound.play('scroll_gun', 1);
                     } else {
                         Controls.menuDown();
-                        this.sound.play('click');
+                        this.sound.play('click', 1);
                     }
                     break;
                 case target.classList.contains('cross__arrow_left'):
@@ -146,10 +147,12 @@ export class Game {
                         }
                     } else {
                         this.menuFire();
+                        this.sound.play('click', 1);
                     }
                     break;
                 case target.classList.contains('options_buttons_settings'):
                     toggleElClass('game__menu_container', 'game__menu_hidden');
+                    this.sound.play('move', 0.3);
                     break;
                 default:
                     break;

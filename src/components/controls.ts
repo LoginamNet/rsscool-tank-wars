@@ -63,12 +63,14 @@ export class Controls {
                 break;
             case target.classList.contains('options_buttons_pause'):
                 State.settings.screen === 'HOME' ? Page.renderGame() : Page.renderHome();
+                this.sound.play('click', 1);
                 break;
             case target.classList.contains('options_buttons_settings'):
                 Page.renderHome();
                 break;
             case target.classList.contains('launch__button'):
                 this.mainMenuFire();
+                this.sound.play('click', 1);
                 break;
             default:
                 break;

@@ -88,6 +88,10 @@
     border-radius: 5px;
 }
 
+.cross__arrow:active {
+  background-color: rgb(255, 255, 255);
+}
+
 .cross__arrow_up,
 .cross__arrow_down {
     width: 20px;
@@ -133,6 +137,10 @@
     box-shadow: -2px 3px 3px 0 rgba(0, 0, 0, 0.644);
 }
 
+.options_button:active {
+  background-color: rgb(107, 107, 107);
+}
+
 .cross__options_text {
     border: 5px solid transparent;
 }
@@ -153,6 +161,10 @@
     font-family: 'Play', sans-serif;
     font-size: 1.5rem;
     font-weight: bold;
+}
+
+.launch__button:active {
+  background-color: rgba(255, 0, 0, 0.7);
 }
 
 /* game-naming ------------------------------------------------- */
