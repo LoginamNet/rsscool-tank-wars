@@ -68,3 +68,44 @@ export function isGround(pixel: ImageData) {
 export function isOutsidePlayZone(x: number) {
     return x < 0 || x > CANVAS_WIDTH;
 }
+
+const arrFirstNames = [
+    'Adam',
+    'Alex',
+    'Aaron',
+    'Ben',
+    'Carl',
+    'Dan',
+    'David',
+    'Edward',
+    'Fred',
+    'Frank',
+    'George',
+    'Hal',
+    'Hank',
+    'Ike',
+    'John',
+    'Jack',
+    'Joe',
+    'Larry',
+    'Monte',
+    'Matthew',
+    'Mark',
+    'Nathan',
+    'Otto',
+    'Paul',
+    'Peter',
+    'Roger',
+    'Roger',
+    'Steve',
+    'Thomas',
+    'Tim',
+    'Ty',
+    'Victor',
+    'Walter',
+];
+
+export const getRandomName = (): string => {
+    const name = arrFirstNames[Math.floor(Math.random() * arrFirstNames.length)];
+    return `${name}`;
+};

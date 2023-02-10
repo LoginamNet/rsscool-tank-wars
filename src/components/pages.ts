@@ -4,6 +4,7 @@ import { Game } from './game';
 import { Player } from './player';
 import { Controls } from './controls';
 import { State } from './state';
+import { Sounds } from './audio';
 import './styles/console.css';
 import './styles/home.css';
 import './styles/game.css';
@@ -165,6 +166,8 @@ export class Page {
         screen.innerHTML = template;
         State.settings.screen = 'WINNER';
         Controls.setMainMenuControls();
+        const sound = new Sounds();
+        sound.play('winner', 0.5);
     }
 
     static renderInstructions() {

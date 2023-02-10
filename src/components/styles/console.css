@@ -15,12 +15,7 @@
 
 /* game-screen ------------------------------------------------- */
 
-.main__screen {
-    position: relative;
-}
-
-.game__screen,
-.info__screen {
+.game__screen {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -30,15 +25,22 @@
     border-left: 10px solid rgb(206, 206, 206);
 }
 
-.info__screen {
-    z-index: 300;
+.game__screen_data {
+    z-index: 100;
     position: absolute;
     top: 0;
     left: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    color: white;
+    background-color: black;
 }
 
-.info__screen_hidden {
-    display: none;
+.data__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 /* game-controls ------------------------------------------------- */
@@ -86,6 +88,10 @@
     border-radius: 5px;
 }
 
+.cross__arrow:active {
+  background-color: rgb(255, 255, 255);
+}
+
 .cross__arrow_up,
 .cross__arrow_down {
     width: 20px;
@@ -131,6 +137,10 @@
     box-shadow: -2px 3px 3px 0 rgba(0, 0, 0, 0.644);
 }
 
+.options_button:active {
+  background-color: rgb(107, 107, 107);
+}
+
 .cross__options_text {
     border: 5px solid transparent;
 }
@@ -151,6 +161,10 @@
     font-family: 'Play', sans-serif;
     font-size: 1.5rem;
     font-weight: bold;
+}
+
+.launch__button:active {
+  background-color: #950101;
 }
 
 /* game-naming ------------------------------------------------- */
