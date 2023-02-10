@@ -100,7 +100,12 @@ export class Page {
         const screen = checkedQuerySelector(document, '.game__screen');
         const template = `
         <div class="game__screen_game">
-            <canvas class="canvas" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+            <div class="game">
+                <canvas class="canvas canvas_background" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+                <canvas class="canvas canvas_tank" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+                <canvas class="canvas canvas_animation" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+                <canvas class="canvas canvas_ui" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+            </div>
             <div class="game__menu_container game__menu_hidden" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px"">
                 <div class="screen__menu">
                     <div class="menu__item_sound menu__item item menu__item_selected">
@@ -176,6 +181,13 @@ export class Page {
             </div>
             <button class="button__back menu__item_selected">BACK TO MENU</button>
         </div>
+        <div class="game">
+            <canvas class="canvas canvas_background" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+            <canvas class="canvas canvas_tank" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+            <canvas class="canvas canvas_animation" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+            <canvas class="canvas canvas_ui" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
+        </div>
+        
         `;
 
         screen.innerHTML = template;
