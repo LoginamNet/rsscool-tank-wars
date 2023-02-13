@@ -17,6 +17,7 @@
 
 .data__controls {
     display: flex;
+    justify-content: space-between;
     width: 100%;
 
 }
@@ -24,8 +25,13 @@
 .data__controls_section {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 10px;
     width: 30%;
+}
+
+.data__controls_section .time {
+    font-size: 2rem;
 }
 
 .game__canvas {

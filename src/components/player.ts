@@ -53,7 +53,7 @@ export class Player {
         angleText.innerHTML = 'Angle: ' + this.angle + '°';
         powerText.innerHTML = 'Power: ' + this.power + '%';
         windText.innerHTML = 'Wind: ' + `${Math.abs(Math.round(this.wind * 100))}m/s ${this.wind < 0 ? '<<<' : '>>>'}`;
-        playerText.innerHTML = 'Player: ' + this.name;
+        playerText.innerHTML = 'Plr: ' + this.name;
     }
 
     setPower() {

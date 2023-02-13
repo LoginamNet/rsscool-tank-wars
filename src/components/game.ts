@@ -16,6 +16,9 @@ export class Game {
     p4 = new Player(this.ctx, this.field, 490, 0, 'Arcadiy');
     players = Player.players;
     curentPl = this.players[0];
+    time = 30;
+    timerIsOn = false;
+    static timeInt: ReturnType<typeof setInterval>;
 
     private addKeys = (event: KeyboardEvent) => {
         event.preventDefault();
@@ -27,6 +30,7 @@ export class Game {
                         if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                             this.curentPl.powerUp();
                             this.curentPl.setPlayerInfo();
+                            if (!this.timerIsOn) this.startTimer();
                             Sounds.play('scroll_gun');
                         } else {
                             Controls.menuUp();
@@ -36,6 +40,7 @@ export class Game {
                         if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                             this.curentPl.powerDown();
                             this.curentPl.setPlayerInfo();
+                            if (!this.timerIsOn) this.startTimer();
                             Sounds.play('scroll_gun');
                         } else {
                             Controls.menuDown();
@@ -45,6 +50,7 @@ export class Game {
                         if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                             this.curentPl.angleUp();
                             this.curentPl.setPlayerInfo();
+                            if (!this.timerIsOn) this.startTimer();
                             this.updateTanks();
                             Sounds.play('scroll_gun');
                         } else {
@@ -55,6 +61,7 @@ export class Game {
                         if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                             this.curentPl.angleDown();
                             this.curentPl.setPlayerInfo();
+                            if (!this.timerIsOn) this.startTimer();
                             this.updateTanks();
                             Sounds.play('scroll_gun');
                         } else {
@@ -67,6 +74,7 @@ export class Game {
                                 Player.animationFlag = true;
                                 window.requestAnimationFrame(this.updateAnimation.bind(this));
                                 this.curentPl.fireProjectile(this.players);
+                                if (!this.timerIsOn) this.startTimer();
                                 Sounds.play('shot_tank', 0.3);
                             }
                         } else {
@@ -74,11 +82,8 @@ export class Game {
                             Sounds.play('click');
                         }
                         break;
-                    case 'Tab':
-                        toggleElClass('game__menu_container', 'game__menu_hidden');
-                        Sounds.play('click');
-                        break;
                     case 'Escape':
+                        this.stopTimer();
                         toggleElClass('game__menu_container', 'game__menu_hidden');
                         Sounds.play('move');
                         break;
@@ -91,7 +96,8 @@ export class Game {
                     case 'Space':
                         instructions.classList.remove('info__screen_hidden');
                         break;
-                    case 'Tab':
+                    case 'Escape':
+                        this.stopTimer();
                         instructions.classList.remove('info__screen_hidden');
                         toggleElClass('game__menu_container', 'game__menu_hidden');
                         break;
@@ -113,6 +119,7 @@ export class Game {
                         if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                             this.curentPl.powerUp();
                             this.curentPl.setPlayerInfo();
+                            if (!this.timerIsOn) this.startTimer();
                             Sounds.play('scroll_gun');
                         } else {
                             Controls.menuUp();
@@ -122,6 +129,7 @@ export class Game {
                         if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                             this.curentPl.powerDown();
                             this.curentPl.setPlayerInfo();
+                            if (!this.timerIsOn) this.startTimer();
                             Sounds.play('scroll_gun');
                         } else {
                             Controls.menuDown();
@@ -131,6 +139,7 @@ export class Game {
                         if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                             this.curentPl.angleUp();
                             this.curentPl.setPlayerInfo();
+                            if (!this.timerIsOn) this.startTimer();
                             this.updateTanks();
                             Sounds.play('scroll_gun');
                         } else {
@@ -141,6 +150,7 @@ export class Game {
                         if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                             this.curentPl.angleDown();
                             this.curentPl.setPlayerInfo();
+                            if (!this.timerIsOn) this.startTimer();
                             this.updateTanks();
                             Sounds.play('scroll_gun');
                         } else {
@@ -153,6 +163,7 @@ export class Game {
                                 Player.animationFlag = true;
                                 window.requestAnimationFrame(this.updateAnimation.bind(this));
                                 this.curentPl.fireProjectile(this.players);
+                                if (!this.timerIsOn) this.startTimer();
                                 Sounds.play('shot_tank', 0.3);
                             }
                         } else {
@@ -160,7 +171,12 @@ export class Game {
                             Sounds.play('click');
                         }
                         break;
+                    case target.classList.contains('options_buttons_pause'):
+                        this.switchTimer();
+                        Sounds.play('move');
+                        break;
                     case target.classList.contains('options_buttons_settings'):
+                        this.stopTimer();
                         toggleElClass('game__menu_container', 'game__menu_hidden');
                         Sounds.play('move');
                         break;
@@ -197,7 +213,6 @@ export class Game {
                 this.removeControlKeys();
                 Player.players = [];
                 Page.renderHome();
-                // Sounds.play('intro', 0.2);
                 break;
             default:
                 break;
@@ -224,11 +239,13 @@ export class Game {
         this.field.generate(this.setPositionTank, this.players, this.field); //drawing ground and sky and setTank
         this.setControlKeys();
         this.curentPl.setPlayerInfo();
+        this.startTimer();
     }
 
     stop() {
         if (this.players.length === 1) {
             this.removeControlKeys();
+            this.stopTimer();
             Page.renderWinner(this.players[0]);
             Player.players = [];
         }
@@ -258,6 +275,17 @@ export class Game {
             this.curentPl.projectileTrajectory = [];
             this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
             this.curentPl.setPlayerInfo();
+            this.refreshTime();
+        }
+    }
+
+    checkTime() {
+        const i = this.players.indexOf(this.curentPl);
+
+        if (this.time === 0) {
+            this.curentPl.projectileTrajectory = [];
+            this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
+            this.curentPl.setPlayerInfo();
         }
     }
 
@@ -271,5 +299,41 @@ export class Game {
 
     updateTanks() {
         this.curentPl.updatePlayers();
+    }
+
+    startTimer() {
+        this.setTime();
+        this.timerIsOn = true;
+
+        Game.timeInt = setInterval(() => {
+            if (this.time > 0) {
+                this.time--;
+                this.setTime();
+            } else {
+                this.checkTime();
+                this.refreshTime();
+            }
+            return this.time;
+        }, 1000);
+    }
+
+    stopTimer() {
+        this.setTime();
+        this.timerIsOn = false;
+        clearInterval(Game.timeInt);
+    }
+
+    switchTimer() {
+        this.timerIsOn ? this.stopTimer() : this.startTimer();
+    }
+
+    setTime() {
+        const timeText = checkedQuerySelector(document, '.time');
+        timeText.innerHTML = `TIME:` + this.time;
+    }
+
+    refreshTime() {
+        this.time = 30;
+        this.setTime();
     }
 }

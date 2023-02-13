@@ -141,6 +141,9 @@ export class Page {
                     <div class="power"></div>
                 </div>
                 <div class="data__controls_section">
+                    <div class="time"></div>
+                </div>
+                <div class="data__controls_section">
                     <div class="wind"></div>
                     <div class="player"></div>
                 </div>
