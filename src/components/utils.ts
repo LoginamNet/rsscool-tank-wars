@@ -1,4 +1,5 @@
 import { CANVAS_GROUND, CANVAS_WIDTH } from '../common/constants';
+
 /* functions ------------------------------------------------- */
 
 // get element by selector
@@ -106,6 +107,10 @@ const arrFirstNames = [
     'Matthew',
     'Mark',
     'Michael',
+    'Larry',
+    'Monte',
+    'Matthew',
+    'Mark',
     'Nathan',
     'Otto',
     'Paul',
@@ -140,3 +145,11 @@ export const getRandomColor = (): string => {
 
     return color;
 };
+
+// get random num from min to max included
+
+export function getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}

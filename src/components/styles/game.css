@@ -2,6 +2,32 @@
     position: relative;
 }
 
+.game__screen_data {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    background-color: black;
+}
+
+.data__controls {
+    display: flex;
+    width: 100%;
+
+}
+
+.data__controls_section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 30%;
+}
+
 .game__canvas {
     position: relative;
 }

@@ -136,8 +136,14 @@ export class Page {
         </div>
         <div class="game__screen_data">
             <div class="data__controls">
-                <div class="angle" ></div>
-                <div class="power" ></div>
+                <div class="data__controls_section">
+                    <div class="angle"></div>
+                    <div class="power"></div>
+                </div>
+                <div class="data__controls_section">
+                    <div class="wind"></div>
+                    <div class="player"></div>
+                </div>
             </div>
         </div>
         `;
@@ -158,7 +164,7 @@ export class Page {
             </div>
             <div>And the winner is ${currentPl.name}</div>
             <div class="screen__menu">
-                <button class="menu__item menu__item_selected">RESTART GAME</button>
+                <button class="menu__item menu__item_selected winner__screen_restart">RESTART GAME</button>
             </div>
         </div>
         `;
@@ -166,8 +172,7 @@ export class Page {
         screen.innerHTML = template;
         State.settings.screen = 'WINNER';
         Controls.setMainMenuControls();
-        const sound = new Sounds();
-        sound.play('winner', 0.5);
+        Sounds.play('winner', 0.5);
     }
 
     static renderInstructions() {

@@ -10,31 +10,30 @@ export class Controls {
         switch (event.code) {
             case 'ArrowUp':
                 this.menuUp();
-                this.sound.play('click');
                 break;
             case 'ArrowDown':
                 this.menuDown();
-                this.sound.play('click');
                 break;
             case 'ArrowLeft':
                 this.menuLeft();
-                this.sound.play('move');
                 break;
             case 'ArrowRight':
                 this.menuRight();
-                this.sound.play('move');
                 break;
             case 'Enter':
                 State.settings.screen === 'HOME' ? Page.renderGame() : Page.renderHome();
                 break;
             case 'Space':
                 this.mainMenuFire();
+                Sounds.play('click');
                 break;
             case 'Tab':
                 Page.renderHome();
+                Sounds.play('click');
                 break;
             case 'Escape':
                 Page.renderHome();
+                Sounds.play('click');
                 break;
             default:
                 break;
@@ -47,30 +46,27 @@ export class Controls {
         switch (true) {
             case target.classList.contains('cross__arrow_up'):
                 this.menuUp();
-                this.sound.play('click');
                 break;
             case target.classList.contains('cross__arrow_down'):
                 this.menuDown();
-                this.sound.play('click');
                 break;
             case target.classList.contains('cross__arrow_left'):
                 this.menuLeft();
-                this.sound.play('move');
                 break;
             case target.classList.contains('cross__arrow_right'):
                 this.menuRight();
-                this.sound.play('move');
                 break;
             case target.classList.contains('options_buttons_pause'):
                 State.settings.screen === 'HOME' ? Page.renderGame() : Page.renderHome();
-                this.sound.play('click');
+                Sounds.play('click');
                 break;
             case target.classList.contains('options_buttons_settings'):
                 Page.renderHome();
+                Sounds.play('click');
                 break;
             case target.classList.contains('launch__button'):
                 this.mainMenuFire();
-                this.sound.play('click');
+                Sounds.play('click');
                 break;
             default:
                 break;
@@ -81,6 +77,7 @@ export class Controls {
         const items = document.querySelectorAll('.menu__item');
         for (let i = 0; i < items.length; i++) {
             if (items[i].classList.contains('menu__item_selected')) {
+                Sounds.play('click');
                 if (i === items.length - 1) {
                     items[i].classList.remove('menu__item_selected');
                     items[0].classList.add('menu__item_selected');
@@ -98,6 +95,7 @@ export class Controls {
         const items = document.querySelectorAll('.menu__item');
         for (let i = 0; i < items.length; i++) {
             if (items[i].classList.contains('menu__item_selected')) {
+                Sounds.play('click');
                 if (i === 0) {
                     items[i].classList.remove('menu__item_selected');
                     items[items.length - 1].classList.add('menu__item_selected');
@@ -116,6 +114,7 @@ export class Controls {
         const options = item.querySelectorAll('.menu__switcher');
         for (let i = 0; i < options.length; i++) {
             if (options[i].classList.contains('menu__switcher_selected')) {
+                Sounds.play('move');
                 if (i === 0) {
                     options[i].classList.remove('menu__switcher_selected');
                     options[options.length - 1].classList.add('menu__switcher_selected');
@@ -136,6 +135,7 @@ export class Controls {
         const options = item.querySelectorAll('.menu__switcher');
         for (let i = 0; i < options.length; i++) {
             if (options[i].classList.contains('menu__switcher_selected')) {
+                Sounds.play('move');
                 if (i === options.length - 1) {
                     options[i].classList.remove('menu__switcher_selected');
                     options[0].classList.add('menu__switcher_selected');
@@ -188,12 +188,15 @@ export class Controls {
         switch (event.code) {
             case 'Enter':
                 this.removeInstructionsControls();
+                Sounds.play('click');
                 break;
             case 'Space':
                 this.removeInstructionsControls();
+                Sounds.play('click');
                 break;
             case 'Tab':
                 this.removeInstructionsControls();
+                Sounds.play('click');
                 break;
             default:
                 break;
@@ -206,12 +209,15 @@ export class Controls {
         switch (true) {
             case target.classList.contains('options_buttons_pause'):
                 this.removeInstructionsControls();
+                Sounds.play('click');
                 break;
             case target.classList.contains('options_buttons_settings'):
                 this.removeInstructionsControls();
+                Sounds.play('click');
                 break;
             case target.classList.contains('launch__button'):
                 this.removeInstructionsControls();
+                Sounds.play('click');
                 break;
             default:
                 break;

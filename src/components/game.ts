@@ -32,20 +32,18 @@ export class Game {
                         if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                             this.curentPl.powerUp();
                             this.curentPl.setPlayerInfo();
-                            this.sound.play('scroll_gun');
+                            Sounds.play('scroll_gun');
                         } else {
                             Controls.menuUp();
-                            this.sound.play('click');
                         }
                         break;
                     case 'ArrowDown':
                         if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                             this.curentPl.powerDown();
                             this.curentPl.setPlayerInfo();
-                            this.sound.play('scroll_gun');
+                            Sounds.play('scroll_gun');
                         } else {
                             Controls.menuDown();
-                            this.sound.play('click');
                         }
                         break;
                     case 'ArrowLeft':
@@ -53,10 +51,9 @@ export class Game {
                             this.curentPl.angleUp();
                             this.curentPl.setPlayerInfo();
                             this.updateTanks();
-                            this.sound.play('scroll_gun');
+                            Sounds.play('scroll_gun');
                         } else {
                             Controls.menuRight();
-                            this.sound.play('move');
                         }
                         break;
                     case 'ArrowRight':
@@ -64,10 +61,9 @@ export class Game {
                             this.curentPl.angleDown();
                             this.curentPl.setPlayerInfo();
                             this.updateTanks();
-                            this.sound.play('scroll_gun');
+                            Sounds.play('scroll_gun');
                         } else {
                             Controls.menuLeft();
-                            this.sound.play('move');
                         }
                         break;
                     case 'Space':
@@ -76,18 +72,20 @@ export class Game {
                                 Player.animationFlag = true;
                                 window.requestAnimationFrame(this.updateAnimation.bind(this));
                                 this.curentPl.fireProjectile(this.players);
-                                this.sound.play('shot_tank', 0.3);
+                                Sounds.play('shot_tank', 0.3);
                             }
                         } else {
                             this.menuFire();
+                            Sounds.play('click');
                         }
                         break;
                     case 'Tab':
                         toggleElClass('game__menu_container', 'game__menu_hidden');
+                        Sounds.play('click');
                         break;
                     case 'Escape':
                         toggleElClass('game__menu_container', 'game__menu_hidden');
-                        this.sound.play('move');
+                        Sounds.play('move');
                         break;
                     default:
                         break;
@@ -120,20 +118,18 @@ export class Game {
                         if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                             this.curentPl.powerUp();
                             this.curentPl.setPlayerInfo();
-                            this.sound.play('scroll_gun');
+                            Sounds.play('scroll_gun');
                         } else {
                             Controls.menuUp();
-                            this.sound.play('click');
                         }
                         break;
                     case target.classList.contains('cross__arrow_down'):
                         if (checkElClass('game__menu_container', 'game__menu_hidden')) {
                             this.curentPl.powerDown();
                             this.curentPl.setPlayerInfo();
-                            this.sound.play('scroll_gun');
+                            Sounds.play('scroll_gun');
                         } else {
                             Controls.menuDown();
-                            this.sound.play('click');
                         }
                         break;
                     case target.classList.contains('cross__arrow_left'):
@@ -141,10 +137,9 @@ export class Game {
                             this.curentPl.angleUp();
                             this.curentPl.setPlayerInfo();
                             this.updateTanks();
-                            this.sound.play('scroll_gun');
+                            Sounds.play('scroll_gun');
                         } else {
                             Controls.menuRight();
-                            this.sound.play('move');
                         }
                         break;
                     case target.classList.contains('cross__arrow_right'):
@@ -152,10 +147,9 @@ export class Game {
                             this.curentPl.angleDown();
                             this.curentPl.setPlayerInfo();
                             this.updateTanks();
-                            this.sound.play('scroll_gun');
+                            Sounds.play('scroll_gun');
                         } else {
                             Controls.menuLeft();
-                            this.sound.play('move');
                         }
                         break;
                     case target.classList.contains('launch__button'):
@@ -164,16 +158,16 @@ export class Game {
                                 Player.animationFlag = true;
                                 window.requestAnimationFrame(this.updateAnimation.bind(this));
                                 this.curentPl.fireProjectile(this.players);
-                                this.sound.play('shot_tank', 0.3);
+                                Sounds.play('shot_tank', 0.3);
                             }
                         } else {
                             this.menuFire();
-                            this.sound.play('click');
+                            Sounds.play('click');
                         }
                         break;
                     case target.classList.contains('options_buttons_settings'):
                         toggleElClass('game__menu_container', 'game__menu_hidden');
-                        this.sound.play('move');
+                        Sounds.play('move');
                         break;
                     default:
                         break;
@@ -208,7 +202,7 @@ export class Game {
                 this.removeControlKeys();
                 Player.players = [];
                 Page.renderHome();
-                // this.sound.play('intro', 0.2);
+                // Sounds.play('intro', 0.2);
                 break;
             default:
                 break;

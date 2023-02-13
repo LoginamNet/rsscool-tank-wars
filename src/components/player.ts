@@ -2,8 +2,9 @@ import { LENGTH_GUN, POWER_GUN } from '../common/constants';
 import { Field } from './field';
 import { Tank } from './tank';
 import { Ui } from './ui';
-import { checkedQuerySelector, drawCanvasArc, isGround, isOutsidePlayZone } from './utils';
+import { checkedQuerySelector, drawCanvasArc, getRandomInt, isGround, isOutsidePlayZone } from './utils';
 import { expl } from './explosion';
+import { Sounds } from './audio';
 
 export class Player {
     name: string;
@@ -16,6 +17,7 @@ export class Player {
     isHitted = false;
     positionX: number;
     positionY: number;
+    wind = getRandomInt(-25, 25) / 100;
     tank: Tank;
     ui: Ui;
     static tick = 0;
@@ -46,9 +48,12 @@ export class Player {
     setPlayerInfo() {
         const angleText = checkedQuerySelector(document, '.angle');
         const powerText = checkedQuerySelector(document, '.power');
-
-        angleText.innerHTML = 'Angle: ' + this.angle;
-        powerText.innerHTML = 'Power: ' + this.power;
+        const windText = checkedQuerySelector(document, '.wind');
+        const playerText = checkedQuerySelector(document, '.player');
+        angleText.innerHTML = 'Angle: ' + this.angle + '°';
+        powerText.innerHTML = 'Power: ' + this.power + '%';
+        windText.innerHTML = 'Wind: ' + `${Math.abs(Math.round(this.wind * 100))}m/s ${this.wind < 0 ? '<<<' : '>>>'}`;
+        playerText.innerHTML = 'Player: ' + this.name;
     }
 
     setPower() {
@@ -99,9 +104,13 @@ export class Player {
         let time = 0;
         const g = -9.8 / 100;
         do {
-            xCoordinate = this.calcXCoords() + (this.power / 10) * Math.cos((this.angle / 180) * Math.PI) * time;
+            xCoordinate =
+                this.wind * time +
+                this.calcXCoords() +
+                (this.power / 10) * Math.cos((this.angle / 180) * Math.PI) * time;
 
             yCoordinate =
+                this.wind * time +
                 this.calcYCoords() -
                 ((this.power / 10) * Math.sin((this.angle / 180) * Math.PI) * time + 0.5 * g * Math.pow(time, 2));
 
@@ -140,6 +149,8 @@ export class Player {
             this.intervalId = 0;
             this.isFired = false;
             Player.animationFlag = false;
+            this.wind = getRandomInt(-25, 25) / 100;
+            this.setPlayerInfo();
         }
     }
 
@@ -188,39 +199,6 @@ export class Player {
     }
 
     drawPlayer() {
-        // // wheels
-        // const step = 10;
-        // let x = this.initialTankPositionX;
-        // for (let i = 0; i < 4; i++) {
-        //     this.ctx.beginPath();
-        //     this.ctx.arc(x, this.initialTankPositionY, 3, degToRad(0), degToRad(360));
-        //     this.ctx.fillStyle = '#000000';
-        //     this.ctx.fill();
-        //     this.ctx.stroke();
-        //     x += step;
-        // }
-        // // tank hull
-        // this.ctx.beginPath();
-        // this.ctx.moveTo(this.initialTankPositionX - 7, this.initialTankPositionY);
-        // this.ctx.lineTo(this.initialTankPositionX - 3, this.initialTankPositionY - 6);
-        // this.ctx.lineTo(this.initialTankPositionX + 33, this.initialTankPositionY - 6);
-        // this.ctx.lineTo(this.initialTankPositionX + 37, this.initialTankPositionY);
-        // this.ctx.strokeStyle = '#000000';
-        // this.ctx.stroke();
-        // // tank tower
-        // this.ctx.beginPath();
-        // this.ctx.arc(this.initialTankPositionX + 15, this.initialTankPositionY - 7, 10, degToRad(180), degToRad(0));
-        // this.ctx.fillStyle = '#000000';
-        // this.ctx.fill();
-        // this.ctx.stroke();
-        // // tank gun
-        // this.ctx.beginPath();
-        // this.ctx.moveTo(this.initialTankPositionX + 15, this.initialTankPositionY - 9);
-        // this.ctx.lineTo(this.calcXCoords(), this.calcYCoords());
-        // this.ctx.lineWidth = 3;
-        // this.ctx.strokeStyle = '#000000';
-        // this.ctx.stroke();
-
         this.tank.initialTankPositionX = this.positionX;
         this.tank.initialTankPositionY = this.positionY;
         this.tank.drawBodyTank(this.colorTank);
@@ -248,16 +226,9 @@ export class Player {
 
     drawHit(players: Player[]) {
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 && this.isTargetHit(players)) {
-            //this.ctx.fillStyle = 'red';
-            // drawCanvasArc(
-            //     this.ctx,
-            //     this.projectileTrajectory[this.projectileTrajectory.length - 1].x,
-            //     this.projectileTrajectory[this.projectileTrajectory.length - 1].y,
-            //     10
-            // );
-
             Player.animationExplosionFlag = true;
             Player.ctx = this.ctx;
+            Sounds.play('bang_tank');
 
             for (const player of players) {
                 if (player.isHitted) {
