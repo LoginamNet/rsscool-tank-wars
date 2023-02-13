@@ -166,8 +166,7 @@ export class Page {
         screen.innerHTML = template;
         State.settings.screen = 'WINNER';
         Controls.setMainMenuControls();
-        const sound = new Sounds();
-        sound.play('winner', 0.5);
+        Sounds.play('winner', 0.5);
     }
 
     static renderInstructions() {

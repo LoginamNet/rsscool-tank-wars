@@ -4,6 +4,7 @@ import { Tank } from './tank';
 import { Ui } from './ui';
 import { checkedQuerySelector, drawCanvasArc, isGround, isOutsidePlayZone } from './utils';
 import { expl } from './explosion';
+import { Sounds } from './audio';
 
 export class Player {
     name: string;
@@ -187,39 +188,6 @@ export class Player {
     }
 
     drawPlayer() {
-        // // wheels
-        // const step = 10;
-        // let x = this.initialTankPositionX;
-        // for (let i = 0; i < 4; i++) {
-        //     this.ctx.beginPath();
-        //     this.ctx.arc(x, this.initialTankPositionY, 3, degToRad(0), degToRad(360));
-        //     this.ctx.fillStyle = '#000000';
-        //     this.ctx.fill();
-        //     this.ctx.stroke();
-        //     x += step;
-        // }
-        // // tank hull
-        // this.ctx.beginPath();
-        // this.ctx.moveTo(this.initialTankPositionX - 7, this.initialTankPositionY);
-        // this.ctx.lineTo(this.initialTankPositionX - 3, this.initialTankPositionY - 6);
-        // this.ctx.lineTo(this.initialTankPositionX + 33, this.initialTankPositionY - 6);
-        // this.ctx.lineTo(this.initialTankPositionX + 37, this.initialTankPositionY);
-        // this.ctx.strokeStyle = '#000000';
-        // this.ctx.stroke();
-        // // tank tower
-        // this.ctx.beginPath();
-        // this.ctx.arc(this.initialTankPositionX + 15, this.initialTankPositionY - 7, 10, degToRad(180), degToRad(0));
-        // this.ctx.fillStyle = '#000000';
-        // this.ctx.fill();
-        // this.ctx.stroke();
-        // // tank gun
-        // this.ctx.beginPath();
-        // this.ctx.moveTo(this.initialTankPositionX + 15, this.initialTankPositionY - 9);
-        // this.ctx.lineTo(this.calcXCoords(), this.calcYCoords());
-        // this.ctx.lineWidth = 3;
-        // this.ctx.strokeStyle = '#000000';
-        // this.ctx.stroke();
-
         this.tank.initialTankPositionX = this.positionX;
         this.tank.initialTankPositionY = this.positionY;
         this.tank.drawBodyTank();
@@ -247,16 +215,9 @@ export class Player {
 
     drawHit(players: Player[]) {
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 && this.isTargetHit(players)) {
-            //this.ctx.fillStyle = 'red';
-            // drawCanvasArc(
-            //     this.ctx,
-            //     this.projectileTrajectory[this.projectileTrajectory.length - 1].x,
-            //     this.projectileTrajectory[this.projectileTrajectory.length - 1].y,
-            //     10
-            // );
-
             Player.animationExplosionFlag = true;
             Player.ctx = this.ctx;
+            Sounds.play('bang_tank');
 
             for (const player of players) {
                 if (player.isHitted) {
