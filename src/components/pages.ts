@@ -158,7 +158,7 @@ export class Page {
             </div>
             <div>And the winner is ${currentPl.name}</div>
             <div class="screen__menu">
-                <button class="menu__item menu__item_selected">RESTART GAME</button>
+                <button class="menu__item menu__item_selected winner__screen_restart">RESTART GAME</button>
             </div>
         </div>
         `;

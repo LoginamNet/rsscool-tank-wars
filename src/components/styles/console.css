@@ -15,7 +15,12 @@
 
 /* game-screen ------------------------------------------------- */
 
-.game__screen {
+.main__screen {
+    position: relative;	
+}
+
+.game__screen,
+.info__screen {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -25,22 +30,15 @@
     border-left: 10px solid rgb(206, 206, 206);
 }
 
-.game__screen_data {
-    z-index: 100;
+.info__screen {
+    z-index: 300;
     position: absolute;
     top: 0;
     left: 0;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    color: white;
-    background-color: black;
 }
 
-.data__controls {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.info__screen_hidden {
+    display: none;
 }
 
 /* game-controls ------------------------------------------------- */
