@@ -18,7 +18,10 @@ export class Page {
     static renderConsole() {
         this.body.innerHTML = `
         <div class="game__console">
-            <div class="game__screen"></div>
+            <div class="main__screen">
+                <div class="game__screen"></div>
+                <div class="info__screen info__screen_hidden"></div>
+            </div>
             <div class="game__controls">
                 <div class="game__controls_circle">
                     <div class="game__controls_cross">
@@ -164,11 +167,11 @@ export class Page {
         State.settings.screen = 'WINNER';
         Controls.setMainMenuControls();
         const sound = new Sounds();
-        sound.play('winner');
+        sound.play('winner', 0.5);
     }
 
     static renderInstructions() {
-        const screen = checkedQuerySelector(document, '.game__screen');
+        const screen = checkedQuerySelector(document, '.info__screen');
         const template = `
         <div class="instructions__screen" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px">
             <div class="instructions__conraiter">
@@ -183,18 +186,11 @@ export class Page {
                     <li class="instructions__list_item">Kbrd PAUSE/Button START/PAUSE - pause game time or start count again</li>
                     <li class="instructions__list_item">Kbrd TAB/Button SETTINGS - open settings menu</li>
                 </ul>
-            </div>
-            <button class="button__back menu__item_selected">BACK TO MENU</button>
-        </div>
-        <div class="game">
-            <canvas class="canvas canvas_background" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
-            <canvas class="canvas canvas_tank" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
-            <canvas class="canvas canvas_animation" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
-            <canvas class="canvas canvas_ui" width="${CANVAS_WIDTH}" height="${CANVAS_HEIGHT}"></canvas>
-        </div>
-        
+                <button class="instructions__button_back">BACK TO MENU</button>
+        </div>        
         `;
 
         screen.innerHTML = template;
+        Controls.setInstructionsControls();
     }
 }

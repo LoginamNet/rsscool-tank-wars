@@ -68,3 +68,75 @@ export function isGround(pixel: ImageData) {
 export function isOutsidePlayZone(x: number) {
     return x < 0 || x > CANVAS_WIDTH;
 }
+
+// array random first names
+
+const arrFirstNames = [
+    'Adam',
+    'Alex',
+    'Aaron',
+    'Anthony',
+    'Ben',
+    'Bob',
+    'Carl',
+    'Cristiano',
+    'Charles',
+    'Christopher',
+    'Dan',
+    'David',
+    'Daniel',
+    'Edward',
+    'Fred',
+    'Frank',
+    'George',
+    'Hal',
+    'Hank',
+    'Harry',
+    'Ike',
+    'John',
+    'Jack',
+    'Joe',
+    'Joseph',
+    'James',
+    'Larry',
+    'Leonardo',
+    'Lewis',
+    'Max',
+    'Monte',
+    'Matthew',
+    'Mark',
+    'Michael',
+    'Nathan',
+    'Otto',
+    'Paul',
+    'Peter',
+    'Roger',
+    'Robert',
+    'Richard',
+    'Steve',
+    'Thomas',
+    'Tim',
+    'Ty',
+    'Victor',
+    'Walter',
+    'William',
+];
+
+// function get random first name
+
+export const getRandomName = (): string => {
+    const name = arrFirstNames[Math.floor(Math.random() * arrFirstNames.length)];
+    return `${name}`;
+};
+
+// function get random color
+
+export const getRandomColor = (): string => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+
+    return color;
+};

@@ -31,7 +31,8 @@ export class Player {
         private field: Field,
         public initialTankPositionX: number,
         public initialTankPositionY: number,
-        public nameStr: string
+        public nameStr: string,
+        public colorTank: string
     ) {
         this.name = nameStr;
         this.angle = initialTankPositionX > 400 ? 135 : 45;
@@ -222,8 +223,8 @@ export class Player {
 
         this.tank.initialTankPositionX = this.positionX;
         this.tank.initialTankPositionY = this.positionY;
-        this.tank.drawBodyTank();
-        this.tank.drawTankGun(this.calcXCoords(), this.calcYCoords());
+        this.tank.drawBodyTank(this.colorTank);
+        this.tank.drawTankGun(this.calcXCoords(), this.calcYCoords(), this.colorTank);
     }
 
     clearPlayers() {

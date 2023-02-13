@@ -1,4 +1,4 @@
-import { checkedQuerySelector } from './utils';
+import { checkedQuerySelector, toggleElClass } from './utils';
 import { Page } from './pages';
 import { State } from './state';
 import { Sounds } from './audio';
@@ -41,36 +41,36 @@ export class Controls {
         }
     };
 
-    static addMainMenuButtons = (event: Event) => {
+    private static addMainMenuButtons = (event: Event) => {
         event.preventDefault();
         const target = <HTMLElement>event.target;
         switch (true) {
             case target.classList.contains('cross__arrow_up'):
                 this.menuUp();
-                this.sound.play('click', 1);
+                this.sound.play('click');
                 break;
             case target.classList.contains('cross__arrow_down'):
                 this.menuDown();
-                this.sound.play('click', 1);
+                this.sound.play('click');
                 break;
             case target.classList.contains('cross__arrow_left'):
                 this.menuLeft();
-                this.sound.play('move', 1);
+                this.sound.play('move');
                 break;
             case target.classList.contains('cross__arrow_right'):
                 this.menuRight();
-                this.sound.play('move', 1);
+                this.sound.play('move');
                 break;
             case target.classList.contains('options_buttons_pause'):
                 State.settings.screen === 'HOME' ? Page.renderGame() : Page.renderHome();
-                this.sound.play('click', 1);
+                this.sound.play('click');
                 break;
             case target.classList.contains('options_buttons_settings'):
                 Page.renderHome();
                 break;
             case target.classList.contains('launch__button'):
                 this.mainMenuFire();
-                this.sound.play('click', 1);
+                this.sound.play('click');
                 break;
             default:
                 break;
@@ -159,12 +159,14 @@ export class Controls {
                 break;
             case item.innerText === 'START GAME':
                 Page.renderGame();
+                // this.sound.play('intro', 0);
                 break;
             case item.innerText === 'BACK TO MENU':
                 Page.renderHome();
                 break;
             case item.innerText === 'RESTART GAME':
                 Page.renderHome();
+                // this.sound.play('intro', 0.2);
                 break;
             default:
                 break;
@@ -179,5 +181,54 @@ export class Controls {
     static removeMainMenuControls() {
         document.removeEventListener('keydown', this.addMainMenuKeys);
         document.removeEventListener('click', this.addMainMenuButtons);
+    }
+
+    private static addInstructionsKeys = (event: KeyboardEvent) => {
+        event.preventDefault();
+        switch (event.code) {
+            case 'Enter':
+                this.removeInstructionsControls();
+                break;
+            case 'Space':
+                this.removeInstructionsControls();
+                break;
+            case 'Tab':
+                this.removeInstructionsControls();
+                break;
+            default:
+                break;
+        }
+    };
+
+    private static addInstructionsButtons = (event: Event) => {
+        event.preventDefault();
+        const target = <HTMLElement>event.target;
+        switch (true) {
+            case target.classList.contains('options_buttons_pause'):
+                this.removeInstructionsControls();
+                break;
+            case target.classList.contains('options_buttons_settings'):
+                this.removeInstructionsControls();
+                break;
+            case target.classList.contains('launch__button'):
+                this.removeInstructionsControls();
+                break;
+            default:
+                break;
+        }
+    };
+
+    static setInstructionsControls() {
+        if (State.settings.screen === 'HOME') this.removeMainMenuControls();
+        document.addEventListener('keydown', this.addInstructionsKeys);
+        document.addEventListener('click', this.addInstructionsButtons);
+        toggleElClass('info__screen', 'info__screen_hidden');
+    }
+
+    static removeInstructionsControls() {
+        document.removeEventListener('keydown', this.addInstructionsKeys);
+        document.removeEventListener('click', this.addInstructionsButtons);
+        if (State.settings.screen === 'HOME') this.setMainMenuControls();
+        toggleElClass('info__screen', 'info__screen_hidden');
     }
 }
