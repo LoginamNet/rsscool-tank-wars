@@ -282,7 +282,7 @@ export class Game {
     checkTime() {
         const i = this.players.indexOf(this.curentPl);
 
-        if (this.time === 0) {
+        if (this.time === 0 && !this.curentPl.isFired) {
             this.curentPl.projectileTrajectory = [];
             this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
             this.curentPl.setPlayerInfo();
@@ -310,8 +310,10 @@ export class Game {
                 this.time--;
                 this.setTime();
             } else {
-                this.checkTime();
-                this.refreshTime();
+                if (!this.curentPl.isFired) {
+                    this.checkTime();
+                    this.refreshTime();
+                }
             }
             return this.time;
         }, 1000);
