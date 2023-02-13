@@ -158,12 +158,14 @@ export class Controls {
                 break;
             case item.innerText === 'START GAME':
                 Page.renderGame();
+                // Sounds.play('intro', 0);
                 break;
             case item.innerText === 'BACK TO MENU':
                 Page.renderHome();
                 break;
             case item.innerText === 'RESTART GAME':
                 Page.renderHome();
+                // Sounds.play('intro', 0.2);
                 break;
             default:
                 break;

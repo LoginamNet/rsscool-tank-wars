@@ -1,4 +1,4 @@
-import { CANVAS_GROUND, CANVAS_WIDTH } from '../common/constants';
+import { CANVAS_GROUND, CANVAS_WIDTH, ARR_FIRST_NAMES } from '../common/constants';
 
 /* functions ------------------------------------------------- */
 
@@ -33,7 +33,7 @@ export function toggleElClass(elClass: string, toggleClass: string): void {
     el.classList.toggle(toggleClass);
 }
 
-// check if elenent contains selector
+// check if element contains selector
 
 export function checkElClass(elClass: string, checkedClass: string): boolean {
     const el = checkedQuerySelector(document, `.${elClass}`);
@@ -70,45 +70,23 @@ export function isOutsidePlayZone(x: number) {
     return x < 0 || x > CANVAS_WIDTH;
 }
 
-const arrFirstNames = [
-    'Adam',
-    'Alex',
-    'Aaron',
-    'Ben',
-    'Carl',
-    'Dan',
-    'David',
-    'Edward',
-    'Fred',
-    'Frank',
-    'George',
-    'Hal',
-    'Hank',
-    'Ike',
-    'John',
-    'Jack',
-    'Joe',
-    'Larry',
-    'Monte',
-    'Matthew',
-    'Mark',
-    'Nathan',
-    'Otto',
-    'Paul',
-    'Peter',
-    'Roger',
-    'Roger',
-    'Steve',
-    'Thomas',
-    'Tim',
-    'Ty',
-    'Victor',
-    'Walter',
-];
+// function get random first name
 
 export const getRandomName = (): string => {
-    const name = arrFirstNames[Math.floor(Math.random() * arrFirstNames.length)];
+    const name = ARR_FIRST_NAMES[Math.floor(Math.random() * ARR_FIRST_NAMES.length)];
     return `${name}`;
+};
+
+// function get random color
+
+export const getRandomColor = (): string => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+
+    return color;
 };
 
 // get random num from min to max included
