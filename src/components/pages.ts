@@ -136,8 +136,14 @@ export class Page {
         </div>
         <div class="game__screen_data">
             <div class="data__controls">
-                <div class="angle" ></div>
-                <div class="power" ></div>
+                <div class="data__controls_section">
+                    <div class="angle"></div>
+                    <div class="power"></div>
+                </div>
+                <div class="data__controls_section">
+                    <div class="wind"></div>
+                    <div class="player"></div>
+                </div>
             </div>
         </div>
         `;

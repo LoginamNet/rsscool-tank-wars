@@ -2,7 +2,7 @@ import { LENGTH_GUN, POWER_GUN } from '../common/constants';
 import { Field } from './field';
 import { Tank } from './tank';
 import { Ui } from './ui';
-import { checkedQuerySelector, drawCanvasArc, isGround, isOutsidePlayZone } from './utils';
+import { checkedQuerySelector, drawCanvasArc, getRandomInt, isGround, isOutsidePlayZone } from './utils';
 import { expl } from './explosion';
 import { Sounds } from './audio';
 
@@ -17,6 +17,7 @@ export class Player {
     isHitted = false;
     positionX: number;
     positionY: number;
+    wind = getRandomInt(-25, 25) / 100;
     tank: Tank;
     ui: Ui;
     static tick = 0;
@@ -46,9 +47,13 @@ export class Player {
     setPlayerInfo() {
         const angleText = checkedQuerySelector(document, '.angle');
         const powerText = checkedQuerySelector(document, '.power');
+        const windText = checkedQuerySelector(document, '.wind');
+        const playerText = checkedQuerySelector(document, '.player');
 
-        angleText.innerHTML = 'Angle: ' + this.angle;
-        powerText.innerHTML = 'Power: ' + this.power;
+        angleText.innerHTML = 'Angle: ' + this.angle + '°';
+        powerText.innerHTML = 'Power: ' + this.power + '%';
+        windText.innerHTML = 'Wind: ' + `${Math.abs(Math.round(this.wind * 100))}m/s ${this.wind < 0 ? '<<<' : '>>>'}`;
+        playerText.innerHTML = 'Player: ' + this.name;
     }
 
     setPower() {
@@ -99,9 +104,13 @@ export class Player {
         let time = 0;
         const g = -9.8 / 100;
         do {
-            xCoordinate = this.calcXCoords() + (this.power / 10) * Math.cos((this.angle / 180) * Math.PI) * time;
+            xCoordinate =
+                this.wind * time +
+                this.calcXCoords() +
+                (this.power / 10) * Math.cos((this.angle / 180) * Math.PI) * time;
 
             yCoordinate =
+                this.wind * time +
                 this.calcYCoords() -
                 ((this.power / 10) * Math.sin((this.angle / 180) * Math.PI) * time + 0.5 * g * Math.pow(time, 2));
 
@@ -140,6 +149,8 @@ export class Player {
             this.intervalId = 0;
             this.isFired = false;
             Player.animationFlag = false;
+            this.wind = getRandomInt(-25, 25) / 100;
+            this.setPlayerInfo();
         }
     }
 

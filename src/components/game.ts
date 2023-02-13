@@ -10,10 +10,10 @@ export class Game {
     ctx = this.canvas.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D;
     data = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
     field = new Field();
-    p1 = new Player(this.ctx, this.field, 350, 590, 'Gosha');
-    p2 = new Player(this.ctx, this.field, 650, 590, 'Modest');
-    p3 = new Player(this.ctx, this.field, 70, 530, 'Sigizmund');
-    p4 = new Player(this.ctx, this.field, 490, 530, 'Arcadiy');
+    p1 = new Player(this.ctx, this.field, 350, 0, 'Gosha');
+    p2 = new Player(this.ctx, this.field, 650, 0, 'Modest');
+    p3 = new Player(this.ctx, this.field, 70, 0, 'Sigizmund');
+    p4 = new Player(this.ctx, this.field, 490, 0, 'Arcadiy');
     players = Player.players;
     curentPl = this.players[0];
 
