@@ -1,4 +1,5 @@
-import { CANVAS_GROUND, CANVAS_WIDTH } from '../common/constants';
+import { CANVAS_GROUND, CANVAS_WIDTH, ARR_FIRST_NAMES } from '../common/constants';
+
 /* functions ------------------------------------------------- */
 
 // get element by selector
@@ -23,6 +24,20 @@ export function createEl(classList: string, element = 'div'): HTMLElement {
 
 export function appendEl(parent: HTMLElement, element: HTMLElement): void {
     parent.append(element);
+}
+
+// toggle class of an element by selectors
+
+export function toggleElClass(elClass: string, toggleClass: string): void {
+    const el = checkedQuerySelector(document, `.${elClass}`);
+    el.classList.toggle(toggleClass);
+}
+
+// check if element contains selector
+
+export function checkElClass(elClass: string, checkedClass: string): boolean {
+    const el = checkedQuerySelector(document, `.${elClass}`);
+    return el.classList.contains(checkedClass);
 }
 
 // draw circle wirh canvas arc method
@@ -53,4 +68,31 @@ export function isGround(pixel: ImageData) {
 
 export function isOutsidePlayZone(x: number) {
     return x < 0 || x > CANVAS_WIDTH;
+}
+
+// function get random first name
+
+export const getRandomName = (): string => {
+    const name = ARR_FIRST_NAMES[Math.floor(Math.random() * ARR_FIRST_NAMES.length)];
+    return `${name}`;
+};
+
+// function get random color
+
+export const getRandomColor = (): string => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+
+    return color;
+};
+
+// get random num from min to max included
+
+export function getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
