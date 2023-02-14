@@ -7,7 +7,7 @@ export class Tank {
 
     constructor(public initialTankPositionX: number, public initialTankPositionY: number) {}
 
-    drawBodyTank() {
+    drawBodyTank(colorTank: string) {
         // wheels
         const step = 10;
         let x = this.initialTankPositionX;
@@ -17,6 +17,7 @@ export class Tank {
             this.ctx.arc(x, this.initialTankPositionY, 3, degToRad(0), degToRad(360));
             this.ctx.fillStyle = '#000000';
             this.ctx.fill();
+            this.ctx.strokeStyle = '#000000';
             this.ctx.stroke();
             x += step;
         }
@@ -33,18 +34,18 @@ export class Tank {
         // tank tower
         this.ctx.beginPath();
         this.ctx.arc(this.initialTankPositionX + 15, this.initialTankPositionY - 7, 10, degToRad(180), degToRad(0));
-        this.ctx.fillStyle = '#000000';
+        this.ctx.fillStyle = `${colorTank}`;
         this.ctx.fill();
         this.ctx.stroke();
     }
 
-    drawTankGun(x: number, y: number) {
+    drawTankGun(x: number, y: number, colorTank: string) {
         // tank gun
         this.ctx.beginPath();
         this.ctx.moveTo(this.initialTankPositionX + 15, this.initialTankPositionY - 9);
         this.ctx.lineTo(x, y);
         this.ctx.lineWidth = 3;
-        this.ctx.strokeStyle = '#000000';
+        this.ctx.strokeStyle = `${colorTank}`;
         this.ctx.stroke();
     }
 
