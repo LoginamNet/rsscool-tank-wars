@@ -39,13 +39,13 @@ export class Tank {
         this.ctx.stroke();
     }
 
-    drawTankGun(x: number, y: number, colorTank: string) {
+    drawTankGun(x: number, y: number) {
         // tank gun
         this.ctx.beginPath();
         this.ctx.moveTo(this.initialTankPositionX + 15, this.initialTankPositionY - 9);
         this.ctx.lineTo(x, y);
         this.ctx.lineWidth = 3;
-        this.ctx.strokeStyle = `${colorTank}`;
+        this.ctx.strokeStyle = '#000000';
         this.ctx.stroke();
     }
 

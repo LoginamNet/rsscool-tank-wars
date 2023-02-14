@@ -82,6 +82,14 @@ export class Game {
                             Sounds.play('click');
                         }
                         break;
+                    case 'Pause':
+                        if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                            this.switchTimer();
+                        } else {
+                            toggleElClass('game__menu_container', 'game__menu_hidden');
+                        }
+                        Sounds.play('move');
+                        break;
                     case 'Escape':
                         this.stopTimer();
                         toggleElClass('game__menu_container', 'game__menu_hidden');
@@ -172,7 +180,11 @@ export class Game {
                         }
                         break;
                     case target.classList.contains('options_buttons_pause'):
-                        this.switchTimer();
+                        if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                            this.switchTimer();
+                        } else {
+                            toggleElClass('game__menu_container', 'game__menu_hidden');
+                        }
                         Sounds.play('move');
                         break;
                     case target.classList.contains('options_buttons_settings'):
@@ -242,7 +254,7 @@ export class Game {
         this.startTimer();
     }
 
-    stop() {
+    end() {
         if (this.players.length === 1) {
             this.removeControlKeys();
             this.stopTimer();
@@ -264,7 +276,7 @@ export class Game {
             window.requestAnimationFrame(this.updateAnimation.bind(this));
         } else {
             this.clean();
-            this.stop();
+            this.end();
         }
     }
 
@@ -304,6 +316,7 @@ export class Game {
     startTimer() {
         this.setTime();
         this.timerIsOn = true;
+        Page.removePause();
 
         Game.timeInt = setInterval(() => {
             if (this.time > 0) {
@@ -323,6 +336,7 @@ export class Game {
         this.setTime();
         this.timerIsOn = false;
         clearInterval(Game.timeInt);
+        Page.renderPause();
     }
 
     switchTimer() {

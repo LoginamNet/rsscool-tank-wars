@@ -19,20 +19,17 @@ export class Controls {
             case 'ArrowRight':
                 this.menuRight();
                 break;
-            case 'Enter':
+            case 'Pause':
                 State.settings.screen === 'HOME' ? Page.renderGame() : Page.renderHome();
+                Sounds.play('move');
                 break;
             case 'Space':
                 this.mainMenuFire();
                 Sounds.play('click');
                 break;
-            case 'Tab':
-                Page.renderHome();
-                Sounds.play('click');
-                break;
             case 'Escape':
                 Page.renderHome();
-                Sounds.play('click');
+                Sounds.play('move');
                 break;
             default:
                 break;
@@ -57,11 +54,11 @@ export class Controls {
                 break;
             case target.classList.contains('options_buttons_pause'):
                 State.settings.screen === 'HOME' ? Page.renderGame() : Page.renderHome();
-                Sounds.play('click');
+                Sounds.play('move');
                 break;
             case target.classList.contains('options_buttons_settings'):
                 Page.renderHome();
-                Sounds.play('click');
+                Sounds.play('move');
                 break;
             case target.classList.contains('launch__button'):
                 this.mainMenuFire();
