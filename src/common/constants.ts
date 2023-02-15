@@ -7,6 +7,7 @@ export const POWER_GUN = 50;
 export const WIND_MIN = -25;
 export const WIND_MAX = 25;
 export const WIND_RATIO = 100;
+export const ROUND_TIME = 30;
 export const ARR_FIRST_NAMES = [
     'Adam',
     'Alex',

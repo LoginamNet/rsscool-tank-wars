@@ -6,6 +6,7 @@ import { Controls } from './controls';
 import { Sounds } from './audio';
 import { Count } from './countPlayers';
 import { State } from './state';
+import { ROUND_TIME } from '../common/constants';
 
 export class Game {
     canvas = <HTMLCanvasElement>checkedQuerySelector(document, '.canvas_animation');
@@ -16,7 +17,7 @@ export class Game {
     player = this.count.getPlayers();
     players = Player.players;
     curentPl = this.players[getRandomInt(0, +State.settings.players - 1)];
-    time = 30;
+    roundTime = ROUND_TIME;
     timerIsOn = false;
     static timeInt: ReturnType<typeof setInterval>;
 
@@ -287,14 +288,14 @@ export class Game {
             this.curentPl.projectileTrajectory = [];
             this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
             this.curentPl.setPlayerInfo();
-            this.refreshTime();
+            this.setTime();
         }
     }
 
     checkTime() {
         const i = this.players.indexOf(this.curentPl);
 
-        if (this.time === 0 && !this.curentPl.isFired) {
+        if (this.roundTime === 0 && !this.curentPl.isFired) {
             this.curentPl.projectileTrajectory = [];
             this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
             this.curentPl.setPlayerInfo();
@@ -314,26 +315,26 @@ export class Game {
     }
 
     startTimer() {
-        this.setTime();
+        this.renderTime();
         this.timerIsOn = true;
         Page.removePause();
 
         Game.timeInt = setInterval(() => {
-            if (this.time > 0) {
-                this.time--;
-                this.setTime();
+            if (this.roundTime > 0) {
+                this.roundTime--;
+                this.renderTime();
             } else {
                 if (!this.curentPl.isFired) {
                     this.checkTime();
-                    this.refreshTime();
+                    this.setTime();
                 }
             }
-            return this.time;
+            return this.roundTime;
         }, 1000);
     }
 
     stopTimer() {
-        this.setTime();
+        this.renderTime();
         this.timerIsOn = false;
         clearInterval(Game.timeInt);
         Page.renderPause();
@@ -343,13 +344,13 @@ export class Game {
         this.timerIsOn ? this.stopTimer() : this.startTimer();
     }
 
-    setTime() {
+    renderTime() {
         const timeText = checkedQuerySelector(document, '.time');
-        timeText.innerHTML = `TIME:` + this.time;
+        timeText.innerHTML = `TIME:` + this.roundTime;
     }
 
-    refreshTime() {
-        this.time = 30;
-        this.setTime();
+    setTime() {
+        this.roundTime = ROUND_TIME;
+        this.renderTime();
     }
 }

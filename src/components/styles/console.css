@@ -136,10 +136,6 @@
     box-shadow: -2px 3px 3px 0 rgba(0, 0, 0, 0.644);
 }
 
-.options_button:active {
-    transform: scale(0.95);
-}
-
 .cross__options_text {
     border: 5px solid transparent;
 }
@@ -162,6 +158,8 @@
     font-weight: bold;
 }
 
+
+.options_button:active,
 .launch__button:active {
     transform: scale(0.95);
 }
