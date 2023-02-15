@@ -1,5 +1,5 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../common/constants';
-import { checkedQuerySelector } from './utils';
+import { checkedQuerySelector, createEl } from './utils';
 import { Game } from './game';
 import { Player } from './player';
 import { Controls } from './controls';
@@ -11,6 +11,7 @@ import './styles/game.css';
 import './styles/winner.css';
 import './styles/menu.css';
 import './styles/instructions.css';
+import './styles/pause.css';
 
 export class Page {
     static body = checkedQuerySelector(document, 'body');
@@ -63,30 +64,30 @@ export class Page {
                 <div class="menu__item_mode menu__item menu__item_selected">
                 <span>GAME MODE:</span>
                 <div class="menu__switchers">
-                    <div class="menu__switcher menu__switcher_selected">PvE</div>
-                    <div class="menu__switcher">PvP</div>
+                    <div class="menu__switcher" id="PvE">PvE</div>
+                    <div class="menu__switcher" id="PvP">PvP</div>
                 </div>
                 </div>
                 <div class="menu__item_players menu__item">
                     <span>PvP PLAYERS:</span>
                     <div class="menu__switchers">
-                        <div class="menu__switcher">2</div>
-                        <div class="menu__switcher">3</div>
-                        <div class="menu__switcher menu__switcher_selected">4</div>
+                        <div class="menu__switcher" id="2">2</div>
+                        <div class="menu__switcher" id="3">3</div>
+                        <div class="menu__switcher" id="4">4</div>
                     </div>
                 </div>
                 <div class="menu__item_sound menu__item">
                     <span>SOUNDS:</span>
                     <div class="menu__switchers">
-                        <div class="menu__switcher menu__switcher_selected">ON</div>
-                        <div class="menu__switcher">OFF</div>
+                        <div class="menu__switcher" id="ON">ON</div>
+                        <div class="menu__switcher" id="OFF">OFF</div>
                     </div>
                 </div>
                 <div class="menu__item_language menu__item">
                     <span>LANGUAGE:</span>
                     <div class="menu__switchers">
-                        <div class="menu__switcher menu__switcher_selected">EN</div>
-                        <div class="menu__switcher">РУС</div>
+                        <div class="menu__switcher" id="EN">EN</div>
+                        <div class="menu__switcher" id="РУС">РУС</div>
                     </div>
                 </div>
                 <button class="menu__item">HOW TO PLAY</button>
@@ -98,6 +99,7 @@ export class Page {
         Controls.removeMainMenuControls();
         screen.innerHTML = template;
         State.settings.screen = 'HOME';
+        State.setMenuItems();
         Controls.setMainMenuControls();
     }
 
@@ -116,15 +118,15 @@ export class Page {
                     <div class="menu__item_sound menu__item item menu__item_selected">
                         <span>SOUNDS:</span>
                         <div class="menu__switchers">
-                            <div class="menu__switcher menu__switcher_selected">ON</div>
-                            <div class="menu__switcher">OFF</div>
+                            <div class="menu__switcher" id="ON">ON</div>
+                            <div class="menu__switcher" id="OFF">OFF</div>
                         </div>
                     </div>
                     <div class="menu__item_language menu__item">
                         <span>LANGUAGE:</span>
                         <div class="menu__switchers">
-                            <div class="menu__switcher menu__switcher_selected">EN</div>
-                            <div class="menu__switcher">РУС</div>
+                            <div class="menu__switcher" id="EN">EN</div>
+                            <div class="menu__switcher" id="РУС">РУС</div>
                         </div>
                     </div>
                     <button class="menu__item">HOW TO PLAY</button>
@@ -141,8 +143,14 @@ export class Page {
                     <div class="power"></div>
                 </div>
                 <div class="data__controls_section">
+                    <div class="time"></div>
+                </div>
+                <div class="data__controls_section">
                     <div class="wind"></div>
-                    <div class="player"></div>
+                    <div class="player__info">
+                        <div class="player"></div>
+                        <div class="color"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -151,6 +159,7 @@ export class Page {
         Controls.removeMainMenuControls();
         screen.innerHTML = template;
         State.settings.screen = 'GAME';
+        State.setMenuItems();
         const game = new Game();
         game.start();
     }
@@ -197,5 +206,27 @@ export class Page {
 
         screen.innerHTML = template;
         Controls.setInstructionsControls();
+    }
+
+    static renderPause() {
+        const screen = checkedQuerySelector(document, '.game__screen');
+        const pause = createEl('screen__pause', 'div');
+        const template = `
+            <div class="pause__text">PAUSE</div>        
+        `;
+
+        pause.innerHTML = template;
+
+        if (document.querySelector('.screen__pause') === null) {
+            screen.append(pause);
+        }
+    }
+
+    static removePause() {
+        if (document.querySelector('.screen__pause') !== null) {
+            const pause = checkedQuerySelector(document, '.screen__pause');
+
+            pause.remove();
+        }
     }
 }

@@ -2,7 +2,7 @@ import { LENGTH_GUN, POWER_GUN } from '../common/constants';
 import { Field } from './field';
 import { Tank } from './tank';
 import { Ui } from './ui';
-import { checkedQuerySelector, drawCanvasArc, getRandomInt, isGround, isOutsidePlayZone } from './utils';
+import { checkedQuerySelector, drawCanvasArc, getRandomWind, isGround, isOutsidePlayZone } from './utils';
 import { expl } from './explosion';
 import { Sounds } from './audio';
 
@@ -17,7 +17,7 @@ export class Player {
     isHitted = false;
     positionX: number;
     positionY: number;
-    wind = getRandomInt(-25, 25) / 100;
+    wind = getRandomWind();
     tank: Tank;
     ui: Ui;
     static tick = 0;
@@ -50,10 +50,12 @@ export class Player {
         const powerText = checkedQuerySelector(document, '.power');
         const windText = checkedQuerySelector(document, '.wind');
         const playerText = checkedQuerySelector(document, '.player');
+        const playerColor = checkedQuerySelector(document, '.color');
         angleText.innerHTML = 'Angle: ' + this.angle + '°';
         powerText.innerHTML = 'Power: ' + this.power + '%';
         windText.innerHTML = 'Wind: ' + `${Math.abs(Math.round(this.wind * 100))}m/s ${this.wind < 0 ? '<<<' : '>>>'}`;
-        playerText.innerHTML = 'Player: ' + this.name;
+        playerText.innerHTML = 'Plr: ' + this.name;
+        playerColor.style.backgroundColor = this.colorTank;
     }
 
     setPower() {
@@ -110,7 +112,6 @@ export class Player {
                 (this.power / 10) * Math.cos((this.angle / 180) * Math.PI) * time;
 
             yCoordinate =
-                this.wind * time +
                 this.calcYCoords() -
                 ((this.power / 10) * Math.sin((this.angle / 180) * Math.PI) * time + 0.5 * g * Math.pow(time, 2));
 
@@ -149,7 +150,7 @@ export class Player {
             this.intervalId = 0;
             this.isFired = false;
             Player.animationFlag = false;
-            this.wind = getRandomInt(-25, 25) / 100;
+            this.wind = getRandomWind();
             this.setPlayerInfo();
         }
     }
@@ -201,8 +202,8 @@ export class Player {
     drawPlayer() {
         this.tank.initialTankPositionX = this.positionX;
         this.tank.initialTankPositionY = this.positionY;
+        this.tank.drawTankGun(this.calcXCoords(), this.calcYCoords());
         this.tank.drawBodyTank(this.colorTank);
-        this.tank.drawTankGun(this.calcXCoords(), this.calcYCoords(), this.colorTank);
     }
 
     clearPlayers() {

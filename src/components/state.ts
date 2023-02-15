@@ -31,7 +31,17 @@ export class State {
                     break;
             }
         }
+    }
 
-        console.log(State.settings);
+    static setMenuItems() {
+        const options = document.querySelectorAll('.menu__switcher');
+
+        for (const option of options) {
+            for (const item of Object.values(State.settings)) {
+                if (option.id === item) {
+                    option.classList.add('menu__switcher_selected');
+                }
+            }
+        }
     }
 }

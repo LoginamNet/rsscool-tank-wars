@@ -1,4 +1,4 @@
-import { CANVAS_GROUND, CANVAS_WIDTH, ARR_FIRST_NAMES } from '../common/constants';
+import { CANVAS_GROUND, CANVAS_WIDTH, ARR_FIRST_NAMES, WIND_MIN, WIND_MAX, WIND_RATIO } from '../common/constants';
 
 /* functions ------------------------------------------------- */
 
@@ -95,4 +95,10 @@ export function getRandomInt(min: number, max: number) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// get random wind
+
+export function getRandomWind() {
+    return getRandomInt(WIND_MIN, WIND_MAX) / WIND_RATIO;
 }

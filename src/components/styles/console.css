@@ -87,7 +87,8 @@
 }
 
 .cross__arrow:active {
-  background-color: rgb(255, 255, 255);
+    background-color: rgb(83, 83, 83);
+    transform: scale(0.9);
 }
 
 .cross__arrow_up,
@@ -135,10 +136,6 @@
     box-shadow: -2px 3px 3px 0 rgba(0, 0, 0, 0.644);
 }
 
-.options_button:active {
-  background-color: rgb(107, 107, 107);
-}
-
 .cross__options_text {
     border: 5px solid transparent;
 }
@@ -161,8 +158,10 @@
     font-weight: bold;
 }
 
+
+.options_button:active,
 .launch__button:active {
-  background-color: #950101;
+    transform: scale(0.95);
 }
 
 /* game-naming ------------------------------------------------- */
