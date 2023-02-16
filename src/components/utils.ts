@@ -1,4 +1,5 @@
 import { CANVAS_GROUND, CANVAS_WIDTH, ARR_FIRST_NAMES, WIND_MIN, WIND_MAX, WIND_RATIO } from '../common/constants';
+import { Player } from './player';
 
 /* functions ------------------------------------------------- */
 
@@ -8,6 +9,16 @@ export function checkedQuerySelector(parent: Element | Document, selector: strin
     const el = parent.querySelector(selector);
     if (!el) {
         throw new Error(`Selector ${selector} didn't match any elements.`);
+    }
+    return el as HTMLElement;
+}
+
+// get element by id
+
+export function checkedID(parent: HTMLFormElement | Document, id: string): HTMLElement {
+    const el = parent.getElementById(id);
+    if (!el) {
+        throw new Error(`ID ${id} didn't match any elements.`);
     }
     return el as HTMLElement;
 }
@@ -73,8 +84,14 @@ export function isOutsidePlayZone(x: number) {
 // function get random first name
 
 export const getRandomName = (): string => {
-    const name = ARR_FIRST_NAMES[Math.floor(Math.random() * ARR_FIRST_NAMES.length)];
-    return `${name}`;
+    let playerName = '';
+    const randomName = ARR_FIRST_NAMES[Math.floor(Math.random() * ARR_FIRST_NAMES.length)];
+
+    Player.players.every((player) => player.name !== randomName)
+        ? (playerName = randomName)
+        : (playerName = getRandomName());
+
+    return playerName;
 };
 
 // function get random color

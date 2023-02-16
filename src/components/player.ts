@@ -5,6 +5,7 @@ import { Ui } from './ui';
 import { checkedQuerySelector, drawCanvasArc, getRandomWind, isGround, isOutsidePlayZone } from './utils';
 import { expl } from './explosion';
 import { Sounds } from './audio';
+import { Translate } from './translation';
 
 export class Player {
     name: string;
@@ -51,40 +52,39 @@ export class Player {
         const windText = checkedQuerySelector(document, '.wind');
         const playerText = checkedQuerySelector(document, '.player');
         const playerColor = checkedQuerySelector(document, '.color');
-        angleText.innerHTML = 'Angle: ' + this.angle + '°';
-        powerText.innerHTML = 'Power: ' + this.power + '%';
-        windText.innerHTML = 'Wind: ' + `${Math.abs(Math.round(this.wind * 100))}m/s ${this.wind < 0 ? '<<<' : '>>>'}`;
-        playerText.innerHTML = 'Plr: ' + this.name;
+        angleText.innerHTML = Translate.setLang().screen.angle + this.angle + '°';
+        powerText.innerHTML = Translate.setLang().screen.power + this.power + '%';
+        windText.innerHTML =
+            Translate.setLang().screen.wind +
+            `${Math.abs(Math.round(this.wind * 100))}${Translate.setLang().screen.windSpeed} ${
+                this.wind < 0 ? '<<<' : '>>>'
+            }`;
+        playerText.innerHTML = Translate.setLang().screen.player + this.name;
         playerColor.style.backgroundColor = this.colorTank;
-    }
-
-    setPower() {
-        const angleText = checkedQuerySelector(document, '.power');
-        angleText.innerHTML = 'Power: ' + this.power;
     }
 
     angleUp() {
         this.angle < 180 ? this.angle++ : (this.angle = 180);
         const angleText = checkedQuerySelector(document, '.angle');
-        angleText.innerHTML = 'Angle: ' + this.angle;
+        angleText.innerHTML = Translate.setLang().screen.angle + this.angle;
     }
 
     angleDown() {
         this.angle > 0 ? this.angle-- : (this.angle = 0);
         const angleText = checkedQuerySelector(document, '.angle');
-        angleText.innerHTML = 'Angle: ' + this.angle;
+        angleText.innerHTML = Translate.setLang().screen.angle + this.angle;
     }
 
     powerUp() {
         this.power < 100 ? this.power++ : (this.power = 100);
         const powerText = checkedQuerySelector(document, '.power');
-        powerText.innerHTML = 'Power: ' + this.power;
+        powerText.innerHTML = Translate.setLang().screen.power + this.power;
     }
 
     powerDown() {
         this.power > 0 ? this.power-- : (this.power = 0);
         const powerText = checkedQuerySelector(document, '.power');
-        powerText.innerHTML = 'Power: ' + this.power;
+        powerText.innerHTML = Translate.setLang().screen.power + this.power;
     }
 
     private calcAngle() {
@@ -92,11 +92,11 @@ export class Player {
     }
 
     private calcXCoords() {
-        return this.initialTankPositionX + 15 + Math.cos(this.calcAngle()) * LENGTH_GUN;
+        return this.initialTankPositionX + 13 + Math.cos(this.calcAngle()) * LENGTH_GUN;
     }
 
     private calcYCoords() {
-        return this.initialTankPositionY - 9 + Math.sin(this.calcAngle()) * LENGTH_GUN;
+        return this.initialTankPositionY - 6 + Math.sin(this.calcAngle()) * LENGTH_GUN;
     }
 
     private calculateTrajectory(players: Player[]) {
