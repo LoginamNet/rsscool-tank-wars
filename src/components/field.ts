@@ -1,6 +1,6 @@
 import { CANVAS_HEIGHT, CANVAS_WIDTH, CANVAS_GROUND, CANVAS_FLY } from '../common/constants';
-import { checkedQuerySelector } from './utils';
-import { map1 } from './maps/map';
+import { checkedQuerySelector, getRandomInt } from './utils';
+import { mapsArr } from './maps/map';
 import { Player } from './player';
 
 export class Field {
@@ -32,7 +32,7 @@ export class Field {
     }
 
     private loadMap() {
-        this.context.drawImage(map1, 0, 0);
+        this.context.drawImage(mapsArr[getRandomInt(0, mapsArr.length - 1)], 0, 0);
         const imageData = this.context.getImageData(0, 0, this.canvas.width, this.canvas.height);
         this.repainting(imageData, CANVAS_FLY, CANVAS_GROUND);
         this.context.putImageData(imageData, 0, 0);

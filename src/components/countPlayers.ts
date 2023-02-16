@@ -15,19 +15,19 @@ export class Count {
         // }
         switch (this.num) {
             case 2:
-                new Player(this.ctx, this.field, 70, 530, getRandomName(), getRandomColor());
-                new Player(this.ctx, this.field, 650, 590, getRandomName(), getRandomColor());
+                new Player(this.ctx, this.field, 35, 0, getRandomName(), getRandomColor());
+                new Player(this.ctx, this.field, 745, 0, getRandomName(), getRandomColor());
                 break;
             case 3:
-                new Player(this.ctx, this.field, 350, 590, getRandomName(), getRandomColor());
-                new Player(this.ctx, this.field, 70, 530, getRandomName(), getRandomColor());
-                new Player(this.ctx, this.field, 650, 590, getRandomName(), getRandomColor());
+                new Player(this.ctx, this.field, 35, 0, getRandomName(), getRandomColor());
+                new Player(this.ctx, this.field, 385, 0, getRandomName(), getRandomColor());
+                new Player(this.ctx, this.field, 745, 0, getRandomName(), getRandomColor());
                 break;
             case 4:
-                new Player(this.ctx, this.field, 350, 590, getRandomName(), getRandomColor());
-                new Player(this.ctx, this.field, 650, 590, getRandomName(), getRandomColor());
-                new Player(this.ctx, this.field, 70, 530, getRandomName(), getRandomColor());
-                new Player(this.ctx, this.field, 490, 530, getRandomName(), getRandomColor());
+                new Player(this.ctx, this.field, 35, 0, getRandomName(), getRandomColor());
+                new Player(this.ctx, this.field, 265, 0, getRandomName(), getRandomColor());
+                new Player(this.ctx, this.field, 505, 0, getRandomName(), getRandomColor());
+                new Player(this.ctx, this.field, 745, 0, getRandomName(), getRandomColor());
                 break;
         }
     }
