@@ -12,6 +12,16 @@ export function checkedQuerySelector(parent: Element | Document, selector: strin
     return el as HTMLElement;
 }
 
+// get element by id
+
+export function checkedID(parent: HTMLFormElement | Document, id: string): HTMLElement {
+    const el = parent.getElementById(id);
+    if (!el) {
+        throw new Error(`ID ${id} didn't match any elements.`);
+    }
+    return el as HTMLElement;
+}
+
 // create new HTML element and add selectors
 
 export function createEl(classList: string, element = 'div'): HTMLElement {

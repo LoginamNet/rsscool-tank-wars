@@ -1,3 +1,4 @@
+import { Translate } from './translation';
 import { checkedQuerySelector } from './utils';
 
 export class State {
@@ -16,16 +17,17 @@ export class State {
         if (option) {
             switch (true) {
                 case item.classList.contains('menu__item_mode'):
-                    State.settings.mode = option.innerHTML;
+                    State.settings.mode = option.id;
                     break;
                 case item.classList.contains('menu__item_players'):
-                    State.settings.players = option.innerHTML;
+                    State.settings.players = option.id;
                     break;
                 case item.classList.contains('menu__item_sound'):
-                    State.settings.sound = option.innerHTML;
+                    State.settings.sound = option.id;
                     break;
                 case item.classList.contains('menu__item_language'):
-                    State.settings.language = option.innerHTML;
+                    State.settings.language = option.id;
+                    Translate.setMenuLang();
                     break;
                 default:
                     break;

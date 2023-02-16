@@ -5,6 +5,7 @@ import { Player } from './player';
 import { Controls } from './controls';
 import { State } from './state';
 import { Sounds } from './audio';
+import { Translate } from './translation';
 import './styles/console.css';
 import './styles/home.css';
 import './styles/game.css';
@@ -43,12 +44,12 @@ export class Page {
                         <button class="options_button options_buttons_settings"></button>
                     </div>
                     <div class="cross__options_text">
-                        <span class="options_text">Pause/Start</span>
-                        <span class="options_text">Settings</span>
+                        <span class="options_text options_text_pause">${Translate.setLang().pauseBtn}</span>
+                        <span class="options_text options_text_settings">${Translate.setLang().settingsBtn}</span>
                     </div>
                 </div>
                 <div class="game__controls_circle">
-                    <button class="launch__button">FIRE!</button>
+                    <button class="launch__button">${Translate.setLang().fireBtn}</button>
                 </div>
             </div>
         </div>
@@ -62,14 +63,14 @@ export class Page {
             <h1 class="home__screen_title">TANK WARS</h1>
             <div class="screen__menu">
                 <div class="menu__item_mode menu__item menu__item_selected">
-                <span>GAME MODE:</span>
+                <span id="mode">${Translate.setLang().mode}</span>
                 <div class="menu__switchers">
                     <div class="menu__switcher" id="PvE">PvE</div>
                     <div class="menu__switcher" id="PvP">PvP</div>
                 </div>
                 </div>
                 <div class="menu__item_players menu__item">
-                    <span>PvP PLAYERS:</span>
+                    <span id="players_num">${Translate.setLang().playersNum}</span>
                     <div class="menu__switchers">
                         <div class="menu__switcher" id="2">2</div>
                         <div class="menu__switcher" id="3">3</div>
@@ -77,21 +78,21 @@ export class Page {
                     </div>
                 </div>
                 <div class="menu__item_sound menu__item">
-                    <span>SOUNDS:</span>
+                    <span id="sound">${Translate.setLang().sound}</span>
                     <div class="menu__switchers">
-                        <div class="menu__switcher" id="ON">ON</div>
-                        <div class="menu__switcher" id="OFF">OFF</div>
+                        <div class="menu__switcher" id="ON">${Translate.setLang().soundON}</div>
+                        <div class="menu__switcher" id="OFF">${Translate.setLang().soundOFF}</div>
                     </div>
                 </div>
                 <div class="menu__item_language menu__item">
-                    <span>LANGUAGE:</span>
+                    <span id="lang">${Translate.setLang().lang}</span>
                     <div class="menu__switchers">
                         <div class="menu__switcher" id="EN">EN</div>
                         <div class="menu__switcher" id="РУС">РУС</div>
                     </div>
                 </div>
-                <button class="menu__item">HOW TO PLAY</button>
-                <button class="menu__item">START GAME</button>
+                <button class="menu__item" id="btn_instructions">${Translate.setLang().inst}</button>
+                <button class="menu__item" id="btn_start">${Translate.setLang().start}</button>
             </div>
         </div>
         `;
@@ -116,22 +117,22 @@ export class Page {
             <div class="game__menu_container game__menu_hidden" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px"">
                 <div class="screen__menu">
                     <div class="menu__item_sound menu__item item menu__item_selected">
-                        <span>SOUNDS:</span>
+                        <span id="sound">${Translate.setLang().sound}</span>
                         <div class="menu__switchers">
-                            <div class="menu__switcher" id="ON">ON</div>
-                            <div class="menu__switcher" id="OFF">OFF</div>
+                            <div class="menu__switcher" id="ON">${Translate.setLang().soundON}</div>
+                            <div class="menu__switcher" id="OFF">${Translate.setLang().soundOFF}</div>
                         </div>
                     </div>
                     <div class="menu__item_language menu__item">
-                        <span>LANGUAGE:</span>
+                        <span id="lang">${Translate.setLang().lang}</span>
                         <div class="menu__switchers">
                             <div class="menu__switcher" id="EN">EN</div>
                             <div class="menu__switcher" id="РУС">РУС</div>
                         </div>
                     </div>
-                    <button class="menu__item">HOW TO PLAY</button>
-                    <button class="menu__item">BACK TO GAME</button>
-                    <button class="menu__item">BACK TO MAIN MENU</button>
+                    <button class="menu__item" id="btn_instructions">${Translate.setLang().inst}</button>
+                    <button class="menu__item" id="btn_back">${Translate.setLang().back}</button>
+                    <button class="menu__item" id="btn_menu">${Translate.setLang().menu}</button>
                 </div>
             </div>
         </div>
@@ -142,15 +143,15 @@ export class Page {
                     <div class="angle"></div>
                     <div class="power"></div>
                 </div>
-                <div class="data__controls_section">
-                    <div class="time"></div>
-                </div>
-                <div class="data__controls_section">
+                <div class="data__controls_section section_big">
                     <div class="wind"></div>
                     <div class="player__info">
                         <div class="player"></div>
                         <div class="color"></div>
                     </div>
+                </div>
+                <div class="data__controls_section">
+                    <div class="time"></div>
                 </div>
             </div>
         </div>
@@ -171,9 +172,11 @@ export class Page {
             <div class="winner__image_container">
                 <div class="winner__image"></div>
             </div>
-            <div>And the winner is ${currentPl.name}</div>
+            <div>${currentPl.name} ${Translate.setLang().winnerText}</div>
             <div class="screen__menu">
-                <button class="menu__item menu__item_selected winner__screen_restart">RESTART GAME</button>
+                <button class="menu__item menu__item_selected winner__screen_restart" id="btn_restart">
+                    ${Translate.setLang().restart}
+                </button>
             </div>
         </div>
         `;
@@ -189,18 +192,18 @@ export class Page {
         const template = `
         <div class="instructions__screen" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px">
             <div class="instructions__conraiter">
-                <h2>HOW TO PLAY</h2>
-                <span>You can use your keyboard or display buttons to control the tank</span>
+                <h2>${Translate.setLang().instructions.header}</h2>
+                <span>${Translate.setLang().instructions.info}</span>
                 <ul class="instructions__list">
-                    <li class="instructions__list_item">Kbrd UP/Cross UP - increase shot power</li>
-                    <li class="instructions__list_item">Kbrd DOWN/Cross DOWN - reduce shot power</li>
-                    <li class="instructions__list_item">Kbrd LEFT/Cross LEFT - increase tank canon angle</li>
-                    <li class="instructions__list_item">Kbrd RIGHT/Cross RIGHT - reduce tank canon angle</li>
-                    <li class="instructions__list_item">Kbrd SPACE/Button FIRE - fire projectile</li>
-                    <li class="instructions__list_item">Kbrd PAUSE/Button START/PAUSE - pause game time or start count again</li>
-                    <li class="instructions__list_item">Kbrd TAB/Button SETTINGS - open settings menu</li>
+                    <li class="instructions__list_item">${Translate.setLang().instructions.up}</li>
+                    <li class="instructions__list_item">${Translate.setLang().instructions.down}</li>
+                    <li class="instructions__list_item">${Translate.setLang().instructions.left}</li>
+                    <li class="instructions__list_item">${Translate.setLang().instructions.right}</li>
+                    <li class="instructions__list_item">${Translate.setLang().instructions.space}</li>
+                    <li class="instructions__list_item">${Translate.setLang().instructions.pause}</li>
+                    <li class="instructions__list_item">${Translate.setLang().instructions.esc}</li>
                 </ul>
-                <button class="instructions__button_back">BACK TO MENU</button>
+                <button class="instructions__button_back">${Translate.setLang().instructions.back}</button>
         </div>        
         `;
 
@@ -212,7 +215,7 @@ export class Page {
         const screen = checkedQuerySelector(document, '.game__screen');
         const pause = createEl('screen__pause', 'div');
         const template = `
-            <div class="pause__text">PAUSE</div>        
+            <div class="pause__text">${Translate.setLang().gamePaused}</div>        
         `;
 
         pause.innerHTML = template;

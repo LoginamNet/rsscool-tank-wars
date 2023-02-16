@@ -27,7 +27,11 @@
     flex-direction: column;
     justify-content: center;
     gap: 10px;
-    width: 31%;
+    width: 29%;
+}
+
+.data__controls_section + .section_big {
+    width: 42%;
 }
 
 .data__controls_section .time {
