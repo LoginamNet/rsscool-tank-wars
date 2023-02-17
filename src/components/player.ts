@@ -177,11 +177,8 @@ export class Player {
                     this.projectileTrajectory[i].x > player.initialTankPositionX - 2.5 &&
                     this.projectileTrajectory[i].x < player.initialTankPositionX + 34 &&
                     this.projectileTrajectory[i].y > player.initialTankPositionY - 10 &&
-                    this.projectileTrajectory[i].y < player.initialTankPositionY + 2.5 &&
-                    this.initialTankPositionX !== player.initialTankPositionX
+                    this.projectileTrajectory[i].y < player.initialTankPositionY + 2.5
                 ) {
-                    // this.ctx.fillStyle = 'orange';
-                    // drawCanvasArc(this.ctx, player.initialPositionX + 15, player.initialPositionY - 5, 25);
                     players.map((item) => {
                         if (item.initialTankPositionX === player.initialTankPositionX) {
                             item.isHitted = true;

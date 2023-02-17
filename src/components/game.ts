@@ -293,7 +293,10 @@ export class Game {
     checkHit() {
         const i = this.players.indexOf(this.curentPl);
 
-        if (this.curentPl.isTerrainHit() && !this.curentPl.isTargetHit(this.players) && !this.curentPl.isFired) {
+        if (
+            ((this.curentPl.isTerrainHit() && !this.curentPl.isTargetHit(this.players)) || this.curentPl.isHitted) &&
+            !this.curentPl.isFired
+        ) {
             this.curentPl.projectileTrajectory = [];
             this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
             this.curentPl.setPlayerInfo();
