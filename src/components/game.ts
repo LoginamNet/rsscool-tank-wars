@@ -247,7 +247,6 @@ export class Game {
     }
 
     start() {
-        console.log(this.players);
         this.clean();
         this.field.generate(this.setPositionTank, this.players, this.field); //drawing ground and sky and setTank
         this.setControlKeys();
@@ -269,10 +268,13 @@ export class Game {
         this.curentPl.drawFire();
         this.checkHit();
 
-        if (Player.animationExplosionFlag) {
-            Player.drawExplosion();
+        if (Player.animationExplosionTankFlag) {
+            Player.drawExplosionTank();
+        } else {
+            if (Player.animationExplosionShellFlag) {
+                Player.drawExplosionShell();
+            }
         }
-
         if (Player.animationFlag) {
             window.requestAnimationFrame(this.updateAnimation.bind(this));
         } else {
