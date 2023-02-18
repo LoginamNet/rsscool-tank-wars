@@ -24,6 +24,10 @@ const baseConfig = {
                 test: /\.(png|svg|jpg|jpeg|webp|gif|ico|gif|wav|mp3)$/i,
                 type: 'asset/resource',
             },
+            {
+                test: /\.(woff(2)?)|eot|ttf|otf$/i,
+                type: 'asset/inline',
+            },
         ],
     },
     resolve: {

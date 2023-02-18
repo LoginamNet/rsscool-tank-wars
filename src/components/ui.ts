@@ -5,6 +5,10 @@ import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../common/constants';
 export class Ui {
     canvas = <HTMLCanvasElement>checkedQuerySelector(document, '.canvas_ui');
     ctx = this.canvas.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D;
+    constructor() {
+        this.ctx.font = '9px PressStart2P';
+        this.ctx.fillStyle = '#FFFFFF';
+    }
 
     renderTanksName(players: Player[]) {
         this.clearUi();
@@ -18,8 +22,7 @@ export class Ui {
     }
 
     private renderTankName(player: Player) {
-        this.ctx.font = '16px serif';
-        this.ctx.fillStyle = '#FFFFFF';
-        this.ctx.fillText(player.name, player.positionX - 10, player.positionY - 40);
+        const biasName = 12 - (player.name.length * 9) / 2;
+        this.ctx.fillText(player.name, player.positionX + biasName, player.positionY - 40);
     }
 }

@@ -18,7 +18,6 @@ export const ARR_FIRST_NAMES = [
     'Carl',
     'Cristiano',
     'Charles',
-    'Christopher',
     'Dan',
     'David',
     'Daniel',
