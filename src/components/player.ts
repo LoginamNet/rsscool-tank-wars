@@ -78,7 +78,7 @@ export class Player {
     }
 
     powerUp() {
-        this.power < 100 ? this.power++ : (this.power = 100);
+        this.power < 125 ? this.power++ : (this.power = 125);
         const powerText = checkedQuerySelector(document, '.power');
         powerText.innerHTML = Translate.setLang().screen.power + this.power;
     }
@@ -214,17 +214,8 @@ export class Player {
     }
 
     drawTerrainHit() {
-        if (
-            this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 &&
-            isOutsidePlayZone(this.projectileTrajectory[this.projectileTrajectory.length - 1].x)
-        ) {
-            this.ctx.fillStyle = 'red';
-            drawCanvasArc(
-                this.ctx,
-                this.projectileTrajectory[this.projectileTrajectory.length - 1].x,
-                this.projectileTrajectory[this.projectileTrajectory.length - 1].y - 5,
-                10
-            );
+        if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 && this.isTerrainHit()) {
+            Sounds.play('damage_po_zemle');
         }
     }
 
