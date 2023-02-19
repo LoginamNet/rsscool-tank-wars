@@ -150,17 +150,17 @@ export class Controls {
     private static mainMenuFire() {
         const item = checkedQuerySelector(document, '.menu__item_selected');
         switch (true) {
-            case item.innerText === 'HOW TO PLAY':
+            case item.id === 'btn_instructions':
                 Page.renderInstructions();
                 break;
-            case item.innerText === 'START GAME':
+            case item.id === 'btn_start':
                 Page.renderGame();
                 // Sounds.play('intro', 0);
                 break;
-            case item.innerText === 'BACK TO MENU':
+            case item.id === 'btn_back':
                 Page.renderHome();
                 break;
-            case item.innerText === 'RESTART GAME':
+            case item.id === 'btn_restart':
                 Page.renderHome();
                 // Sounds.play('intro', 0.2);
                 break;

@@ -22,6 +22,7 @@
 
 .instructions__list_item {
     padding: 5px 0;
+    line-height: 150%;
 }
 
 .instructions__button_back {

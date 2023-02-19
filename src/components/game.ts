@@ -7,6 +7,7 @@ import { Sounds } from './audio';
 import { Count } from './countPlayers';
 import { State } from './state';
 import { ROUND_TIME } from '../common/constants';
+import { Translate } from './translation';
 
 export class Game {
     canvas = <HTMLCanvasElement>checkedQuerySelector(document, '.canvas_animation');
@@ -56,6 +57,8 @@ export class Game {
                             Sounds.play('scroll_gun');
                         } else {
                             Controls.menuRight();
+                            this.curentPl.setPlayerInfo();
+                            this.renderTime();
                         }
                         break;
                     case 'ArrowRight':
@@ -67,6 +70,8 @@ export class Game {
                             Sounds.play('scroll_gun');
                         } else {
                             Controls.menuLeft();
+                            this.curentPl.setPlayerInfo();
+                            this.renderTime();
                         }
                         break;
                     case 'Space':
@@ -153,6 +158,8 @@ export class Game {
                             Sounds.play('scroll_gun');
                         } else {
                             Controls.menuRight();
+                            this.curentPl.setPlayerInfo();
+                            this.renderTime();
                         }
                         break;
                     case target.classList.contains('cross__arrow_right'):
@@ -164,6 +171,8 @@ export class Game {
                             Sounds.play('scroll_gun');
                         } else {
                             Controls.menuLeft();
+                            this.curentPl.setPlayerInfo();
+                            this.renderTime();
                         }
                         break;
                     case target.classList.contains('launch__button'):
@@ -216,13 +225,13 @@ export class Game {
     private menuFire() {
         const item = checkedQuerySelector(document, '.menu__item_selected');
         switch (true) {
-            case item.innerText === 'HOW TO PLAY':
+            case item.id === 'btn_instructions':
                 Page.renderInstructions();
                 break;
-            case item.innerText === 'BACK TO GAME':
+            case item.id === 'btn_back':
                 toggleElClass('game__menu_container', 'game__menu_hidden');
                 break;
-            case item.innerText === 'BACK TO MAIN MENU':
+            case item.id === 'btn_menu':
                 this.removeControlKeys();
                 Player.players = [];
                 Page.renderHome();
@@ -286,7 +295,10 @@ export class Game {
     checkHit() {
         const i = this.players.indexOf(this.curentPl);
 
-        if (this.curentPl.isTerrainHit() && !this.curentPl.isTargetHit(this.players) && !this.curentPl.isFired) {
+        if (
+            ((this.curentPl.isTerrainHit() && !this.curentPl.isTargetHit(this.players)) || this.curentPl.isHitted) &&
+            !this.curentPl.isFired
+        ) {
             this.curentPl.projectileTrajectory = [];
             this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
             this.curentPl.setPlayerInfo();
@@ -348,7 +360,7 @@ export class Game {
 
     renderTime() {
         const timeText = checkedQuerySelector(document, '.time');
-        timeText.innerHTML = `TIME:` + this.roundTime;
+        timeText.innerHTML = Translate.setLang().screen.time + this.roundTime.toString().padStart(2, '0');
     }
 
     setTime() {
