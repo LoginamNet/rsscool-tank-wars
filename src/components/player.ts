@@ -222,7 +222,7 @@ export class Player {
 
     drawTerrainHit() {
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 && this.isTerrainHit()) {
-            Sounds.play(Sound.terrainExplosion);
+            Sounds.play(Sound.terrainExplosion, 0.3);
         }
     }
 

@@ -39,11 +39,12 @@ export class Game {
 
         if (Player.animationExplosionTankFlag) {
             Player.drawExplosionTank();
-        } else {
-            if (Player.animationExplosionShellFlag) {
-                Player.drawExplosionShell();
-            }
         }
+
+        if (Player.animationExplosionShellFlag) {
+            Player.drawExplosionShell();
+        }
+
         if (Player.animationFlag) {
             window.requestAnimationFrame(Game.updateAnimation.bind(this));
         } else {

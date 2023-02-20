@@ -287,7 +287,7 @@ export class Controls {
             window.requestAnimationFrame(Game.updateAnimation.bind(this));
             State.game.currentPl?.fireProjectile(State.game.players);
             if (!Timer.timerIsOn) Timer.startTimer();
-            Sounds.play(Sound.tankExplosion, 0.3);
+            Sounds.play(Sound.shot, 0.3);
         }
     }
 
