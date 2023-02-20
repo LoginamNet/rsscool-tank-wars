@@ -3,7 +3,8 @@ import { Field } from './field';
 import { Tank } from './tank';
 import { Ui } from './ui';
 import { checkedQuerySelector, drawCanvasArc, getRandomWind, isGround, isOutsidePlayZone } from './utils';
-import { expl } from './explosion';
+import { explTank } from './explosion';
+import { explShell } from './explosion-shell';
 import { Sounds } from './audio';
 import { Translate } from './translation';
 
@@ -25,7 +26,8 @@ export class Player {
     static explosionX = 0;
     static explosionY = 0;
     static players: Player[] = [];
-    static animationExplosionFlag = false;
+    static animationExplosionTankFlag = false;
+    static animationExplosionShellFlag = false;
     static animationFlag = false;
     static ctx: CanvasRenderingContext2D;
 
@@ -76,7 +78,7 @@ export class Player {
     }
 
     powerUp() {
-        this.power < 100 ? this.power++ : (this.power = 100);
+        this.power < 125 ? this.power++ : (this.power = 125);
         const powerText = checkedQuerySelector(document, '.power');
         powerText.innerHTML = Translate.setLang().screen.power + this.power;
     }
@@ -141,6 +143,10 @@ export class Player {
         this.currentTrajectoryIndex++;
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1) {
             this.endShot();
+            Player.explosionX = this.projectileTrajectory[this.currentTrajectoryIndex].x;
+            Player.explosionY = this.projectileTrajectory[this.currentTrajectoryIndex].y;
+            Player.animationExplosionShellFlag = true;
+            Player.ctx = this.ctx;
         }
     }
 
@@ -149,7 +155,7 @@ export class Player {
             clearInterval(this.intervalId);
             this.intervalId = 0;
             this.isFired = false;
-            Player.animationFlag = false;
+            // Player.animationFlag = false;
             this.wind = getRandomWind();
             this.setPlayerInfo();
         }
@@ -177,11 +183,8 @@ export class Player {
                     this.projectileTrajectory[i].x > player.initialTankPositionX - 2.5 &&
                     this.projectileTrajectory[i].x < player.initialTankPositionX + 34 &&
                     this.projectileTrajectory[i].y > player.initialTankPositionY - 10 &&
-                    this.projectileTrajectory[i].y < player.initialTankPositionY + 2.5 &&
-                    this.initialTankPositionX !== player.initialTankPositionX
+                    this.projectileTrajectory[i].y < player.initialTankPositionY + 2.5
                 ) {
-                    // this.ctx.fillStyle = 'orange';
-                    // drawCanvasArc(this.ctx, player.initialPositionX + 15, player.initialPositionY - 5, 25);
                     players.map((item) => {
                         if (item.initialTankPositionX === player.initialTankPositionX) {
                             item.isHitted = true;
@@ -211,23 +214,14 @@ export class Player {
     }
 
     drawTerrainHit() {
-        if (
-            this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 &&
-            isOutsidePlayZone(this.projectileTrajectory[this.projectileTrajectory.length - 1].x)
-        ) {
-            this.ctx.fillStyle = 'red';
-            drawCanvasArc(
-                this.ctx,
-                this.projectileTrajectory[this.projectileTrajectory.length - 1].x,
-                this.projectileTrajectory[this.projectileTrajectory.length - 1].y - 5,
-                10
-            );
+        if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 && this.isTerrainHit()) {
+            Sounds.play('damage_po_zemle', 0.3);
         }
     }
 
     drawHit(players: Player[]) {
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 && this.isTargetHit(players)) {
-            Player.animationExplosionFlag = true;
+            Player.animationExplosionTankFlag = true;
             Player.ctx = this.ctx;
             Sounds.play('bang_tank');
 
@@ -273,41 +267,47 @@ export class Player {
         this.drawTerrainHit();
     }
 
-    static drawExplosion() {
-        const image = [
-            [0, 0],
-            [30, 0],
-            [60, 0],
-            [90, 0],
-            [0, 30],
-            [30, 30],
-            [60, 30],
-            [90, 30],
-            [0, 60],
-            [30, 60],
-            [60, 60],
-            [90, 60],
-            [0, 90],
-            [30, 90],
-            [60, 90],
-        ];
-        const tickFrame = Math.floor(Player.tick / 10);
+    static drawExplosionTank() {
+        const tickFrame = Math.floor(Player.tick / explTank.speed);
         Player.animationFlag = true;
+        Player.animationExplosionShellFlag = false;
         Player.ctx.drawImage(
-            expl,
-            image[tickFrame][0],
-            image[tickFrame][1],
-            30,
-            30,
-            Player.explosionX - 10,
-            Player.explosionY - 40,
-            45,
-            45
+            explTank.img,
+            explTank.frame[tickFrame][0],
+            explTank.frame[tickFrame][1],
+            explTank.width,
+            explTank.height,
+            Player.explosionX - 20,
+            Player.explosionY - 70,
+            66,
+            81
         );
         Player.tick++;
-        if (Math.floor(this.tick / 10) === 15) {
+        if (Math.floor(this.tick / 10) === 24) {
             this.tick = 0;
-            Player.animationExplosionFlag = false;
+            Player.animationExplosionTankFlag = false;
+            Player.animationFlag = false;
+        }
+    }
+
+    static drawExplosionShell() {
+        const tickFrame = Math.floor(Player.tick / explShell.speed);
+        Player.animationFlag = true;
+        Player.ctx.drawImage(
+            explShell.img,
+            explShell.frame[tickFrame][0],
+            explShell.frame[tickFrame][1],
+            explShell.width,
+            explShell.height,
+            Player.explosionX - 15,
+            Player.explosionY - 22,
+            30,
+            30
+        );
+        Player.tick++;
+        if (Math.floor(this.tick / 10) === explShell.amountFrame) {
+            this.tick = 0;
+            Player.animationExplosionShellFlag = false;
             Player.animationFlag = false;
         }
     }

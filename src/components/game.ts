@@ -256,7 +256,6 @@ export class Game {
     }
 
     start() {
-        console.log(this.players);
         this.clean();
         this.field.generate(this.setPositionTank, this.players, this.field); //drawing ground and sky and setTank
         this.setControlKeys();
@@ -278,10 +277,13 @@ export class Game {
         this.curentPl.drawFire();
         this.checkHit();
 
-        if (Player.animationExplosionFlag) {
-            Player.drawExplosion();
+        if (Player.animationExplosionTankFlag) {
+            Player.drawExplosionTank();
+        } else {
+            if (Player.animationExplosionShellFlag) {
+                Player.drawExplosionShell();
+            }
         }
-
         if (Player.animationFlag) {
             window.requestAnimationFrame(this.updateAnimation.bind(this));
         } else {
@@ -293,7 +295,10 @@ export class Game {
     checkHit() {
         const i = this.players.indexOf(this.curentPl);
 
-        if (this.curentPl.isTerrainHit() && !this.curentPl.isTargetHit(this.players) && !this.curentPl.isFired) {
+        if (
+            ((this.curentPl.isTerrainHit() && !this.curentPl.isTargetHit(this.players)) || this.curentPl.isHitted) &&
+            !this.curentPl.isFired
+        ) {
             this.curentPl.projectileTrajectory = [];
             this.curentPl = this.players.length - 1 !== i ? this.players[i + 1] : this.players[0];
             this.curentPl.setPlayerInfo();
