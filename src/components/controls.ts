@@ -35,7 +35,7 @@ export class Controls {
                 if (State.settings.screen === 'WINNER') {
                     Page.renderHome();
                 }
-                Sounds.play('move');
+                Sounds.play(Sound.move);
                 break;
             case 'Space':
                 if (State.settings.screen === 'GAME') {
@@ -51,7 +51,7 @@ export class Controls {
                 } else {
                     Page.renderHome();
                 }
-                Sounds.play('move');
+                Sounds.play(Sound.move);
                 break;
             default:
                 break;
@@ -128,11 +128,12 @@ export class Controls {
     }
 
     private static gameDown() {
-        if (!State.game.currentPl!.isFired) {
-            State.game.currentPl!.projectileTrajectory = [];
+        if (!State.game.currentPl?.isFired) {
+            if (State.game.currentPl) State.game.currentPl.projectileTrajectory = [];
+
             if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                State.game.currentPl!.powerDown();
-                State.game.currentPl!.setPlayerInfo();
+                State.game.currentPl?.powerDown();
+                State.game.currentPl?.setPlayerInfo();
                 if (!Timer.timerIsOn) Timer.startTimer();
                 Sounds.play(Sound.scroll);
             } else {
@@ -160,11 +161,12 @@ export class Controls {
     }
 
     private static gameUp() {
-        if (!State.game.currentPl!.isFired) {
-            State.game.currentPl!.projectileTrajectory = [];
+        if (!State.game.currentPl?.isFired) {
+            if (State.game.currentPl) State.game.currentPl.projectileTrajectory = [];
+
             if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                State.game.currentPl!.powerUp();
-                State.game.currentPl!.setPlayerInfo();
+                State.game.currentPl?.powerUp();
+                State.game.currentPl?.setPlayerInfo();
                 if (!Timer.timerIsOn) Timer.startTimer();
                 Sounds.play(Sound.scroll);
             } else {
@@ -195,17 +197,18 @@ export class Controls {
     }
 
     private static gameLeft() {
-        if (!State.game.currentPl!.isFired) {
-            State.game.currentPl!.projectileTrajectory = [];
+        if (!State.game.currentPl?.isFired) {
+            if (State.game.currentPl) State.game.currentPl.projectileTrajectory = [];
+
             if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                State.game.currentPl!.angleUp();
-                State.game.currentPl!.setPlayerInfo();
+                State.game.currentPl?.angleUp();
+                State.game.currentPl?.setPlayerInfo();
                 if (!Timer.timerIsOn) Timer.startTimer();
                 Player.updateTanks();
                 Sounds.play(Sound.scroll);
             } else {
                 Controls.menuRight();
-                State.game.currentPl!.setPlayerInfo();
+                State.game.currentPl?.setPlayerInfo();
                 Timer.renderTime();
             }
         }
@@ -233,17 +236,18 @@ export class Controls {
     }
 
     private static gameRight() {
-        if (!State.game.currentPl!.isFired) {
-            State.game.currentPl!.projectileTrajectory = [];
+        if (!State.game.currentPl?.isFired) {
+            if (State.game.currentPl) State.game.currentPl.projectileTrajectory = [];
+
             if (checkElClass('game__menu_container', 'game__menu_hidden')) {
-                State.game.currentPl!.angleDown();
-                State.game.currentPl!.setPlayerInfo();
+                State.game.currentPl?.angleDown();
+                State.game.currentPl?.setPlayerInfo();
                 if (!Timer.timerIsOn) Timer.startTimer();
                 Player.updateTanks();
                 Sounds.play(Sound.scroll);
             } else {
                 Controls.menuLeft();
-                State.game.currentPl!.setPlayerInfo();
+                State.game.currentPl?.setPlayerInfo();
                 Timer.renderTime();
             }
         }
@@ -281,7 +285,7 @@ export class Controls {
         if (!Player.animationFlag) {
             Player.animationFlag = true;
             window.requestAnimationFrame(Game.updateAnimation.bind(this));
-            State.game.currentPl!.fireProjectile(State.game.players);
+            State.game.currentPl?.fireProjectile(State.game.players);
             if (!Timer.timerIsOn) Timer.startTimer();
             Sounds.play(Sound.tankExplosion, 0.3);
         }

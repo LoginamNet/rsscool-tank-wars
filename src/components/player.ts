@@ -328,7 +328,7 @@ export class Player {
     }
 
     static updateTanks() {
-        State.game.currentPl!.updatePlayers();
+        State.game.currentPl?.updatePlayers();
     }
 
     private updatePlayersUi() {

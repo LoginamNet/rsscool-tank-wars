@@ -19,7 +19,7 @@ export class Timer {
                 this.roundTime--;
                 this.renderTime();
             } else {
-                if (!State.game.currentPl!.isFired) {
+                if (!State.game.currentPl?.isFired) {
                     this.checkTime();
                     this.setTime();
                 }
@@ -54,13 +54,15 @@ export class Timer {
     }
 
     static checkTime() {
-        const i = State.game.players.indexOf(State.game.currentPl!);
+        if (State.game.currentPl) {
+            const i = State.game.players.indexOf(State.game.currentPl);
 
-        if (this.roundTime === 0 && !State.game.currentPl!.isFired) {
-            State.game.currentPl!.projectileTrajectory = [];
-            State.game.currentPl! =
-                State.game.players.length - 1 !== i ? State.game.players[i + 1] : State.game.players[0];
-            State.game.currentPl!.setPlayerInfo();
+            if (this.roundTime === 0 && !State.game.currentPl.isFired) {
+                State.game.currentPl.projectileTrajectory = [];
+                State.game.currentPl =
+                    State.game.players.length - 1 !== i ? State.game.players[i + 1] : State.game.players[0];
+                State.game.currentPl.setPlayerInfo();
+            }
         }
     }
 }

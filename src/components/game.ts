@@ -19,7 +19,7 @@ export class Game {
         Count.getPlayers();
         Game.clean();
         this.field.generate(this.setPositionTank, State.game.players, this.field); //drawing ground and sky and setTank
-        State.game.currentPl!.setPlayerInfo();
+        State.game.currentPl?.setPlayerInfo();
         Timer.startTimer();
     }
 
@@ -34,7 +34,7 @@ export class Game {
 
     static updateAnimation() {
         Game.clean();
-        State.game.currentPl!.drawFire();
+        State.game.currentPl?.drawFire();
         Game.checkHit();
 
         if (Player.animationExplosionTankFlag) {
@@ -53,18 +53,20 @@ export class Game {
     }
 
     private static checkHit() {
-        const i = State.game.players.indexOf(State.game.currentPl!);
+        if (State.game.currentPl) {
+            const i = State.game.players.indexOf(State.game.currentPl);
 
-        if (
-            ((State.game.currentPl!.isTerrainHit() && !State.game.currentPl!.isTargetHit(State.game.players)) ||
-                State.game.currentPl!.isHitted) &&
-            !State.game.currentPl!.isFired
-        ) {
-            State.game.currentPl!.projectileTrajectory = [];
-            State.game.currentPl! =
-                State.game.players.length - 1 !== i ? State.game.players[i + 1] : State.game.players[0];
-            State.game.currentPl!.setPlayerInfo();
-            Timer.setTime();
+            if (
+                ((State.game.currentPl.isTerrainHit() && !State.game.currentPl.isTargetHit(State.game.players)) ||
+                    State.game.currentPl.isHitted) &&
+                !State.game.currentPl.isFired
+            ) {
+                State.game.currentPl.projectileTrajectory = [];
+                State.game.currentPl =
+                    State.game.players.length - 1 !== i ? State.game.players[i + 1] : State.game.players[0];
+                State.game.currentPl.setPlayerInfo();
+                Timer.setTime();
+            }
         }
     }
 
