@@ -215,7 +215,7 @@ export class Player {
 
     drawTerrainHit() {
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 && this.isTerrainHit()) {
-            Sounds.play('damage_po_zemle');
+            Sounds.play('damage_po_zemle', 0.3);
         }
     }
 
