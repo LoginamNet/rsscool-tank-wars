@@ -119,3 +119,9 @@ export function getRandomInt(min: number, max: number) {
 export function getRandomWind() {
     return getRandomInt(WIND_MIN, WIND_MAX) / WIND_RATIO;
 }
+
+// calculate angle
+
+export function calcAngle(angle: number) {
+    return ((360 - angle) * Math.PI) / 180;
+}

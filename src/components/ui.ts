@@ -4,7 +4,7 @@ import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../common/constants';
 
 export class Ui {
     canvas = <HTMLCanvasElement>checkedQuerySelector(document, '.canvas_ui');
-    ctx = this.canvas.getContext('2d', { willReadFrequently: true }) as CanvasRenderingContext2D;
+    ctx = <CanvasRenderingContext2D>this.canvas.getContext('2d', { willReadFrequently: true });
     constructor() {
         this.ctx.font = '9px PressStart2P';
         this.ctx.fillStyle = '#FFFFFF';

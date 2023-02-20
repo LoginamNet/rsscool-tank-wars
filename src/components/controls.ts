@@ -5,6 +5,7 @@ import { Sounds } from './audio';
 import { Timer } from './timer';
 import { Player } from './player';
 import { Game } from './game';
+import { Sound } from '../types/types';
 
 export class Controls {
     private static addMenuKeys = (event: KeyboardEvent) => {
@@ -85,7 +86,7 @@ export class Controls {
                 if (State.settings.screen === 'WINNER') {
                     Page.renderHome();
                 }
-                Sounds.play('move');
+                Sounds.play(Sound.move);
                 break;
             case target.classList.contains('options_buttons_settings'):
                 if (State.settings.screen === 'GAME') {
@@ -94,7 +95,7 @@ export class Controls {
                 } else {
                     Page.renderHome();
                 }
-                Sounds.play('move');
+                Sounds.play(Sound.move);
                 break;
             case target.classList.contains('launch__button'):
                 if (State.settings.screen === 'GAME') {
@@ -112,7 +113,7 @@ export class Controls {
         const items = document.querySelectorAll('.menu__item');
         for (let i = 0; i < items.length; i++) {
             if (items[i].classList.contains('menu__item_selected')) {
-                Sounds.play('click');
+                Sounds.play(Sound.click);
                 if (i === items.length - 1) {
                     items[i].classList.remove('menu__item_selected');
                     items[0].classList.add('menu__item_selected');
@@ -133,7 +134,7 @@ export class Controls {
                 State.game.currentPl!.powerDown();
                 State.game.currentPl!.setPlayerInfo();
                 if (!Timer.timerIsOn) Timer.startTimer();
-                Sounds.play('scroll_gun');
+                Sounds.play(Sound.scroll);
             } else {
                 Controls.menuDown();
             }
@@ -144,7 +145,7 @@ export class Controls {
         const items = document.querySelectorAll('.menu__item');
         for (let i = 0; i < items.length; i++) {
             if (items[i].classList.contains('menu__item_selected')) {
-                Sounds.play('click');
+                Sounds.play(Sound.click);
                 if (i === 0) {
                     items[i].classList.remove('menu__item_selected');
                     items[items.length - 1].classList.add('menu__item_selected');
@@ -165,7 +166,7 @@ export class Controls {
                 State.game.currentPl!.powerUp();
                 State.game.currentPl!.setPlayerInfo();
                 if (!Timer.timerIsOn) Timer.startTimer();
-                Sounds.play('scroll_gun');
+                Sounds.play(Sound.scroll);
             } else {
                 Controls.menuUp();
             }
@@ -177,7 +178,7 @@ export class Controls {
         const options = item.querySelectorAll('.menu__switcher');
         for (let i = 0; i < options.length; i++) {
             if (options[i].classList.contains('menu__switcher_selected')) {
-                Sounds.play('move');
+                Sounds.play(Sound.move);
                 if (i === 0) {
                     options[i].classList.remove('menu__switcher_selected');
                     options[options.length - 1].classList.add('menu__switcher_selected');
@@ -201,7 +202,7 @@ export class Controls {
                 State.game.currentPl!.setPlayerInfo();
                 if (!Timer.timerIsOn) Timer.startTimer();
                 Player.updateTanks();
-                Sounds.play('scroll_gun');
+                Sounds.play(Sound.scroll);
             } else {
                 Controls.menuRight();
                 State.game.currentPl!.setPlayerInfo();
@@ -215,7 +216,7 @@ export class Controls {
         const options = item.querySelectorAll('.menu__switcher');
         for (let i = 0; i < options.length; i++) {
             if (options[i].classList.contains('menu__switcher_selected')) {
-                Sounds.play('move');
+                Sounds.play(Sound.move);
                 if (i === options.length - 1) {
                     options[i].classList.remove('menu__switcher_selected');
                     options[0].classList.add('menu__switcher_selected');
@@ -239,7 +240,7 @@ export class Controls {
                 State.game.currentPl!.setPlayerInfo();
                 if (!Timer.timerIsOn) Timer.startTimer();
                 Player.updateTanks();
-                Sounds.play('scroll_gun');
+                Sounds.play(Sound.scroll);
             } else {
                 Controls.menuLeft();
                 State.game.currentPl!.setPlayerInfo();
@@ -250,7 +251,7 @@ export class Controls {
 
     private static menuFire() {
         const item = checkedQuerySelector(document, '.menu__item_selected');
-        Sounds.play('click');
+        Sounds.play(Sound.click);
         switch (true) {
             case item.id === 'btn_instructions':
                 Page.renderInstructions();
@@ -282,7 +283,7 @@ export class Controls {
             window.requestAnimationFrame(Game.updateAnimation.bind(this));
             State.game.currentPl!.fireProjectile(State.game.players);
             if (!Timer.timerIsOn) Timer.startTimer();
-            Sounds.play('shot_tank', 0.3);
+            Sounds.play(Sound.tankExplosion, 0.3);
         }
     }
 
@@ -301,15 +302,15 @@ export class Controls {
         switch (event.code) {
             case 'Enter':
                 this.removeInstructionsControls();
-                Sounds.play('click');
+                Sounds.play(Sound.click);
                 break;
             case 'Space':
                 this.removeInstructionsControls();
-                Sounds.play('click');
+                Sounds.play(Sound.click);
                 break;
             case 'Tab':
                 this.removeInstructionsControls();
-                Sounds.play('click');
+                Sounds.play(Sound.click);
                 break;
             default:
                 break;
@@ -322,15 +323,15 @@ export class Controls {
         switch (true) {
             case target.classList.contains('options_buttons_pause'):
                 this.removeInstructionsControls();
-                Sounds.play('click');
+                Sounds.play(Sound.click);
                 break;
             case target.classList.contains('options_buttons_settings'):
                 this.removeInstructionsControls();
-                Sounds.play('click');
+                Sounds.play(Sound.click);
                 break;
             case target.classList.contains('launch__button'):
                 this.removeInstructionsControls();
-                Sounds.play('click');
+                Sounds.play(Sound.click);
                 break;
             default:
                 break;

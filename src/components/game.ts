@@ -1,4 +1,4 @@
-import { checkedQuerySelector, checkElClass, toggleElClass } from './utils';
+import { checkedQuerySelector } from './utils';
 import { Field } from './field';
 import { Player } from './player';
 import { Page } from './pages';
