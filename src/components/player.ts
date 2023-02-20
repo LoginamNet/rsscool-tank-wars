@@ -7,6 +7,7 @@ import { explTank } from './explosion';
 import { explShell } from './explosion-shell';
 import { Sounds } from './audio';
 import { Translate } from './translation';
+import { State } from './state';
 
 export class Player {
     name: string;
@@ -25,7 +26,6 @@ export class Player {
     static tick = 0;
     static explosionX = 0;
     static explosionY = 0;
-    static players: Player[] = [];
     static animationExplosionTankFlag = false;
     static animationExplosionShellFlag = false;
     static animationFlag = false;
@@ -41,7 +41,7 @@ export class Player {
     ) {
         this.name = nameStr;
         this.angle = initialTankPositionX > 400 ? 135 : 45;
-        Player.players.push(this);
+        State.game.players.push(this);
         this.positionX = initialTankPositionX;
         this.positionY = initialTankPositionY;
         this.tank = new Tank(this.positionX, this.positionY);
@@ -132,7 +132,6 @@ export class Player {
         this.intervalId = window.setInterval(this.nextProjectilePosition.bind(this), 10);
         if (this.power === 0) {
             clearInterval(this.intervalId);
-            this.intervalId = 0;
             this.isFired = false;
         } else {
             this.isFired = true;
@@ -153,9 +152,7 @@ export class Player {
     private endShot() {
         if (this.intervalId) {
             clearInterval(this.intervalId);
-            this.intervalId = 0;
             this.isFired = false;
-            // Player.animationFlag = false;
             this.wind = getRandomWind();
             this.setPlayerInfo();
         }
@@ -263,7 +260,7 @@ export class Player {
     drawFire() {
         this.drawPlayerProjectile();
         this.drawProjectilePath();
-        this.drawHit(Player.players);
+        this.drawHit(State.game.players);
         this.drawTerrainHit();
     }
 
@@ -314,13 +311,17 @@ export class Player {
 
     updatePlayers() {
         this.clearPlayers();
-        for (const player of Player.players) {
+        for (const player of State.game.players) {
             player.drawPlayer();
         }
         this.updatePlayersUi();
     }
 
+    static updateTanks() {
+        State.game.currentPl!.updatePlayers();
+    }
+
     private updatePlayersUi() {
-        this.ui.renderTanksName(Player.players);
+        this.ui.renderTanksName(State.game.players);
     }
 }

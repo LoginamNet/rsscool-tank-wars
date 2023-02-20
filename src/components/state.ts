@@ -1,3 +1,4 @@
+import { stateGame } from '../types/types';
 import { Translate } from './translation';
 import { checkedQuerySelector } from './utils';
 
@@ -8,6 +9,10 @@ export class State {
         players: '4',
         sound: 'ON',
         language: 'EN',
+    };
+
+    static game: stateGame = {
+        players: [],
     };
 
     static setSettings() {

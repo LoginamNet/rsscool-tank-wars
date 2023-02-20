@@ -1,34 +1,55 @@
-import { checkedQuerySelector, toggleElClass } from './utils';
+import { checkedQuerySelector, checkElClass, toggleElClass } from './utils';
 import { Page } from './pages';
 import { State } from './state';
 import { Sounds } from './audio';
+import { Timer } from './timer';
+import { Player } from './player';
+import { Game } from './game';
 
 export class Controls {
-    private static addMainMenuKeys = (event: KeyboardEvent) => {
+    private static addMenuKeys = (event: KeyboardEvent) => {
         event.preventDefault();
         switch (event.code) {
             case 'ArrowUp':
-                this.menuUp();
+                State.settings.screen === 'GAME' ? this.gameUp() : this.menuUp();
                 break;
             case 'ArrowDown':
-                this.menuDown();
+                State.settings.screen === 'GAME' ? this.gameDown() : this.menuDown();
                 break;
             case 'ArrowLeft':
-                this.menuLeft();
+                State.settings.screen === 'GAME' ? this.gameLeft() : this.menuLeft();
                 break;
             case 'ArrowRight':
-                this.menuRight();
+                State.settings.screen === 'GAME' ? this.gameRight() : this.menuRight();
                 break;
             case 'Pause':
-                State.settings.screen === 'HOME' ? Page.renderGame() : Page.renderHome();
+                if (State.settings.screen === 'GAME') {
+                    checkElClass('game__menu_container', 'game__menu_hidden')
+                        ? Timer.switchTimer()
+                        : toggleElClass('game__menu_container', 'game__menu_hidden');
+                }
+                if (State.settings.screen === 'HOME') {
+                    Page.renderGame();
+                }
+                if (State.settings.screen === 'WINNER') {
+                    Page.renderHome();
+                }
                 Sounds.play('move');
                 break;
             case 'Space':
-                this.mainMenuFire();
-                Sounds.play('click');
+                if (State.settings.screen === 'GAME') {
+                    checkElClass('game__menu_container', 'game__menu_hidden') ? this.gameFire() : this.menuFire();
+                } else {
+                    this.menuFire();
+                }
                 break;
             case 'Escape':
-                Page.renderHome();
+                if (State.settings.screen === 'GAME') {
+                    Timer.stopTimer();
+                    toggleElClass('game__menu_container', 'game__menu_hidden');
+                } else {
+                    Page.renderHome();
+                }
                 Sounds.play('move');
                 break;
             default:
@@ -36,40 +57,58 @@ export class Controls {
         }
     };
 
-    private static addMainMenuButtons = (event: Event) => {
+    private static addMenuButtons = (event: Event) => {
         event.preventDefault();
         const target = <HTMLElement>event.target;
         switch (true) {
             case target.classList.contains('cross__arrow_up'):
-                this.menuUp();
+                State.settings.screen === 'GAME' ? this.gameUp() : this.menuUp();
                 break;
             case target.classList.contains('cross__arrow_down'):
-                this.menuDown();
+                State.settings.screen === 'GAME' ? this.gameDown() : this.menuDown();
                 break;
             case target.classList.contains('cross__arrow_left'):
-                this.menuLeft();
+                State.settings.screen === 'GAME' ? this.gameLeft() : this.menuLeft();
                 break;
             case target.classList.contains('cross__arrow_right'):
-                this.menuRight();
+                State.settings.screen === 'GAME' ? this.gameRight() : this.menuRight();
                 break;
             case target.classList.contains('options_buttons_pause'):
-                State.settings.screen === 'HOME' ? Page.renderGame() : Page.renderHome();
+                if (State.settings.screen === 'GAME') {
+                    checkElClass('game__menu_container', 'game__menu_hidden')
+                        ? Timer.switchTimer()
+                        : toggleElClass('game__menu_container', 'game__menu_hidden');
+                }
+                if (State.settings.screen === 'HOME') {
+                    Page.renderGame();
+                }
+                if (State.settings.screen === 'WINNER') {
+                    Page.renderHome();
+                }
                 Sounds.play('move');
                 break;
             case target.classList.contains('options_buttons_settings'):
-                Page.renderHome();
+                if (State.settings.screen === 'GAME') {
+                    Timer.stopTimer();
+                    toggleElClass('game__menu_container', 'game__menu_hidden');
+                } else {
+                    Page.renderHome();
+                }
                 Sounds.play('move');
                 break;
             case target.classList.contains('launch__button'):
-                this.mainMenuFire();
-                Sounds.play('click');
+                if (State.settings.screen === 'GAME') {
+                    checkElClass('game__menu_container', 'game__menu_hidden') ? this.gameFire() : this.menuFire();
+                } else {
+                    this.menuFire();
+                }
                 break;
             default:
                 break;
         }
     };
 
-    static menuDown() {
+    private static menuDown() {
         const items = document.querySelectorAll('.menu__item');
         for (let i = 0; i < items.length; i++) {
             if (items[i].classList.contains('menu__item_selected')) {
@@ -87,7 +126,21 @@ export class Controls {
         }
     }
 
-    static menuUp() {
+    private static gameDown() {
+        if (!State.game.currentPl!.isFired) {
+            State.game.currentPl!.projectileTrajectory = [];
+            if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                State.game.currentPl!.powerDown();
+                State.game.currentPl!.setPlayerInfo();
+                if (!Timer.timerIsOn) Timer.startTimer();
+                Sounds.play('scroll_gun');
+            } else {
+                Controls.menuDown();
+            }
+        }
+    }
+
+    private static menuUp() {
         const items = document.querySelectorAll('.menu__item');
         for (let i = 0; i < items.length; i++) {
             if (items[i].classList.contains('menu__item_selected')) {
@@ -105,7 +158,21 @@ export class Controls {
         }
     }
 
-    static menuLeft() {
+    private static gameUp() {
+        if (!State.game.currentPl!.isFired) {
+            State.game.currentPl!.projectileTrajectory = [];
+            if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                State.game.currentPl!.powerUp();
+                State.game.currentPl!.setPlayerInfo();
+                if (!Timer.timerIsOn) Timer.startTimer();
+                Sounds.play('scroll_gun');
+            } else {
+                Controls.menuUp();
+            }
+        }
+    }
+
+    private static menuLeft() {
         const item = checkedQuerySelector(document, '.menu__item_selected');
         const options = item.querySelectorAll('.menu__switcher');
         for (let i = 0; i < options.length; i++) {
@@ -126,7 +193,24 @@ export class Controls {
         }
     }
 
-    static menuRight() {
+    private static gameLeft() {
+        if (!State.game.currentPl!.isFired) {
+            State.game.currentPl!.projectileTrajectory = [];
+            if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                State.game.currentPl!.angleUp();
+                State.game.currentPl!.setPlayerInfo();
+                if (!Timer.timerIsOn) Timer.startTimer();
+                Player.updateTanks();
+                Sounds.play('scroll_gun');
+            } else {
+                Controls.menuRight();
+                State.game.currentPl!.setPlayerInfo();
+                Timer.renderTime();
+            }
+        }
+    }
+
+    private static menuRight() {
         const item = checkedQuerySelector(document, '.menu__item_selected');
         const options = item.querySelectorAll('.menu__switcher');
         for (let i = 0; i < options.length; i++) {
@@ -147,36 +231,69 @@ export class Controls {
         }
     }
 
-    private static mainMenuFire() {
+    private static gameRight() {
+        if (!State.game.currentPl!.isFired) {
+            State.game.currentPl!.projectileTrajectory = [];
+            if (checkElClass('game__menu_container', 'game__menu_hidden')) {
+                State.game.currentPl!.angleDown();
+                State.game.currentPl!.setPlayerInfo();
+                if (!Timer.timerIsOn) Timer.startTimer();
+                Player.updateTanks();
+                Sounds.play('scroll_gun');
+            } else {
+                Controls.menuLeft();
+                State.game.currentPl!.setPlayerInfo();
+                Timer.renderTime();
+            }
+        }
+    }
+
+    private static menuFire() {
         const item = checkedQuerySelector(document, '.menu__item_selected');
+        Sounds.play('click');
         switch (true) {
             case item.id === 'btn_instructions':
                 Page.renderInstructions();
                 break;
             case item.id === 'btn_start':
                 Page.renderGame();
-                // Sounds.play('intro', 0);
                 break;
             case item.id === 'btn_back':
-                Page.renderHome();
+                State.settings.screen === 'GAME'
+                    ? toggleElClass('game__menu_container', 'game__menu_hidden')
+                    : Page.renderHome();
                 break;
             case item.id === 'btn_restart':
                 Page.renderHome();
-                // Sounds.play('intro', 0.2);
+                break;
+            case item.id === 'btn_menu':
+                State.game.players = [];
+                Timer.setTime();
+                Page.renderHome();
                 break;
             default:
                 break;
         }
     }
 
-    static setMainMenuControls() {
-        document.addEventListener('keydown', this.addMainMenuKeys);
-        document.addEventListener('click', this.addMainMenuButtons);
+    private static gameFire() {
+        if (!Player.animationFlag) {
+            Player.animationFlag = true;
+            window.requestAnimationFrame(Game.updateAnimation.bind(this));
+            State.game.currentPl!.fireProjectile(State.game.players);
+            if (!Timer.timerIsOn) Timer.startTimer();
+            Sounds.play('shot_tank', 0.3);
+        }
     }
 
-    static removeMainMenuControls() {
-        document.removeEventListener('keydown', this.addMainMenuKeys);
-        document.removeEventListener('click', this.addMainMenuButtons);
+    static setControls() {
+        document.addEventListener('keydown', this.addMenuKeys);
+        document.addEventListener('click', this.addMenuButtons);
+    }
+
+    static removeControls() {
+        document.removeEventListener('keydown', this.addMenuKeys);
+        document.removeEventListener('click', this.addMenuButtons);
     }
 
     private static addInstructionsKeys = (event: KeyboardEvent) => {
@@ -221,7 +338,7 @@ export class Controls {
     };
 
     static setInstructionsControls() {
-        if (State.settings.screen === 'HOME') this.removeMainMenuControls();
+        this.removeControls();
         document.addEventListener('keydown', this.addInstructionsKeys);
         document.addEventListener('click', this.addInstructionsButtons);
         toggleElClass('info__screen', 'info__screen_hidden');
@@ -230,7 +347,7 @@ export class Controls {
     static removeInstructionsControls() {
         document.removeEventListener('keydown', this.addInstructionsKeys);
         document.removeEventListener('click', this.addInstructionsButtons);
-        if (State.settings.screen === 'HOME') this.setMainMenuControls();
+        this.setControls();
         toggleElClass('info__screen', 'info__screen_hidden');
     }
 }

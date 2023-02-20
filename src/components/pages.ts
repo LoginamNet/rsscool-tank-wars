@@ -97,11 +97,11 @@ export class Page {
         </div>
         `;
 
-        Controls.removeMainMenuControls();
+        Controls.removeControls();
         screen.innerHTML = template;
         State.settings.screen = 'HOME';
         State.setMenuItems();
-        Controls.setMainMenuControls();
+        Controls.setControls();
     }
 
     static renderGame() {
@@ -157,7 +157,6 @@ export class Page {
         </div>
         `;
 
-        Controls.removeMainMenuControls();
         screen.innerHTML = template;
         State.settings.screen = 'GAME';
         State.setMenuItems();
@@ -183,7 +182,6 @@ export class Page {
 
         screen.innerHTML = template;
         State.settings.screen = 'WINNER';
-        Controls.setMainMenuControls();
         Sounds.play('winner', 0.5);
     }
 

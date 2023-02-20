@@ -1,5 +1,5 @@
 import { CANVAS_GROUND, CANVAS_WIDTH, ARR_FIRST_NAMES, WIND_MIN, WIND_MAX, WIND_RATIO } from '../common/constants';
-import { Player } from './player';
+import { State } from './state';
 
 /* functions ------------------------------------------------- */
 
@@ -87,7 +87,7 @@ export const getRandomName = (): string => {
     let playerName = '';
     const randomName = ARR_FIRST_NAMES[Math.floor(Math.random() * ARR_FIRST_NAMES.length)];
 
-    Player.players.every((player) => player.name !== randomName)
+    State.game.players.every((player) => player.name !== randomName)
         ? (playerName = randomName)
         : (playerName = getRandomName());
 
