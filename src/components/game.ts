@@ -39,10 +39,10 @@ export class Game {
 
         if (Player.animationExplosionTankFlag) {
             Player.drawExplosionTank();
-        }
-
-        if (Player.animationExplosionShellFlag) {
-            Player.drawExplosionShell();
+        } else {
+            if (Player.animationExplosionShellFlag) {
+                Player.drawExplosionShell();
+            }
         }
 
         if (Player.animationFlag) {
@@ -58,7 +58,8 @@ export class Game {
             const i = State.game.players.indexOf(State.game.currentPl);
 
             if (
-                ((State.game.currentPl.isTerrainHit() && !State.game.currentPl.isTargetHit(State.game.players)) ||
+                (State.game.currentPl.isTerrainHit() ||
+                    State.game.currentPl.isScreenHit() ||
                     State.game.currentPl.isHitted) &&
                 !State.game.currentPl.isFired
             ) {
@@ -67,6 +68,7 @@ export class Game {
                     State.game.players.length - 1 !== i ? State.game.players[i + 1] : State.game.players[0];
                 State.game.currentPl.setPlayerInfo();
                 Timer.setTime();
+                Player.animationFlag = false;
             }
         }
     }

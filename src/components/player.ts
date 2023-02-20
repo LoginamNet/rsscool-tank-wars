@@ -152,10 +152,6 @@ export class Player {
         this.currentTrajectoryIndex++;
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1) {
             this.endShot();
-            Player.explosionX = this.projectileTrajectory[this.currentTrajectoryIndex].x;
-            Player.explosionY = this.projectileTrajectory[this.currentTrajectoryIndex].y;
-            Player.animationExplosionShellFlag = true;
-            Player.ctx = this.ctx;
         }
     }
 
@@ -177,6 +173,11 @@ export class Player {
             if (isGround(pixel)) {
                 return true;
             }
+        }
+    }
+
+    isScreenHit() {
+        for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
             if (isOutsidePlayZone(this.projectileTrajectory[i].x)) {
                 return true;
             }
@@ -222,6 +223,10 @@ export class Player {
 
     drawTerrainHit() {
         if (this.currentTrajectoryIndex === this.projectileTrajectory.length - 1 && this.isTerrainHit()) {
+            Player.explosionX = this.projectileTrajectory[this.currentTrajectoryIndex].x;
+            Player.explosionY = this.projectileTrajectory[this.currentTrajectoryIndex].y;
+            Player.animationExplosionShellFlag = true;
+            Player.ctx = this.ctx;
             Sounds.play(Sound.terrainExplosion, 0.3);
         }
     }

@@ -46,12 +46,15 @@ export class Controls {
                 break;
             case 'Escape':
                 if (State.settings.screen === 'GAME') {
-                    Timer.stopTimer();
-                    toggleElClass('game__menu_container', 'game__menu_hidden');
+                    if (!Player.animationFlag) {
+                        Timer.stopTimer();
+                        toggleElClass('game__menu_container', 'game__menu_hidden');
+                        Sounds.play(Sound.move);
+                    }
                 } else {
                     Page.renderHome();
+                    Sounds.play(Sound.move);
                 }
-                Sounds.play(Sound.move);
                 break;
             default:
                 break;
