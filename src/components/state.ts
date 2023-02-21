@@ -40,6 +40,8 @@ export class State {
         }
     }
 
+    // set menu switchers based on settings state
+
     static setMenuItems() {
         const options = document.querySelectorAll('.menu__switcher');
 

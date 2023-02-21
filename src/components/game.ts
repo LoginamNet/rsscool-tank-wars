@@ -73,6 +73,8 @@ export class Game {
         }
     }
 
+    // set tank position for y coordinate based on current game field and x position
+
     private setPositionTank(players: Player[], field: Field) {
         for (const player of players) {
             player.initialTankPositionY = field.findGround(player.initialTankPositionX);

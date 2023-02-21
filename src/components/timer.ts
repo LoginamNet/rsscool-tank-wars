@@ -44,14 +44,16 @@ export class Timer {
         timeText.innerHTML = Translate.setLang().screen.time + this.roundTime.toString().padStart(2, '0');
     }
 
-    static setTime() {
-        this.roundTime = ROUND_TIME;
-        this.renderTime();
-    }
-
     static resetTime() {
         this.roundTime = ROUND_TIME;
     }
+
+    static setTime() {
+        this.resetTime();
+        this.renderTime();
+    }
+
+    // if time per round is over switch to next player
 
     static checkTime() {
         if (State.game.currentPl) {

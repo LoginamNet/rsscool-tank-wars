@@ -61,6 +61,8 @@ export class Player {
         this.ui = new Ui();
     }
 
+    // set current player info on the top of the the game screen
+
     setPlayerInfo() {
         const angleText = checkedQuerySelector(document, '.angle');
         const powerText = checkedQuerySelector(document, '.power');
@@ -109,6 +111,8 @@ export class Player {
     private calcYCoords() {
         return this.initialTankPositionY - 6 + Math.sin(calcAngle(this.angle)) * LENGTH_GUN;
     }
+
+    // calculate projectile trajectory
 
     private calculateTrajectory(players: Player[]) {
         this.projectileTrajectory = [];
@@ -164,6 +168,8 @@ export class Player {
         }
     }
 
+    // check is projectile hit the ground
+
     isTerrainHit() {
         const canvas = this.field.canvas;
         const ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
@@ -176,6 +182,8 @@ export class Player {
         }
     }
 
+    // check is projectile hit left or right border of the game screen
+
     isScreenHit() {
         for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
             if (isOutsidePlayZone(this.projectileTrajectory[i].x)) {
@@ -183,6 +191,8 @@ export class Player {
             }
         }
     }
+
+    // check is projectile hit any of tanks (including players tank)
 
     isTargetHit(players: Player[]) {
         for (const player of players) {
@@ -209,6 +219,8 @@ export class Player {
         this.calculateTrajectory(players);
         this.shoot();
     }
+
+    // render players tank
 
     drawPlayer() {
         this.tank.initialTankPositionX = this.positionX;
@@ -249,6 +261,8 @@ export class Player {
         }
     }
 
+    // render projectile based on calculated trajectory
+
     drawPlayerProjectile() {
         this.ctx.fillStyle = PROJECTILE_COLOR;
         if (this.currentTrajectoryIndex && this.projectileTrajectory[this.currentTrajectoryIndex] !== undefined) {
@@ -260,6 +274,8 @@ export class Player {
             );
         }
     }
+
+    // render projectile path based on calculated trajectory
 
     drawProjectilePath() {
         this.ctx.fillStyle = TRAJECTORY_COLOR;
