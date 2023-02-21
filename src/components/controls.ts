@@ -25,9 +25,11 @@ export class Controls {
                 break;
             case 'Pause':
                 if (State.settings.screen === 'GAME') {
-                    checkElClass('game__menu_container', 'game__menu_hidden')
-                        ? Timer.switchTimer()
-                        : toggleElClass('game__menu_container', 'game__menu_hidden');
+                    if (!Player.animationFlag) {
+                        checkElClass('game__menu_container', 'game__menu_hidden')
+                            ? Timer.switchTimer()
+                            : toggleElClass('game__menu_container', 'game__menu_hidden');
+                    }
                 }
                 if (State.settings.screen === 'HOME') {
                     Page.renderGame();
@@ -79,9 +81,11 @@ export class Controls {
                 break;
             case target.classList.contains('options_buttons_pause'):
                 if (State.settings.screen === 'GAME') {
-                    checkElClass('game__menu_container', 'game__menu_hidden')
-                        ? Timer.switchTimer()
-                        : toggleElClass('game__menu_container', 'game__menu_hidden');
+                    if (!Player.animationFlag) {
+                        checkElClass('game__menu_container', 'game__menu_hidden')
+                            ? Timer.switchTimer()
+                            : toggleElClass('game__menu_container', 'game__menu_hidden');
+                    }
                 }
                 if (State.settings.screen === 'HOME') {
                     Page.renderGame();
@@ -93,8 +97,10 @@ export class Controls {
                 break;
             case target.classList.contains('options_buttons_settings'):
                 if (State.settings.screen === 'GAME') {
-                    Timer.stopTimer();
-                    toggleElClass('game__menu_container', 'game__menu_hidden');
+                    if (!Player.animationFlag) {
+                        Timer.stopTimer();
+                        toggleElClass('game__menu_container', 'game__menu_hidden');
+                    }
                 } else {
                     Page.renderHome();
                 }
