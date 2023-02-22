@@ -1,6 +1,9 @@
 import {
+    CANVAS_BORDER_OFFSET,
     CANVAS_WIDTH,
     GRAVITY,
+    INITIAL_ANGLE_LEFT,
+    INITIAL_ANGLE_RIGHT,
     LENGTH_GUN,
     MAX_ANGLE,
     MAX_POWER,
@@ -9,6 +12,10 @@ import {
     POWER_GUN,
     POWER_RATIO,
     PROJECTILE_COLOR,
+    TANK_HITBOX_BOTTOM,
+    TANK_HITBOX_LEFT,
+    TANK_HITBOX_RIGHT,
+    TANK_HITBOX_TOP,
     TRAJECTORY_COLOR,
 } from '../common/constants';
 import { Field } from './field';
@@ -53,7 +60,7 @@ export class Player {
         public colorTank: string
     ) {
         this.name = nameStr;
-        this.angle = initialTankPositionX > CANVAS_WIDTH / 2 ? 135 : 45;
+        this.angle = initialTankPositionX > CANVAS_WIDTH / 2 ? INITIAL_ANGLE_RIGHT : INITIAL_ANGLE_LEFT;
         State.game.players.push(this);
         this.positionX = initialTankPositionX;
         this.positionY = initialTankPositionY;
@@ -134,8 +141,8 @@ export class Player {
             this.projectileTrajectory.push({ x: xCoordinate, y: yCoordinate });
             time++;
         } while (
-            xCoordinate >= -20 &&
-            xCoordinate <= CANVAS_WIDTH + 20 &&
+            xCoordinate >= -CANVAS_BORDER_OFFSET &&
+            xCoordinate <= CANVAS_WIDTH + CANVAS_BORDER_OFFSET &&
             !this.isTerrainHit() &&
             !this.isTargetHit(players)?.isHitted
         );
@@ -198,10 +205,10 @@ export class Player {
         for (const player of players) {
             for (let i = 0; i < this.projectileTrajectory.length - 1; i++) {
                 if (
-                    this.projectileTrajectory[i].x > player.initialTankPositionX - 2.5 &&
-                    this.projectileTrajectory[i].x < player.initialTankPositionX + 32 &&
-                    this.projectileTrajectory[i].y > player.initialTankPositionY - 10 &&
-                    this.projectileTrajectory[i].y < player.initialTankPositionY + 2.5
+                    this.projectileTrajectory[i].x > player.initialTankPositionX - TANK_HITBOX_LEFT &&
+                    this.projectileTrajectory[i].x < player.initialTankPositionX + TANK_HITBOX_RIGHT &&
+                    this.projectileTrajectory[i].y > player.initialTankPositionY - TANK_HITBOX_TOP &&
+                    this.projectileTrajectory[i].y < player.initialTankPositionY + TANK_HITBOX_BOTTOM
                 ) {
                     players.map((item) => {
                         if (item.initialTankPositionX === player.initialTankPositionX) {

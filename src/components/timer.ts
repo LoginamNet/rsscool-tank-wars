@@ -18,11 +18,9 @@ export class Timer {
             if (this.roundTime > 0) {
                 this.roundTime--;
                 this.renderTime();
-            } else {
-                if (!State.game.currentPl?.isFired) {
-                    this.checkTime();
-                    this.setTime();
-                }
+            } else if (!State.game.currentPl?.isFired) {
+                this.checkTime();
+                this.setTime();
             }
             return this.roundTime;
         }, 1000);
