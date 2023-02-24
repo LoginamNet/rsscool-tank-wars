@@ -9,7 +9,7 @@ import { Sound } from '../types/types';
 
 export class Controls {
     private static addMenuKeys = (event: KeyboardEvent) => {
-        event.preventDefault();
+        // event.preventDefault();
         switch (event.code) {
             case 'ArrowUp':
                 State.settings.screen === 'GAME' ? this.gameUp() : this.menuUp();

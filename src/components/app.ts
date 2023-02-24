@@ -10,5 +10,6 @@ export class App {
         this.local();
         Page.renderConsole();
         Page.renderHome();
+        Page.renderAuthentication();
     }
 }

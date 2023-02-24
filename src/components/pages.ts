@@ -6,6 +6,7 @@ import { Controls } from './controls';
 import { State } from './state';
 import { Sounds } from './audio';
 import { Translate } from './translation';
+import { Auth } from './authentication';
 import './styles/console.css';
 import './styles/home.css';
 import './styles/game.css';
@@ -13,6 +14,7 @@ import './styles/winner.css';
 import './styles/menu.css';
 import './styles/instructions.css';
 import './styles/pause.css';
+import './styles/authentication.css';
 
 export class Page {
     static body = checkedQuerySelector(document, 'body');
@@ -213,7 +215,7 @@ export class Page {
         const screen = checkedQuerySelector(document, '.game__screen');
         const pause = createEl('screen__pause', 'div');
         const template = `
-            <div class="pause__text">${Translate.setLang().gamePaused}</div>        
+            <div class="pause__text">${Translate.setLang().gamePaused}</div>
         `;
 
         pause.innerHTML = template;
@@ -229,5 +231,29 @@ export class Page {
 
             pause.remove();
         }
+    }
+
+    static renderAuthentication() {
+        const screen = checkedQuerySelector(document, '.game__screen');
+        const template = `
+        <div class="home__screen" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px">
+            <h1 class="home__screen_title">TANK WARS</h1>
+            <div class="auth__box" id="auth__box">
+                <h1 class="auth__box_title">Login</h1>
+                <input type="email" id="email" placeholder="E-mail" />
+                <input type="password" id="password" placeholder="Password" />
+                <div class="auth__box_buttons">
+                    <button class="login button" id='login'>login</button>
+                    <button class="signup button hide" id='signup'>sign up</button>
+                    <button class="logout button hide" id='logout'>logout</button>
+                    <span class="text" id='change'>Sign UP</span>
+                </div>
+            </div>
+        `;
+        Controls.removeControls();
+        screen.innerHTML = template;
+        State.settings.screen = 'HOME';
+        State.setMenuItems();
+        Controls.setControls();
     }
 }
