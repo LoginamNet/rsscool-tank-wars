@@ -9,7 +9,7 @@ export class App {
     render() {
         this.local();
         Page.renderConsole();
-        Page.renderHome();
+        // Page.renderHome();
         Page.renderAuthentication();
     }
 }

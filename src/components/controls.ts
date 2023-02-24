@@ -266,6 +266,9 @@ export class Controls {
         const item = checkedQuerySelector(document, '.menu__item_selected');
         Sounds.play(Sound.click);
         switch (true) {
+            case item.id === 'btn_auth':
+                Page.renderAuthentication();
+                break;
             case item.id === 'btn_instructions':
                 Page.renderInstructions();
                 break;

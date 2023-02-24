@@ -93,6 +93,7 @@ export class Page {
                         <div class="menu__switcher" id="РУС">РУС</div>
                     </div>
                 </div>
+                <button class="menu__item" id="btn_auth">${Translate.setLang().auth}</button>
                 <button class="menu__item" id="btn_instructions">${Translate.setLang().inst}</button>
                 <button class="menu__item" id="btn_start">${Translate.setLang().start}</button>
             </div>
@@ -204,7 +205,7 @@ export class Page {
                     <li class="instructions__list_item">${Translate.setLang().instructions.esc}</li>
                 </ul>
                 <button class="instructions__button_back">${Translate.setLang().instructions.back}</button>
-        </div>        
+        </div>
         `;
 
         screen.innerHTML = template;
