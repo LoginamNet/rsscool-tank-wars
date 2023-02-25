@@ -1,3 +1,4 @@
+import { Auth } from './authentication';
 import { Page } from './pages';
 import { Storage } from './storage';
 
@@ -9,7 +10,7 @@ export class App {
     render() {
         this.local();
         Page.renderConsole();
-        // Page.renderHome();
-        Page.renderAuthentication();
+        Page.renderHome();
+        Auth.listenerUser();
     }
 }

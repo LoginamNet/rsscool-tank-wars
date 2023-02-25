@@ -1,24 +1,40 @@
+.popup__wrapper {
+    display: flex;
+    justify-content: center;
+}
+
 .auth__box {
+    position: relative;
+    z-index: 9999;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 20px;
+    background-color: rgb(247, 222, 191);
+    border: 10px solid rgb(253, 232, 205);
+    border-top: 10px solid rgb(253, 236, 214);
+    border-bottom: 10px solid rgb(226, 194, 155);
+    border-left: 10px solid rgb(194, 167, 133);
+    border-radius: 10px;
 }
 
+.auth__box .close {
+  top: -100%;
+}
 .auth__box_title {
-    margin-top: 20px;
     margin-bottom: 40px;
     font-weight: 700;
     font-size: 28px;
 }
 
-input[type="email"],
-input[type="password"] {
+.input-el {
     display: block;
     box-sizing: border-box;
     margin-bottom: 20px;
     padding: 4px;
-    width: 250px;
+    /* width: 300px; */
+    width: 100%;
     height: 32px;
     border: none;
     border-bottom: 1px solid #AAAAAA;
@@ -26,8 +42,7 @@ input[type="password"] {
     font-size: 14px;
 }
 
-input[type="email"]:focus,
-input[type="password"]:focus {
+.input-el:focus {
   box-shadow: 0px 0px 20px 1px #ff7f50;
   transition: all 0.2s ease;
 }

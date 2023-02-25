@@ -6,6 +6,7 @@ import { Timer } from './timer';
 import { Player } from './player';
 import { Game } from './game';
 import { Sound } from '../types/types';
+import { RenderAuthPopup } from './auth-popup';
 
 export class Controls {
     private static addMenuKeys = (event: KeyboardEvent) => {
@@ -267,7 +268,8 @@ export class Controls {
         Sounds.play(Sound.click);
         switch (true) {
             case item.id === 'btn_auth':
-                Page.renderAuthentication();
+                RenderAuthPopup.showPopup();
+                Controls.removeControls();
                 break;
             case item.id === 'btn_instructions':
                 Page.renderInstructions();
