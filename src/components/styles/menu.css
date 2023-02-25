@@ -1,3 +1,5 @@
+/* menu-screen ------------------------------------------------- */
+
 .screen__menu {
     display: flex;
     flex-direction: column;
@@ -6,6 +8,8 @@
     width: 60%;
     color: white;
 }
+
+/* menu-items ------------------------------------------------- */
 
 .menu__item_mode,
 .menu__item_players,
@@ -21,6 +25,8 @@
     background-color: beige;
     color: black;
 }
+
+/* menu-switchers ------------------------------------------------- */
 
 .menu__switchers {
     display: flex;
@@ -42,6 +48,8 @@
 .menu__switcher_selected {
     color: coral;
 }
+
+/* menu-button ------------------------------------------------- */
 
 .screen__menu button {
     width: 100%;

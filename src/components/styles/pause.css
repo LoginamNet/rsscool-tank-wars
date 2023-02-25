@@ -1,3 +1,5 @@
+/* pause-screen ------------------------------------------------- */
+
 .screen__pause {
     z-index: 150;
     position: absolute;

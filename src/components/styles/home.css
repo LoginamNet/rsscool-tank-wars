@@ -1,3 +1,5 @@
+/* home-screen ------------------------------------------------- */
+
 .home__screen {
     display: flex;
     flex-direction: column;
@@ -11,6 +13,8 @@
     font-size: 3.8rem;
     animation: title-shine 2s infinite;
 }
+
+/* animation ------------------------------------------------- */
 
 @keyframes title-shine {
     0%   {text-shadow: 0 0 3px coral; color: #fff;}
