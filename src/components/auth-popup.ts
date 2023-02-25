@@ -8,6 +8,8 @@ export class RenderAuthPopup {
         const popupWrapper = createEl('popup__wrapper', 'div');
         const authBox = createEl('auth__box', 'div');
         const title = createEl('auth__box_title', 'h1');
+        const inputName = <HTMLInputElement>createEl('username input-el hide', 'input');
+        inputName.id = 'username';
         const inputEmail = <HTMLInputElement>createEl('email input-el', 'input');
         inputEmail.id = 'email';
         const inputPassword = <HTMLInputElement>createEl('password input-el', 'input');
@@ -25,6 +27,7 @@ export class RenderAuthPopup {
         appendEl(body, popupWrapper);
         appendEl(popupWrapper, authBox);
         appendEl(authBox, title);
+        appendEl(authBox, inputName);
         appendEl(authBox, inputEmail);
         appendEl(authBox, inputPassword);
         appendEl(authBox, authBoxButtons);
@@ -34,6 +37,8 @@ export class RenderAuthPopup {
         appendEl(authBoxButtons, changeBtn);
 
         title.textContent = 'Login';
+        inputName.type = 'text';
+        inputName.placeholder = 'Username';
         inputEmail.type = 'email';
         inputEmail.placeholder = 'E-mail';
         inputPassword.type = 'password';

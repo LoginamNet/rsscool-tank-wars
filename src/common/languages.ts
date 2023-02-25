@@ -1,4 +1,5 @@
 export const EN = {
+    subTitle: 'WELCOME',
     pauseBtn: 'Pause/Start',
     settingsBtn: 'Settings',
     fireBtn: 'FIRE!',
@@ -9,6 +10,7 @@ export const EN = {
     soundOFF: 'OFF',
     lang: 'LANGUAGE:',
     auth: 'LOGIN/SIGNUP',
+    authOut: 'LOGOUT',
     titleLogin: 'LOGIN',
     titleRegistr: 'Registration',
     loginBtn: 'LOGIN',
@@ -43,6 +45,7 @@ export const EN = {
 };
 
 export const RU = {
+    subTitle: 'ПРИВЕТ',
     pauseBtn: 'Пауза/Старт',
     settingsBtn: 'Настройки',
     fireBtn: 'ОГОНЬ!',
@@ -53,6 +56,7 @@ export const RU = {
     soundOFF: 'ВЫКЛ',
     lang: 'ЯЗЫК:',
     auth: 'ВХОД/РЕГИСТР.',
+    authOut: 'ВЫЙТИ',
     titleLogin: 'Войти',
     titleRegistr: 'Регистрация',
     loginBtn: 'Войти',

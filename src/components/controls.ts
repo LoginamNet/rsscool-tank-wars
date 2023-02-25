@@ -7,6 +7,7 @@ import { Player } from './player';
 import { Game } from './game';
 import { Sound } from '../types/types';
 import { RenderAuthPopup } from './auth-popup';
+import { Auth } from './authentication';
 
 export class Controls {
     private static addMenuKeys = (event: KeyboardEvent) => {
@@ -268,7 +269,8 @@ export class Controls {
         Sounds.play(Sound.click);
         switch (true) {
             case item.id === 'btn_auth':
-                RenderAuthPopup.showPopup();
+                State.settings.statusAuth === 'LOGIN/SIGNUP' ? RenderAuthPopup.showPopup() : Auth.logOut();
+                // RenderAuthPopup.showPopup();
                 Controls.removeControls();
                 break;
             case item.id === 'btn_instructions':

@@ -1,6 +1,6 @@
 import { checkedID, checkedQuerySelector } from './utils';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, set, ref, update } from 'firebase/database';
+import { getDatabase, set, ref, update, onValue, get, child } from 'firebase/database';
 import {
     getAuth,
     createUserWithEmailAndPassword,
@@ -8,6 +8,10 @@ import {
     onAuthStateChanged,
     signOut,
 } from 'firebase/auth';
+import { State } from './state';
+import { Page } from './pages';
+import { DEFAULT_NAME } from '../common/constants';
+import { Storage } from './storage';
 
 export class Auth {
     static firebaseConfig = {
@@ -33,8 +37,10 @@ export class Auth {
         const loginBtn = checkedQuerySelector(document, '.login');
         const signupBtn = checkedQuerySelector(document, '.signup');
         const title = checkedQuerySelector(document, '.auth__box_title');
+        const username = <HTMLInputElement>checkedQuerySelector(document, '.username');
 
         loginBtn.classList.add('hide');
+        username.classList.remove('hide');
         signupBtn.classList.remove('hide');
         changeBtn.textContent = 'Login';
         title.textContent = 'Registration';
@@ -45,44 +51,42 @@ export class Auth {
         const loginBtn = checkedQuerySelector(document, '.login');
         const signupBtn = checkedQuerySelector(document, '.signup');
         const title = checkedQuerySelector(document, '.auth__box_title');
+        const username = <HTMLInputElement>checkedQuerySelector(document, '.username');
 
         loginBtn.classList.remove('hide');
+        username.classList.add('hide');
         signupBtn.classList.add('hide');
         changeBtn.textContent = 'Sign UP';
         title.textContent = 'Login';
     }
 
     static signUp() {
+        const username = <HTMLInputElement>checkedQuerySelector(document, '.username');
         const email = <HTMLInputElement>checkedQuerySelector(document, '.email');
         const password = <HTMLInputElement>checkedQuerySelector(document, '.password');
-        const signupBtn = checkedQuerySelector(document, '.signup');
-        const loginBtn = <HTMLButtonElement>checkedQuerySelector(document, '.login');
-        const logoutBtn = <HTMLButtonElement>checkedQuerySelector(document, '.logout');
-        const changeBtn = checkedID(document, 'change');
-        const title = checkedQuerySelector(document, '.auth__box_title');
+        const popupWrapper = checkedQuerySelector(document, '.popup__wrapper');
+        const authBox = checkedQuerySelector(document, '.auth__box');
 
         createUserWithEmailAndPassword(Auth.auth, email.value, password.value)
             .then((userCredential) => {
                 // Signed up
+                const dt = new Date();
                 const user = userCredential.user;
                 set(ref(Auth.database, 'users/' + user.uid), {
+                    username: username.value,
                     email: user.email,
                 });
-                alert(`${user.email} created`);
+                update(ref(Auth.database, 'users/'), {
+                    first_login: dt,
+                });
+                State.settings.username = username.value;
+                State.settings.statusAuth = 'LOGOUT';
+                username.value = '';
                 email.value = '';
                 password.value = '';
-                title.textContent = 'Logout';
-                email.classList.add('hide');
-                password.classList.add('hide');
-                signupBtn.classList.add('hide');
-                loginBtn.classList.add('hide');
-                changeBtn.classList.add('hide');
-                logoutBtn.classList.remove('hide');
-
-                const dt = new Date();
-                update(ref(Auth.database, 'users/' + user.uid), {
-                    last_login: dt,
-                });
+                popupWrapper.remove();
+                authBox.classList.add('close');
+                Page.renderHome();
             })
             .catch((error) => {
                 const errorMessage = error.message;
@@ -93,28 +97,34 @@ export class Auth {
     static logIn() {
         const email = <HTMLInputElement>checkedQuerySelector(document, '.email');
         const password = <HTMLInputElement>checkedQuerySelector(document, '.password');
-        const loginBtn = <HTMLButtonElement>checkedQuerySelector(document, '.login');
-        const logoutBtn = <HTMLButtonElement>checkedQuerySelector(document, '.logout');
-        const changeBtn = checkedID(document, 'change');
-        const title = checkedQuerySelector(document, '.auth__box_title');
+        const popupWrapper = checkedQuerySelector(document, '.popup__wrapper');
+        const authBox = checkedQuerySelector(document, '.auth__box');
 
         signInWithEmailAndPassword(Auth.auth, email.value, password.value)
             .then((userCredential) => {
                 // Log in
                 const user = userCredential.user;
                 const dt = new Date();
+                const dbRef = ref(getDatabase());
                 update(ref(Auth.database, 'users/' + user.uid), {
                     last_login: dt,
                 });
-                alert(`${user.email} loged in!`);
+                get(child(dbRef, `users/${user.uid}`)).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        State.settings.username = data.username;
+                        Page.renderHome();
+                        Storage.setStorage('settings');
+                    } else {
+                        console.log('No data available');
+                    }
+                });
+                console.log(`${user.email} loged in!`);
+                State.settings.statusAuth = 'LOGOUT';
                 email.value = '';
                 password.value = '';
-                title.textContent = 'Logout';
-                email.classList.add('hide');
-                password.classList.add('hide');
-                loginBtn.classList.add('hide');
-                changeBtn.classList.add('hide');
-                logoutBtn.classList.remove('hide');
+                popupWrapper.remove();
+                authBox.classList.add('close');
             })
             .catch((error) => {
                 const errorMessage = error.message;
@@ -123,20 +133,14 @@ export class Auth {
     }
 
     static logOut() {
-        const logoutBtn = <HTMLButtonElement>checkedQuerySelector(document, '.logout');
-        const changeBtn = checkedID(document, 'change');
-        const email = <HTMLInputElement>checkedQuerySelector(document, '.email');
-        const password = <HTMLInputElement>checkedQuerySelector(document, '.password');
-
         signOut(Auth.auth)
             .then(() => {
                 // Sign-out successful
-                alert(`loged out`);
-                Auth.changeOnLogin();
-                logoutBtn.classList.add('hide');
-                changeBtn.classList.remove('hide');
-                email.classList.remove('hide');
-                password.classList.remove('hide');
+                console.log(`loged out`);
+                State.settings.statusAuth = 'LOGIN/SIGNUP';
+                State.settings.username = DEFAULT_NAME;
+                Storage.setStorage('settings');
+                Page.renderHome();
             })
             .catch((error) => {
                 const errorMessage = error.message;

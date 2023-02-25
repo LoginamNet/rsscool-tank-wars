@@ -1,3 +1,4 @@
+import { DEFAULT_NAME } from '../common/constants';
 import { stateGame } from '../types/types';
 import { Translate } from './translation';
 import { checkedQuerySelector } from './utils';
@@ -9,6 +10,8 @@ export class State {
         players: '4',
         sound: 'ON',
         language: 'EN',
+        statusAuth: 'LOGIN/SIGNUP',
+        username: DEFAULT_NAME,
     };
 
     static game: stateGame = {

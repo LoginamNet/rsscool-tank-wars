@@ -1,6 +1,7 @@
 import { State } from './state';
 import { EN, RU } from '../common/languages';
 import { checkedID, checkedQuerySelector } from './utils';
+import { DEFAULT_NAME } from '../common/constants';
 
 export class Translate {
     static setLang() {
@@ -18,6 +19,7 @@ export class Translate {
     }
 
     private static setMainMenuLang() {
+        const subTitle = checkedID(document, 'subTitle');
         const menuMode = checkedID(document, 'mode');
         const menuPlayers = checkedID(document, 'players_num');
         const menuSound = checkedID(document, 'sound');
@@ -28,13 +30,14 @@ export class Translate {
         const menuInstrBtn = checkedID(document, 'btn_instructions');
         const menuStartBtn = checkedID(document, 'btn_start');
 
+        subTitle.textContent = this.setLang().subTitle + ' ' + State.settings.username;
         menuMode.innerHTML = this.setLang().mode;
         menuPlayers.innerHTML = this.setLang().playersNum;
         menuSound.innerHTML = this.setLang().sound;
         menuSoundON.innerHTML = this.setLang().soundON;
         menuSoundOFF.innerHTML = this.setLang().soundOFF;
         menuLang.innerHTML = this.setLang().lang;
-        menuAuthBtn.innerHTML = this.setLang().auth;
+        menuAuthBtn.innerHTML = State.settings.username === DEFAULT_NAME ? this.setLang().auth : this.setLang().authOut;
         menuInstrBtn.innerHTML = this.setLang().inst;
         menuStartBtn.innerHTML = this.setLang().start;
     }

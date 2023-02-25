@@ -62,6 +62,9 @@ export class Page {
         const template = `
         <div class="home__screen" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px">
             <h1 class="home__screen_title">TANK WARS</h1>
+            <h2 class="home__screen_subtitle" id="subTitle"> ${
+                Translate.setLang().subTitle + ' ' + State.settings.username
+            }</h2>
             <div class="screen__menu">
                 <div class="menu__item_mode menu__item menu__item_selected">
                 <span id="mode">${Translate.setLang().mode}</span>
@@ -92,7 +95,7 @@ export class Page {
                         <div class="menu__switcher" id="РУС">РУС</div>
                     </div>
                 </div>
-                <button class="menu__item" id="btn_auth">${Translate.setLang().auth}</button>
+                <button class="menu__item" id="btn_auth">${State.settings.statusAuth}</button>
                 <button class="menu__item" id="btn_instructions">${Translate.setLang().inst}</button>
                 <button class="menu__item" id="btn_start">${Translate.setLang().start}</button>
             </div>
