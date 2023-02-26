@@ -2,8 +2,6 @@ import { checkedQuerySelector, appendEl, createEl } from './utils';
 import { Controls } from './controls';
 import { Auth } from './authentication';
 import { Translate } from './translation';
-import { Sounds } from './audio';
-import { Sound } from '../types/types';
 
 export class RenderAuthPopup {
     static showPopup() {
@@ -101,23 +99,19 @@ export class RenderAuthPopup {
                 authBox.classList.add('close');
                 authBox.remove();
                 Controls.setControls();
-                Sounds.play(Sound.move);
             }
         });
 
         loginBtn.addEventListener('click', () => {
             Auth.logIn();
-            Sounds.play(Sound.click);
         });
 
         signupBtn.addEventListener('click', () => {
             Auth.signUp();
-            Sounds.play(Sound.click);
         });
 
         changeBtn.addEventListener('click', () => {
             Auth.change();
-            Sounds.play(Sound.move);
             inputName.value = '';
             inputEmail.value = '';
             inputPassword.value = '';
