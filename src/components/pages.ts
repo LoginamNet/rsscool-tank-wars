@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../common/constants';
+import { CANVAS_HEIGHT, CANVAS_WIDTH, DEFAULT_NAME } from '../common/constants';
 import { checkedQuerySelector, createEl } from './utils';
 import { Game } from './game';
 import { Player } from './player';
@@ -95,7 +95,9 @@ export class Page {
                         <div class="menu__switcher" id="РУС">РУС</div>
                     </div>
                 </div>
-                <button class="menu__item" id="btn_auth">${State.settings.statusAuth}</button>
+                <button class="menu__item" id="btn_auth">${
+                    State.settings.username === DEFAULT_NAME ? Translate.setLang().auth : Translate.setLang().authOut
+                }</button>
                 <button class="menu__item" id="btn_instructions">${Translate.setLang().inst}</button>
                 <button class="menu__item" id="btn_start">${Translate.setLang().start}</button>
             </div>

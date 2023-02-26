@@ -99,3 +99,14 @@
 .hide {
     display: none;
 }
+
+.error {
+    border: 2px solid #E23E57;
+    color: #E23E57;
+    box-shadow: 0px 0px 10px rgba(226, 62, 87, 1);
+}
+
+.check {
+    background-color: #E8F0FE;
+    box-shadow: 0px 0px 10px rgba(255, 127, 80, 1);
+}

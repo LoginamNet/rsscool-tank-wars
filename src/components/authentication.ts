@@ -1,6 +1,6 @@
 import { checkedID, checkedQuerySelector } from './utils';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, set, ref, update, onValue, get, child } from 'firebase/database';
+import { getDatabase, set, ref, update, get, child } from 'firebase/database';
 import {
     getAuth,
     createUserWithEmailAndPassword,
@@ -41,6 +41,7 @@ export class Auth {
 
         loginBtn.classList.add('hide');
         username.classList.remove('hide');
+        username.classList.add('checked');
         signupBtn.classList.remove('hide');
         changeBtn.textContent = 'Login';
         title.textContent = 'Registration';
@@ -55,6 +56,7 @@ export class Auth {
 
         loginBtn.classList.remove('hide');
         username.classList.add('hide');
+        username.classList.remove('checked');
         signupBtn.classList.add('hide');
         changeBtn.textContent = 'Sign UP';
         title.textContent = 'Login';
@@ -70,14 +72,10 @@ export class Auth {
         createUserWithEmailAndPassword(Auth.auth, email.value, password.value)
             .then((userCredential) => {
                 // Signed up
-                const dt = new Date();
                 const user = userCredential.user;
                 set(ref(Auth.database, 'users/' + user.uid), {
                     username: username.value,
                     email: user.email,
-                });
-                update(ref(Auth.database, 'users/'), {
-                    first_login: dt,
                 });
                 State.settings.username = username.value;
                 State.settings.statusAuth = 'LOGOUT';
@@ -105,6 +103,7 @@ export class Auth {
                 // Log in
                 const user = userCredential.user;
                 const dt = new Date();
+                console.log('dt->', dt);
                 const dbRef = ref(getDatabase());
                 update(ref(Auth.database, 'users/' + user.uid), {
                     last_login: dt,
