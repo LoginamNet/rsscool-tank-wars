@@ -7,6 +7,7 @@ import { State } from './state';
 import { Sounds } from './audio';
 import { Translate } from './translation';
 import './styles/console.css';
+import './styles/launch.css';
 import './styles/home.css';
 import './styles/game.css';
 import './styles/winner.css';
@@ -14,6 +15,7 @@ import './styles/menu.css';
 import './styles/instructions.css';
 import './styles/pause.css';
 import './styles/authentication.css';
+import { Color } from './color';
 
 export class Page {
     static body = checkedQuerySelector(document, 'body');
@@ -53,8 +55,38 @@ export class Page {
                     <button class="launch__button">${Translate.setLang().fireBtn}</button>
                 </div>
             </div>
+            <audio сlass="game__audio" src="../assets/audio/intro.mp3" loop></audio>
         </div>
         `;
+
+        Color.setConsoleColor();
+    }
+
+    static renderLaunch() {
+        const screen = checkedQuerySelector(document, '.game__screen');
+        const template = `
+        <div class="launch__screen" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px">
+            <div class="launch__menu">
+                <button class="launch__menu_btn menu__item menu__item_selected" id="btn_launch">${
+                    Translate.setLang().launchBtn
+                }</button>
+            </div>
+            <div class="launch__footer">
+                <a class="launch__rslink" href="https://rs.school/js/"></a>
+                <div class="launch__footer_container">
+                    <a class="launch__github" href="https://github.com/Spektar001">Spektar001</a>
+                    <a class="launch__github" href="https://github.com/vigo44">vigo44</a>
+                    <a class="launch__github" href="https://github.com/LoginamNet">LoginamNet</a>
+                </div>
+                <span class="launch__year">2023</span>
+            </div>
+        </div>
+        `;
+
+        Controls.removeControls();
+        screen.innerHTML = template;
+        State.settings.screen = 'LAUNCH';
+        Controls.setControls();
     }
 
     static renderHome() {
@@ -86,6 +118,14 @@ export class Page {
                     <div class="menu__switchers">
                         <div class="menu__switcher" id="ON">${Translate.setLang().soundON}</div>
                         <div class="menu__switcher" id="OFF">${Translate.setLang().soundOFF}</div>
+                    </div>
+                </div>
+                <div class="menu__item_color menu__item">
+                    <span id="color">${Translate.setLang().color}</span>
+                    <div class="menu__switchers">
+                        <div class="menu__switcher menu__switcher_color color_sand" id="SAND">•</div>
+                        <div class="menu__switcher menu__switcher_color color_blue" id="BLUE">•</div>
+                        <div class="menu__switcher menu__switcher_color color_black" id="BLACK">•</div>
                     </div>
                 </div>
                 <div class="menu__item_language menu__item">

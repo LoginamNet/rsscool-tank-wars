@@ -10,7 +10,7 @@ export class App {
     render() {
         this.local();
         Page.renderConsole();
-        Page.renderHome();
+        Page.renderLaunch();
         Auth.listenerUser();
     }
 }

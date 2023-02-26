@@ -1,4 +1,5 @@
 import { State } from './state';
+import { checkedQuerySelector } from './utils';
 
 export class Sounds {
     static play(name: string, num = 1) {
@@ -9,5 +10,12 @@ export class Sounds {
             audio.volume = +`${num}`;
         }
         audio.play();
+    }
+
+    static playIntro() {
+        const intro = <HTMLAudioElement>checkedQuerySelector(document, 'audio');
+
+        State.settings.sound === 'OFF' ? (intro.volume = 0) : (intro.volume = 0.05);
+        intro.play();
     }
 }

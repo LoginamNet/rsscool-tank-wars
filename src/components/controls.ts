@@ -11,21 +11,25 @@ import { Auth } from './authentication';
 
 export class Controls {
     private static addMenuKeys = (event: KeyboardEvent) => {
-        // event.preventDefault();
         switch (event.code) {
             case 'ArrowUp':
+                event.preventDefault();
                 State.settings.screen === 'GAME' ? this.gameUp() : this.menuUp();
                 break;
             case 'ArrowDown':
+                event.preventDefault();
                 State.settings.screen === 'GAME' ? this.gameDown() : this.menuDown();
                 break;
             case 'ArrowLeft':
+                event.preventDefault();
                 State.settings.screen === 'GAME' ? this.gameLeft() : this.menuLeft();
                 break;
             case 'ArrowRight':
+                event.preventDefault();
                 State.settings.screen === 'GAME' ? this.gameRight() : this.menuRight();
                 break;
             case 'Pause':
+                event.preventDefault();
                 if (State.settings.screen === 'GAME') {
                     if (!Player.animationFlag) {
                         checkElClass('game__menu_container', 'game__menu_hidden')
@@ -42,6 +46,7 @@ export class Controls {
                 Sounds.play(Sound.move);
                 break;
             case 'Space':
+                event.preventDefault();
                 if (State.settings.screen === 'GAME') {
                     checkElClass('game__menu_container', 'game__menu_hidden') ? this.gameFire() : this.menuFire();
                 } else {
@@ -49,6 +54,7 @@ export class Controls {
                 }
                 break;
             case 'Escape':
+                event.preventDefault();
                 if (State.settings.screen === 'GAME') {
                     if (!Player.animationFlag) {
                         Timer.stopTimer();
@@ -90,9 +96,13 @@ export class Controls {
                     }
                 }
                 if (State.settings.screen === 'HOME') {
+                    console.log(1);
                     Page.renderGame();
                 }
                 if (State.settings.screen === 'WINNER') {
+                    Page.renderHome();
+                }
+                if (State.settings.screen === 'LAUNCH') {
                     Page.renderHome();
                 }
                 Sounds.play(Sound.move);
@@ -270,8 +280,11 @@ export class Controls {
         switch (true) {
             case item.id === 'btn_auth':
                 State.settings.statusAuth === 'LOGIN/SIGNUP' ? RenderAuthPopup.showPopup() : Auth.logOut();
-                // RenderAuthPopup.showPopup();
                 Controls.removeControls();
+                break;
+            case item.id === 'btn_launch':
+                Page.renderHome();
+                Sounds.playIntro();
                 break;
             case item.id === 'btn_instructions':
                 Page.renderInstructions();
@@ -318,17 +331,19 @@ export class Controls {
     }
 
     private static addInstructionsKeys = (event: KeyboardEvent) => {
-        event.preventDefault();
         switch (event.code) {
             case 'Enter':
+                event.preventDefault();
                 this.removeInstructionsControls();
                 Sounds.play(Sound.click);
                 break;
             case 'Space':
+                event.preventDefault();
                 this.removeInstructionsControls();
                 Sounds.play(Sound.click);
                 break;
             case 'Tab':
+                event.preventDefault();
                 this.removeInstructionsControls();
                 Sounds.play(Sound.click);
                 break;

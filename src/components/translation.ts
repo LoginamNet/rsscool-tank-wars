@@ -25,6 +25,7 @@ export class Translate {
         const menuSound = checkedID(document, 'sound');
         const menuSoundON = checkedID(document, 'ON');
         const menuSoundOFF = checkedID(document, 'OFF');
+        const menuColor = checkedID(document, 'color');
         const menuLang = checkedID(document, 'lang');
         const menuAuthBtn = checkedID(document, 'btn_auth');
         const menuInstrBtn = checkedID(document, 'btn_instructions');
@@ -36,6 +37,7 @@ export class Translate {
         menuSound.innerHTML = this.setLang().sound;
         menuSoundON.innerHTML = this.setLang().soundON;
         menuSoundOFF.innerHTML = this.setLang().soundOFF;
+        menuColor.innerHTML = this.setLang().color;
         menuLang.innerHTML = this.setLang().lang;
         menuAuthBtn.innerHTML = State.settings.username === DEFAULT_NAME ? this.setLang().auth : this.setLang().authOut;
         menuInstrBtn.innerHTML = this.setLang().inst;

@@ -1,5 +1,6 @@
 export const EN = {
     subTitle: 'WELCOME',
+    launchBtn: 'START!',
     pauseBtn: 'Pause/Start',
     settingsBtn: 'Settings',
     fireBtn: 'FIRE!',
@@ -8,6 +9,7 @@ export const EN = {
     sound: 'SOUNDS:',
     soundON: 'ON',
     soundOFF: 'OFF',
+    color: 'COLOR:',
     lang: 'LANGUAGE:',
     auth: 'LOGIN/SIGNUP',
     authOut: 'LOGOUT',
@@ -56,6 +58,7 @@ export const EN = {
 
 export const RU = {
     subTitle: 'ПРИВЕТ',
+    launchBtn: 'ПО МАШИНАМ!',
     pauseBtn: 'Пауза/Старт',
     settingsBtn: 'Настройки',
     fireBtn: 'ОГОНЬ!',
@@ -64,6 +67,7 @@ export const RU = {
     sound: 'ЗВУКИ:',
     soundON: 'ВКЛ',
     soundOFF: 'ВЫКЛ',
+    color: 'ЦВЕТ:',
     lang: 'ЯЗЫК:',
     auth: 'ВХОД/РЕГИСТР.',
     authOut: 'ВЫЙТИ',
