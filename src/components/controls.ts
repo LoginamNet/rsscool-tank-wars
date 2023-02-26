@@ -6,6 +6,8 @@ import { Timer } from './timer';
 import { Player } from './player';
 import { Game } from './game';
 import { Sound } from '../types/types';
+import { RenderAuthPopup } from './auth-popup';
+import { Auth } from './authentication';
 
 export class Controls {
     private static addMenuKeys = (event: KeyboardEvent) => {
@@ -276,6 +278,10 @@ export class Controls {
         const item = checkedQuerySelector(document, '.menu__item_selected');
         Sounds.play(Sound.click);
         switch (true) {
+            case item.id === 'btn_auth':
+                State.settings.statusAuth === 'LOGIN/SIGNUP' ? RenderAuthPopup.showPopup() : Auth.logOut();
+                Controls.removeControls();
+                break;
             case item.id === 'btn_launch':
                 Page.renderHome();
                 Sounds.playIntro();

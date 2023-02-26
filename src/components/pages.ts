@@ -1,4 +1,4 @@
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from '../common/constants';
+import { CANVAS_HEIGHT, CANVAS_WIDTH, DEFAULT_NAME } from '../common/constants';
 import { checkedQuerySelector, createEl } from './utils';
 import { Game } from './game';
 import { Player } from './player';
@@ -14,6 +14,7 @@ import './styles/winner.css';
 import './styles/menu.css';
 import './styles/instructions.css';
 import './styles/pause.css';
+import './styles/authentication.css';
 import { Color } from './color';
 
 export class Page {
@@ -93,6 +94,9 @@ export class Page {
         const template = `
         <div class="home__screen" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px">
             <h1 class="home__screen_title">TANK WARS</h1>
+            <h2 class="home__screen_subtitle" id="subTitle"> ${
+                Translate.setLang().subTitle + ' ' + State.settings.username
+            }</h2>
             <div class="screen__menu">
                 <div class="menu__item_mode menu__item menu__item_selected">
                 <span id="mode">${Translate.setLang().mode}</span>
@@ -131,6 +135,9 @@ export class Page {
                         <div class="menu__switcher" id="РУС">РУС</div>
                     </div>
                 </div>
+                <button class="menu__item" id="btn_auth">${
+                    State.settings.username === DEFAULT_NAME ? Translate.setLang().auth : Translate.setLang().authOut
+                }</button>
                 <button class="menu__item" id="btn_instructions">${Translate.setLang().inst}</button>
                 <button class="menu__item" id="btn_start">${Translate.setLang().start}</button>
             </div>
@@ -242,7 +249,7 @@ export class Page {
                     <li class="instructions__list_item">${Translate.setLang().instructions.esc}</li>
                 </ul>
                 <button class="instructions__button_back">${Translate.setLang().instructions.back}</button>
-        </div>        
+        </div>
         `;
 
         screen.innerHTML = template;
@@ -253,7 +260,7 @@ export class Page {
         const screen = checkedQuerySelector(document, '.game__screen');
         const pause = createEl('screen__pause', 'div');
         const template = `
-            <div class="pause__text">${Translate.setLang().gamePaused}</div>        
+            <div class="pause__text">${Translate.setLang().gamePaused}</div>
         `;
 
         pause.innerHTML = template;

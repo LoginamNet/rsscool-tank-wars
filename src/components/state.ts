@@ -1,3 +1,4 @@
+import { DEFAULT_NAME } from '../common/constants';
 import { stateGame } from '../types/types';
 import { Sounds } from './audio';
 import { Color } from './color';
@@ -12,6 +13,8 @@ export class State {
         sound: 'ON',
         color: 'SAND',
         language: 'EN',
+        statusAuth: 'LOGIN/SIGNUP',
+        username: DEFAULT_NAME,
     };
 
     static game: stateGame = {

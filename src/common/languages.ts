@@ -1,4 +1,5 @@
 export const EN = {
+    subTitle: 'WELCOME',
     launchBtn: 'START!',
     pauseBtn: 'Pause/Start',
     settingsBtn: 'Settings',
@@ -10,6 +11,22 @@ export const EN = {
     soundOFF: 'OFF',
     color: 'COLOR:',
     lang: 'LANGUAGE:',
+    auth: 'LOGIN/SIGNUP',
+    authOut: 'LOGOUT',
+    titlePopup: {
+        login: 'Login',
+        registration: 'Registration',
+    },
+    titleError: `You've entered an incorrect email address or password.`,
+    inputName: 'Username',
+    inputEmail: 'E-mail',
+    inputPassword: 'Password',
+    loginBtn: 'LOGIN',
+    signupBtn: 'SIGN UP',
+    changeBtn: {
+        signup: 'Sign UP',
+        login: 'Login',
+    },
     inst: 'HOW TO PLAY',
     start: 'START GAME',
     back: 'BACK TO GAME',
@@ -40,6 +57,7 @@ export const EN = {
 };
 
 export const RU = {
+    subTitle: 'ПРИВЕТ',
     launchBtn: 'ПО МАШИНАМ!',
     pauseBtn: 'Пауза/Старт',
     settingsBtn: 'Настройки',
@@ -51,6 +69,22 @@ export const RU = {
     soundOFF: 'ВЫКЛ',
     color: 'ЦВЕТ:',
     lang: 'ЯЗЫК:',
+    auth: 'ВХОД/РЕГИСТР.',
+    authOut: 'ВЫЙТИ',
+    titlePopup: {
+        login: 'Войти',
+        registration: 'Регистрация',
+    },
+    titleError: 'Вы ввели неверный адрес эл.почты или пароль.',
+    inputName: 'Никнейм',
+    inputEmail: 'Эл. почта',
+    inputPassword: 'Пароль',
+    loginBtn: 'ВОЙТИ',
+    signupBtn: 'РЕГИСТРАЦИЯ',
+    changeBtn: {
+        signup: 'Регистрация',
+        login: 'Войти',
+    },
     inst: 'КАК ИГРАТЬ',
     start: 'НАЧАТЬ ИГРУ',
     back: 'ВЕРНУТЬСЯ В ИГРУ',
