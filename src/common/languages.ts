@@ -1,4 +1,5 @@
 export const EN = {
+    launchBtn: 'START!',
     pauseBtn: 'Pause/Start',
     settingsBtn: 'Settings',
     fireBtn: 'FIRE!',
@@ -39,6 +40,7 @@ export const EN = {
 };
 
 export const RU = {
+    launchBtn: 'ПО МАШИНАМ!',
     pauseBtn: 'Пауза/Старт',
     settingsBtn: 'Настройки',
     fireBtn: 'ОГОНЬ!',

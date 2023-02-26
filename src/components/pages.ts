@@ -7,6 +7,7 @@ import { State } from './state';
 import { Sounds } from './audio';
 import { Translate } from './translation';
 import './styles/console.css';
+import './styles/launch.css';
 import './styles/home.css';
 import './styles/game.css';
 import './styles/winner.css';
@@ -57,6 +58,33 @@ export class Page {
         `;
 
         Color.setConsoleColor();
+    }
+
+    static renderLaunch() {
+        const screen = checkedQuerySelector(document, '.game__screen');
+        const template = `
+        <div class="launch__screen" style="width: ${CANVAS_WIDTH}px; height: ${CANVAS_HEIGHT}px">
+            <div class="launch__menu">
+                <button class="launch__menu_btn menu__item menu__item_selected" id="btn_launch">${
+                    Translate.setLang().launchBtn
+                }</button>
+            </div>
+            <div class="launch__footer">
+                <a class="launch__rslink" href="https://rs.school/js/"></a>
+                <div class="launch__footer_container">
+                    <a class="launch__github" href="https://github.com/Spektar001">Spektar001</a>
+                    <a class="launch__github" href="https://github.com/vigo44">vigo44</a>
+                    <a class="launch__github" href="https://github.com/LoginamNet">LoginamNet</a>
+                </div>
+                <span class="launch__year">2023</span>
+            </div>
+        </div>
+        `;
+
+        Controls.removeControls();
+        screen.innerHTML = template;
+        State.settings.screen = 'LAUNCH';
+        Controls.setControls();
     }
 
     static renderHome() {
