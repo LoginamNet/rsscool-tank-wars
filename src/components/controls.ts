@@ -278,6 +278,7 @@ export class Controls {
         switch (true) {
             case item.id === 'btn_launch':
                 Page.renderHome();
+                Sounds.playIntro();
                 break;
             case item.id === 'btn_instructions':
                 Page.renderInstructions();

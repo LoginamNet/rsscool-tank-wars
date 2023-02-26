@@ -54,6 +54,7 @@ export class Page {
                     <button class="launch__button">${Translate.setLang().fireBtn}</button>
                 </div>
             </div>
+            <audio сlass="game__audio" src="../assets/audio/intro.mp3" loop></audio>
         </div>
         `;
 

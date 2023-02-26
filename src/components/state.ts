@@ -1,4 +1,5 @@
 import { stateGame } from '../types/types';
+import { Sounds } from './audio';
 import { Color } from './color';
 import { Translate } from './translation';
 import { checkedQuerySelector } from './utils';
@@ -31,6 +32,7 @@ export class State {
                     break;
                 case item.classList.contains('menu__item_sound'):
                     State.settings.sound = option.id;
+                    Sounds.playIntro();
                     break;
                 case item.classList.contains('menu__item_color'):
                     State.settings.color = option.id;
