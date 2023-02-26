@@ -1,4 +1,5 @@
 import { stateGame } from '../types/types';
+import { Color } from './color';
 import { Translate } from './translation';
 import { checkedQuerySelector } from './utils';
 
@@ -8,6 +9,7 @@ export class State {
         mode: 'PvP',
         players: '4',
         sound: 'ON',
+        color: 'SAND',
         language: 'EN',
     };
 
@@ -29,6 +31,10 @@ export class State {
                     break;
                 case item.classList.contains('menu__item_sound'):
                     State.settings.sound = option.id;
+                    break;
+                case item.classList.contains('menu__item_color'):
+                    State.settings.color = option.id;
+                    Color.setConsoleColor();
                     break;
                 case item.classList.contains('menu__item_language'):
                     State.settings.language = option.id;

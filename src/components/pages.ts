@@ -13,6 +13,7 @@ import './styles/winner.css';
 import './styles/menu.css';
 import './styles/instructions.css';
 import './styles/pause.css';
+import { Color } from './color';
 
 export class Page {
     static body = checkedQuerySelector(document, 'body');
@@ -54,6 +55,8 @@ export class Page {
             </div>
         </div>
         `;
+
+        Color.setConsoleColor();
     }
 
     static renderHome() {
@@ -82,6 +85,14 @@ export class Page {
                     <div class="menu__switchers">
                         <div class="menu__switcher" id="ON">${Translate.setLang().soundON}</div>
                         <div class="menu__switcher" id="OFF">${Translate.setLang().soundOFF}</div>
+                    </div>
+                </div>
+                <div class="menu__item_color menu__item">
+                    <span id="color">${Translate.setLang().color}</span>
+                    <div class="menu__switchers">
+                        <div class="menu__switcher menu__switcher_color color_sand" id="SAND">•</div>
+                        <div class="menu__switcher menu__switcher_color color_blue" id="BLUE">•</div>
+                        <div class="menu__switcher menu__switcher_color color_black" id="BLACK">•</div>
                     </div>
                 </div>
                 <div class="menu__item_language menu__item">
