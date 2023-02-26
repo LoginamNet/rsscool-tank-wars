@@ -2,6 +2,8 @@ import { checkedQuerySelector, appendEl, createEl } from './utils';
 import { Controls } from './controls';
 import { Auth } from './authentication';
 import { Translate } from './translation';
+import { Sounds } from './audio';
+import { Sound } from '../types/types';
 
 export class RenderAuthPopup {
     static showPopup() {
@@ -9,6 +11,7 @@ export class RenderAuthPopup {
         const popupWrapper = createEl('popup__wrapper', 'div');
         const authBox = createEl('auth__box', 'div');
         const title = createEl('auth__box_title', 'h2');
+        const titleError = createEl('auth__box_subtitle hide', 'h3');
         const inputName = <HTMLInputElement>createEl('username input-el hide', 'input');
         inputName.id = 'username';
         const inputEmail = <HTMLInputElement>createEl('email input-el checked', 'input');
@@ -20,12 +23,13 @@ export class RenderAuthPopup {
         loginBtn.id = 'login';
         const signupBtn = <HTMLButtonElement>createEl('signup button hide', 'button');
         signupBtn.id = 'signup';
-        const changeBtn = createEl('change text', 'span');
+        const changeBtn = createEl('change text', 'button');
         changeBtn.id = 'change';
 
         appendEl(body, popupWrapper);
         appendEl(popupWrapper, authBox);
         appendEl(authBox, title);
+        appendEl(authBox, titleError);
         appendEl(authBox, inputName);
         appendEl(authBox, inputEmail);
         appendEl(authBox, inputPassword);
@@ -34,18 +38,19 @@ export class RenderAuthPopup {
         appendEl(authBoxButtons, signupBtn);
         appendEl(authBoxButtons, changeBtn);
 
-        title.textContent = 'Login';
+        title.textContent = Translate.setLang().titlePopup.login;
+        titleError.textContent = Translate.setLang().titleError;
         inputName.type = 'text';
-        inputName.placeholder = 'Username';
+        inputName.placeholder = Translate.setLang().inputName;
         inputEmail.type = 'email';
-        inputEmail.placeholder = 'E-mail';
+        inputEmail.placeholder = Translate.setLang().inputEmail;
         inputPassword.type = 'password';
-        inputPassword.placeholder = 'Password';
-        loginBtn.textContent = 'login';
+        inputPassword.placeholder = Translate.setLang().inputPassword;
+        loginBtn.textContent = Translate.setLang().loginBtn;
         loginBtn.disabled = true;
-        signupBtn.textContent = 'sign up';
+        signupBtn.textContent = Translate.setLang().signupBtn;
         signupBtn.disabled = true;
-        changeBtn.textContent = 'Sign UP';
+        changeBtn.textContent = Translate.setLang().changeBtn.signup;
 
         const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/gm;
 
@@ -58,8 +63,6 @@ export class RenderAuthPopup {
                 RenderAuthPopup.deactivateLock(inputName, authBox, loginBtn);
             }
         });
-
-        // title.textContent === 'Login' ? loginBtn : signupBtn
 
         inputEmail.addEventListener('input', () => {
             RenderAuthPopup.activateLock(inputEmail, authBox, loginBtn);
@@ -92,16 +95,32 @@ export class RenderAuthPopup {
             }
         });
 
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Escape') {
+                popupWrapper.remove();
+                authBox.classList.add('close');
+                authBox.remove();
+                Controls.setControls();
+                Sounds.play(Sound.move);
+            }
+        });
+
         loginBtn.addEventListener('click', () => {
             Auth.logIn();
+            Sounds.play(Sound.click);
         });
 
         signupBtn.addEventListener('click', () => {
             Auth.signUp();
+            Sounds.play(Sound.click);
         });
 
         changeBtn.addEventListener('click', () => {
             Auth.change();
+            Sounds.play(Sound.move);
+            inputName.value = '';
+            inputEmail.value = '';
+            inputPassword.value = '';
         });
     }
 

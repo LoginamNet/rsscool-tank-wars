@@ -18,28 +18,6 @@ export class Translate {
         fireBtn.textContent = this.setLang().fireBtn;
     }
 
-    private static setBtnsPopUp() {
-        const title = checkedQuerySelector(document, '.auth__box_title');
-        const inputName = <HTMLInputElement>checkedQuerySelector(document, '.username');
-        const inputEmail = <HTMLInputElement>checkedQuerySelector(document, '.email');
-        const inputPassword = <HTMLInputElement>checkedQuerySelector(document, '.password');
-        const loginBtn = checkedQuerySelector(document, '.login');
-        const signupBtn = checkedQuerySelector(document, '.signup');
-        const changeBtn = checkedQuerySelector(document, '.change');
-
-        title.textContent =
-            State.settings.username === DEFAULT_NAME
-                ? Translate.setLang().titleLogin
-                : Translate.setLang().titleRegistr;
-        inputName.placeholder = this.setLang().inputName;
-        inputEmail.placeholder = this.setLang().inputEmail;
-        inputPassword.placeholder = this.setLang().inputPassword;
-        loginBtn.textContent = this.setLang().loginBtn;
-        signupBtn.textContent = this.setLang().signupBtn;
-        changeBtn.textContent =
-            State.settings.username === DEFAULT_NAME ? this.setLang().signupBtn : this.setLang().loginBtn;
-    }
-
     private static setMainMenuLang() {
         const subTitle = checkedID(document, 'subTitle');
         const menuMode = checkedID(document, 'mode');
@@ -91,6 +69,5 @@ export class Translate {
     static setMenuLang() {
         State.settings.screen === 'HOME' ? this.setMainMenuLang() : this.setGameMenuLang();
         this.setBtnsLang();
-        // this.setBtnsPopUp();
     }
 }

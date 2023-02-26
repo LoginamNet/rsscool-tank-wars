@@ -12,6 +12,7 @@ import { State } from './state';
 import { Page } from './pages';
 import { DEFAULT_NAME } from '../common/constants';
 import { Storage } from './storage';
+import { Translate } from './translation';
 
 export class Auth {
     static firebaseConfig = {
@@ -29,7 +30,7 @@ export class Auth {
 
     static change() {
         const changeBtn = checkedID(document, 'change');
-        changeBtn.textContent === 'Sign UP' ? Auth.changeOnSignUp() : Auth.changeOnLogin();
+        changeBtn.textContent === Translate.setLang().changeBtn.signup ? Auth.changeOnSignUp() : Auth.changeOnLogin();
     }
 
     static changeOnSignUp() {
@@ -43,8 +44,8 @@ export class Auth {
         username.classList.remove('hide');
         username.classList.add('checked');
         signupBtn.classList.remove('hide');
-        changeBtn.textContent = 'Login';
-        title.textContent = 'Registration';
+        changeBtn.textContent = Translate.setLang().changeBtn.login;
+        title.textContent = Translate.setLang().titlePopup.registration;
     }
 
     static changeOnLogin() {
@@ -58,8 +59,8 @@ export class Auth {
         username.classList.add('hide');
         username.classList.remove('checked');
         signupBtn.classList.add('hide');
-        changeBtn.textContent = 'Sign UP';
-        title.textContent = 'Login';
+        changeBtn.textContent = Translate.setLang().changeBtn.signup;
+        title.textContent = Translate.setLang().titlePopup.login;
     }
 
     static signUp() {
@@ -97,13 +98,13 @@ export class Auth {
         const password = <HTMLInputElement>checkedQuerySelector(document, '.password');
         const popupWrapper = checkedQuerySelector(document, '.popup__wrapper');
         const authBox = checkedQuerySelector(document, '.auth__box');
+        const titleError = checkedQuerySelector(document, '.auth__box_subtitle');
 
         signInWithEmailAndPassword(Auth.auth, email.value, password.value)
             .then((userCredential) => {
                 // Log in
                 const user = userCredential.user;
                 const dt = new Date();
-                console.log('dt->', dt);
                 const dbRef = ref(getDatabase());
                 update(ref(Auth.database, 'users/' + user.uid), {
                     last_login: dt,
@@ -118,8 +119,8 @@ export class Auth {
                         console.log('No data available');
                     }
                 });
-                console.log(`${user.email} loged in!`);
                 State.settings.statusAuth = 'LOGOUT';
+                titleError.classList.add('hide');
                 email.value = '';
                 password.value = '';
                 popupWrapper.remove();
@@ -128,6 +129,7 @@ export class Auth {
             .catch((error) => {
                 const errorMessage = error.message;
                 console.log(errorMessage);
+                titleError.classList.remove('hide');
             });
     }
 
@@ -153,6 +155,8 @@ export class Auth {
                 // const uid = user.uid;
                 const email = user.email;
                 console.log('email->', email);
+            } else {
+                console.log('Никто не зарегался или вошел');
             }
         });
     }
