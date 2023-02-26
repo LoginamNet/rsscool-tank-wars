@@ -52,7 +52,7 @@ export class RenderAuthPopup {
         inputName.addEventListener('input', () => {
             const name = inputName.value;
             RenderAuthPopup.activateLock(inputName, authBox, loginBtn);
-            if (name.length > 3) {
+            if (name.length < 3) {
                 RenderAuthPopup.activateLock(inputName, authBox, loginBtn);
             } else {
                 RenderAuthPopup.deactivateLock(inputName, authBox, loginBtn);
