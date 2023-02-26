@@ -1,3 +1,5 @@
+/* winner-screen ------------------------------------------------- */
+
 .winner__screen {
     display: flex;
     flex-direction: column;
@@ -7,6 +9,8 @@
     color: white;
     background-color: black;
 }
+
+/* winner-image ------------------------------------------------- */
 
 .winner__image_container {
     aspect-ratio: 1/1;
@@ -23,10 +27,14 @@
     animation: trophie-move 2s infinite;
 }
 
+/* winner-button ------------------------------------------------- */
+
 .winner__screen_restart {
     color: white;
     cursor: default;
 }
+
+/* animation ------------------------------------------------- */
 
 @keyframes trophie-move {
     0%   {transform: translateY(0);}
