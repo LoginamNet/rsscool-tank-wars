@@ -23,6 +23,7 @@ export class Translate {
         const menuSound = checkedID(document, 'sound');
         const menuSoundON = checkedID(document, 'ON');
         const menuSoundOFF = checkedID(document, 'OFF');
+        const menuColor = checkedID(document, 'color');
         const menuLang = checkedID(document, 'lang');
         const menuInstrBtn = checkedID(document, 'btn_instructions');
         const menuStartBtn = checkedID(document, 'btn_start');
@@ -32,6 +33,7 @@ export class Translate {
         menuSound.innerHTML = this.setLang().sound;
         menuSoundON.innerHTML = this.setLang().soundON;
         menuSoundOFF.innerHTML = this.setLang().soundOFF;
+        menuColor.innerHTML = this.setLang().color;
         menuLang.innerHTML = this.setLang().lang;
         menuInstrBtn.innerHTML = this.setLang().inst;
         menuStartBtn.innerHTML = this.setLang().start;
