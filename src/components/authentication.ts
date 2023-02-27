@@ -5,7 +5,7 @@ import {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    onAuthStateChanged,
+    // onAuthStateChanged,
     signOut,
 } from 'firebase/auth';
 import { State } from './state';
@@ -69,6 +69,7 @@ export class Auth {
         const password = <HTMLInputElement>checkedQuerySelector(document, '.password');
         const popupWrapper = checkedQuerySelector(document, '.popup__wrapper');
         const authBox = checkedQuerySelector(document, '.auth__box');
+        const titleError = checkedQuerySelector(document, '.auth__box_subtitle');
 
         createUserWithEmailAndPassword(Auth.auth, email.value, password.value)
             .then((userCredential) => {
@@ -77,6 +78,7 @@ export class Auth {
                 set(ref(Auth.database, 'users/' + user.uid), {
                     username: username.value,
                     email: user.email,
+                    state: JSON.stringify(State.settings),
                 });
                 State.settings.username = username.value;
                 State.settings.statusAuth = 'LOGOUT';
@@ -89,6 +91,10 @@ export class Auth {
             })
             .catch((error) => {
                 const errorMessage = error.message;
+                titleError.textContent = Translate.setLang().titleError.emailError;
+                titleError.classList.remove('hide');
+                email.classList.remove('check');
+                email.classList.add('error');
                 console.log(errorMessage);
             });
     }
@@ -112,7 +118,8 @@ export class Auth {
                 get(child(dbRef, `users/${user.uid}`)).then((snapshot) => {
                     if (snapshot.exists()) {
                         const data = snapshot.val();
-                        State.settings.username = data.username;
+                        // State.settings.username = data.username;
+                        State.settings = JSON.parse(data.state);
                         Page.renderHome();
                         Storage.setStorage('settings');
                     } else {
@@ -134,6 +141,19 @@ export class Auth {
     }
 
     static logOut() {
+        // const user = Auth.auth.currentUser;
+        // const dt = new Date();
+        // if (user !== null) {
+        //     update(ref(Auth.database, 'users/' + user.uid), {
+        //         last_login: dt,
+        //         screen: State.settings.screen,
+        //         players: State.settings.players,
+        //         sound: State.settings.sound,
+        //         // color: State.settings.color,
+        //         language: State.settings.language,
+        //         statusAuth: State.settings.statusAuth,
+        //     });
+        // }
         signOut(Auth.auth)
             .then(() => {
                 // Sign-out successful
@@ -149,15 +169,46 @@ export class Auth {
             });
     }
 
-    static listenerUser() {
-        onAuthStateChanged(Auth.auth, (user) => {
-            if (user) {
-                // const uid = user.uid;
-                const email = user.email;
-                console.log('email->', email);
-            } else {
-                console.log('Никто не зарегался или вошел');
-            }
-        });
+    // static listenerUser() {
+    //     onAuthStateChanged(Auth.auth, (user) => {
+    //         if (user) {
+    //             // const uid = user.uid;
+    //             const email = user.email;
+    //             console.log('email->', email);
+    //         } else {
+    //             console.log('Никто не зарегался или вошел');
+    //         }
+    //     });
+    // }
+
+    static updateState() {
+        const dt = new Date();
+        const user = Auth.auth.currentUser;
+        if (user !== null) {
+            update(ref(Auth.database, 'users/' + user.uid), {
+                last_login: dt,
+                state: JSON.stringify(State.settings),
+            });
+        }
     }
+
+    // static validInputs() {
+    //     const username = <HTMLInputElement>checkedQuerySelector(document, '.username');
+    //     // const email = <HTMLInputElement>checkedQuerySelector(document, '.email');
+    //     const titleError = checkedQuerySelector(document, '.auth__box_subtitle');
+    //     const dbRef = ref(getDatabase());
+
+    //     get(child(dbRef, `users/`)).then((snapshot) => {
+    //         if (snapshot.exists()) {
+    //             const data = snapshot.val();
+    //             for (const key in data) {
+    //                 if (username.value === data[key].username) {
+    //                     console.log('такое имя используется');
+    //                 }
+    //             }
+    //         } else {
+    //             console.log('No data available');
+    //         }
+    //     });
+    // }
 }

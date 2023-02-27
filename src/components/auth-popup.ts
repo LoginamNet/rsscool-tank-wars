@@ -37,7 +37,7 @@ export class RenderAuthPopup {
         appendEl(authBoxButtons, changeBtn);
 
         title.textContent = Translate.setLang().titlePopup.login;
-        titleError.textContent = Translate.setLang().titleError;
+        titleError.textContent = Translate.setLang().titleError.loginError;
         inputName.type = 'text';
         inputName.placeholder = Translate.setLang().inputName;
         inputEmail.type = 'email';

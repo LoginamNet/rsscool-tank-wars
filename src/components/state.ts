@@ -1,6 +1,7 @@
 import { DEFAULT_NAME } from '../common/constants';
 import { stateGame } from '../types/types';
 import { Sounds } from './audio';
+import { Auth } from './authentication';
 import { Color } from './color';
 import { Translate } from './translation';
 import { checkedQuerySelector } from './utils';
@@ -28,18 +29,22 @@ export class State {
             switch (true) {
                 case item.classList.contains('menu__item_players'):
                     State.settings.players = option.id;
+                    Auth.updateState();
                     break;
                 case item.classList.contains('menu__item_sound'):
                     State.settings.sound = option.id;
                     Sounds.playIntro();
+                    Auth.updateState();
                     break;
                 case item.classList.contains('menu__item_color'):
                     State.settings.color = option.id;
                     Color.setConsoleColor();
+                    Auth.updateState();
                     break;
                 case item.classList.contains('menu__item_language'):
                     State.settings.language = option.id;
                     Translate.setMenuLang();
+                    Auth.updateState();
                     break;
                 default:
                     break;
