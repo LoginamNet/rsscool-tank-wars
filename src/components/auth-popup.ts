@@ -121,6 +121,13 @@ export class RenderAuthPopup {
             inputName.value = '';
             inputEmail.value = '';
             inputPassword.value = '';
+            titleError.classList.add('hide');
+            inputName.classList.remove('error');
+            inputName.classList.remove('check');
+            inputEmail.classList.remove('error');
+            inputEmail.classList.remove('check');
+            inputPassword.classList.remove('error');
+            inputPassword.classList.remove('check');
         });
     }
 
