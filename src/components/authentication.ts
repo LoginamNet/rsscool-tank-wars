@@ -1,18 +1,14 @@
 import { checkedID, checkedQuerySelector } from './utils';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, set, ref, update, get, child } from 'firebase/database';
-import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    // onAuthStateChanged,
-    signOut,
-} from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { State } from './state';
 import { Page } from './pages';
 import { DEFAULT_NAME } from '../common/constants';
 import { Storage } from './storage';
 import { Translate } from './translation';
+import { Color } from './color';
+import { Sounds } from './audio';
 
 export class Auth {
     static firebaseConfig = {
@@ -118,9 +114,10 @@ export class Auth {
                 get(child(dbRef, `users/${user.uid}`)).then((snapshot) => {
                     if (snapshot.exists()) {
                         const data = snapshot.val();
-                        // State.settings.username = data.username;
                         State.settings = JSON.parse(data.state);
                         Page.renderHome();
+                        Color.setConsoleColor();
+                        Sounds.playIntro();
                         Storage.setStorage('settings');
                     } else {
                         console.log('No data available');
@@ -141,19 +138,6 @@ export class Auth {
     }
 
     static logOut() {
-        // const user = Auth.auth.currentUser;
-        // const dt = new Date();
-        // if (user !== null) {
-        //     update(ref(Auth.database, 'users/' + user.uid), {
-        //         last_login: dt,
-        //         screen: State.settings.screen,
-        //         players: State.settings.players,
-        //         sound: State.settings.sound,
-        //         // color: State.settings.color,
-        //         language: State.settings.language,
-        //         statusAuth: State.settings.statusAuth,
-        //     });
-        // }
         signOut(Auth.auth)
             .then(() => {
                 // Sign-out successful
@@ -169,18 +153,6 @@ export class Auth {
             });
     }
 
-    // static listenerUser() {
-    //     onAuthStateChanged(Auth.auth, (user) => {
-    //         if (user) {
-    //             // const uid = user.uid;
-    //             const email = user.email;
-    //             console.log('email->', email);
-    //         } else {
-    //             console.log('Никто не зарегался или вошел');
-    //         }
-    //     });
-    // }
-
     static updateState() {
         const dt = new Date();
         const user = Auth.auth.currentUser;
@@ -191,24 +163,4 @@ export class Auth {
             });
         }
     }
-
-    // static validInputs() {
-    //     const username = <HTMLInputElement>checkedQuerySelector(document, '.username');
-    //     // const email = <HTMLInputElement>checkedQuerySelector(document, '.email');
-    //     const titleError = checkedQuerySelector(document, '.auth__box_subtitle');
-    //     const dbRef = ref(getDatabase());
-
-    //     get(child(dbRef, `users/`)).then((snapshot) => {
-    //         if (snapshot.exists()) {
-    //             const data = snapshot.val();
-    //             for (const key in data) {
-    //                 if (username.value === data[key].username) {
-    //                     console.log('такое имя используется');
-    //                 }
-    //             }
-    //         } else {
-    //             console.log('No data available');
-    //         }
-    //     });
-    // }
 }

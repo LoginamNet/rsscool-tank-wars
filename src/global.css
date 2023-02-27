@@ -46,6 +46,11 @@ body {
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
+    background: radial-gradient(circle, rgba(22,6,16,1) 0%, rgba(11,3,8,0.44021358543417366) 0%, rgba(6,2,4,0) 0%, rgba(0,0,0,1) 89%), 
+                url(.//assets/images/background.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 body {
