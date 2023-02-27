@@ -57,8 +57,10 @@ export class RenderAuthPopup {
             RenderAuthPopup.activateLock(inputName, authBox, loginBtn);
             if (name.length < 3) {
                 RenderAuthPopup.activateLock(inputName, authBox, loginBtn);
+                RenderAuthPopup.activateLock(inputName, authBox, signupBtn);
             } else {
                 RenderAuthPopup.deactivateLock(inputName, authBox, loginBtn);
+                RenderAuthPopup.deactivateLock(inputName, authBox, signupBtn);
             }
         });
 
@@ -66,8 +68,10 @@ export class RenderAuthPopup {
             RenderAuthPopup.activateLock(inputEmail, authBox, loginBtn);
             if (inputEmail.value.match(regexEmail) === null) {
                 RenderAuthPopup.activateLock(inputEmail, authBox, loginBtn);
+                RenderAuthPopup.activateLock(inputName, authBox, signupBtn);
             } else {
                 RenderAuthPopup.deactivateLock(inputEmail, authBox, loginBtn);
+                RenderAuthPopup.deactivateLock(inputName, authBox, signupBtn);
             }
         });
 
@@ -76,8 +80,10 @@ export class RenderAuthPopup {
             RenderAuthPopup.activateLock(inputPassword, authBox, loginBtn);
             if (pass.length < 6) {
                 RenderAuthPopup.activateLock(inputPassword, authBox, loginBtn);
+                RenderAuthPopup.activateLock(inputName, authBox, signupBtn);
             } else {
                 RenderAuthPopup.deactivateLock(inputPassword, authBox, loginBtn);
+                RenderAuthPopup.deactivateLock(inputName, authBox, signupBtn);
             }
         });
 
