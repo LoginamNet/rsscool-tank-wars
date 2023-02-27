@@ -1,6 +1,6 @@
 ### Tank wars clone for final RsSchool task
 #### INSTRUCTIONS
-The game is adapted only for desktops!\
+**The game is adapted only for desktops!**\
 Registration allows you to save the game settings (from the main menu or from the game menu), returning them after login.
 
 #### HOW TO PLAY
