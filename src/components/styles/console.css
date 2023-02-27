@@ -5,18 +5,37 @@
     flex-direction: column;
     gap: 20px;
     padding: 20px;
+    border-radius: 20px;
+}
+
+.game__console_sand {
     background-color: rgb(247, 222, 191);
     border: 15px solid rgb(253, 232, 205);
     border-top: 17px solid rgb(253, 236, 214);
     border-bottom: 20px solid rgb(226, 194, 155);
     border-left: 20px solid rgb(194, 167, 133);
-    border-radius: 20px;
+}
+
+.game__console_blue {
+    background-color: rgb(93, 136, 255);
+    border: 15px solid rgb(148, 175, 248);
+    border-top: 17px solid rgb(196, 209, 245);
+    border-bottom: 20px solid rgb(82, 117, 214);
+    border-left: 20px solid rgb(50, 73, 138);
+}
+
+.game__console_black {
+    background-color: rgb(121, 121, 121);
+    border: 15px solid rgb(187, 187, 187);
+    border-top: 17px solid rgb(202, 202, 202);
+    border-bottom: 20px solid rgb(75, 75, 75);
+    border-left: 20px solid rgb(59, 59, 59);
 }
 
 /* game-screen ------------------------------------------------- */
 
 .main__screen {
-    position: relative;	
+    position: relative;
 }
 
 .game__screen,
@@ -59,6 +78,27 @@
     border-left: 5px solid rgb(255, 204, 141);
     border-bottom: 5px solid rgb(241, 205, 161);
     border-radius: 50%;
+}
+
+.game__controls_circle_sand {
+    background-color: rgb(223, 200, 171);
+    border: 3px solid rgb(196, 169, 136);
+    border-left: 5px solid rgb(255, 204, 141);
+    border-bottom: 5px solid rgb(241, 205, 161);
+}
+
+.game__controls_circle_blue {
+    background-color: rgb(93, 136, 255);
+    border: 3px solid rgb(69, 107, 209);
+    border-left: 5px solid rgb(134, 166, 255);
+    border-bottom: 5px solid rgb(164, 188, 255);
+}
+
+.game__controls_circle_black {
+    background-color: rgb(121, 121, 121);
+    border: 3px solid rgb(77, 77, 77);
+    border-left: 5px solid rgb(172, 172, 172);
+    border-bottom: 5px solid rgb(187, 187, 187);
 }
 
 /* game-cross ------------------------------------------------- */
@@ -126,6 +166,27 @@
     border-left: 5px solid rgb(255, 204, 141);
     border-bottom: 5px solid rgb(255, 204, 141);
     border-radius: 20px;
+}
+
+.cross__options_buttons_sand {
+    background-color: rgb(223, 200, 171);
+    border: 3px solid rgb(196, 169, 136);
+    border-left: 5px solid rgb(255, 204, 141);
+    border-bottom: 5px solid rgb(255, 204, 141);
+}
+
+.cross__options_buttons_blue {
+    background-color: rgb(93, 136, 255);
+    border: 3px solid rgb(90, 118, 196);
+    border-left: 5px solid rgb(140, 171, 255);
+    border-bottom: 5px solid rgb(179, 199, 255);
+}
+
+.cross__options_buttons_black {
+    background-color: rgb(121, 121, 121);
+    border: 3px solid rgb(66, 66, 66);
+    border-left: 5px solid rgb(170, 170, 170);
+    border-bottom: 5px solid rgb(177, 177, 177);
 }
 
 .options_button {

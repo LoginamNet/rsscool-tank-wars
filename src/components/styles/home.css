@@ -14,6 +14,11 @@
     animation: title-shine 2s infinite;
 }
 
+.home__screen_subtitle {
+    font-size: 1.5rem;
+    color: coral;
+}
+
 /* animation ------------------------------------------------- */
 
 @keyframes title-shine {
