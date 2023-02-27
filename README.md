@@ -1,4 +1,7 @@
 ### Tank wars clone for final RsSchool task
+#### INSTRUCTIONS
+The game is adapted only for desktops!\
+Registration allows you to save the game settings (from the main menu or from the game menu), returning them after login.
 
 #### HOW TO PLAY
 You can use your keyboard or game console buttons to control the tank and menu:
@@ -11,7 +14,7 @@ You can use your keyboard or game console buttons to control the tank and menu:
 **PAUSE(kbrd) | Pause/Start** - pause/resume game, start game with current settings or close ingame menu\
 **ESCAPE | Settings** - open/close settings menu
 
-+ In "game mode", you **can't** press pause or open the menu while the projectile is in flight or an explosion occurs to prevent cheating with the timer time.\
++ In "game mode", you **can't** press pause or open the menu while the projectile is in flight or an explosion occurs to prevent cheating with the timer time.
 + In "game mode", during the explosion animation, you **can** adjust the angle and force of the shot.
 
 #### If you miss or time runs out, the turn goes to the next player.
