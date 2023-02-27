@@ -33,6 +33,7 @@ export const WIND_RATIO = 100;
 export const ROUND_TIME = 30;
 
 /* names ------------------------------------------------- */
+export const DEFAULT_NAME = 'NONAME';
 export const ARR_FIRST_NAMES = [
     'Adam',
     'Alex',
