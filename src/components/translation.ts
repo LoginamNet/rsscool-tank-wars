@@ -20,7 +20,6 @@ export class Translate {
 
     private static setMainMenuLang() {
         const subTitle = checkedID(document, 'subTitle');
-        const menuMode = checkedID(document, 'mode');
         const menuPlayers = checkedID(document, 'players_num');
         const menuSound = checkedID(document, 'sound');
         const menuSoundON = checkedID(document, 'ON');
@@ -32,7 +31,6 @@ export class Translate {
         const menuStartBtn = checkedID(document, 'btn_start');
 
         subTitle.textContent = this.setLang().subTitle + ' ' + State.settings.username;
-        menuMode.innerHTML = this.setLang().mode;
         menuPlayers.innerHTML = this.setLang().playersNum;
         menuSound.innerHTML = this.setLang().sound;
         menuSoundON.innerHTML = this.setLang().soundON;

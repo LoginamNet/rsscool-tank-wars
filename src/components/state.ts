@@ -8,7 +8,6 @@ import { checkedQuerySelector } from './utils';
 export class State {
     static settings = {
         screen: 'LAUNCH',
-        mode: 'PvP',
         players: '4',
         sound: 'ON',
         color: 'SAND',
@@ -27,9 +26,6 @@ export class State {
 
         if (option) {
             switch (true) {
-                case item.classList.contains('menu__item_mode'):
-                    State.settings.mode = option.id;
-                    break;
                 case item.classList.contains('menu__item_players'):
                     State.settings.players = option.id;
                     break;

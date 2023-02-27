@@ -98,14 +98,7 @@ export class Page {
                 Translate.setLang().subTitle + ' ' + State.settings.username
             }</h2>
             <div class="screen__menu">
-                <div class="menu__item_mode menu__item menu__item_selected">
-                <span id="mode">${Translate.setLang().mode}</span>
-                <div class="menu__switchers">
-                    <div class="menu__switcher" id="PvE">PvE</div>
-                    <div class="menu__switcher" id="PvP">PvP</div>
-                </div>
-                </div>
-                <div class="menu__item_players menu__item">
+                <div class="menu__item_players menu__item menu__item_selected">
                     <span id="players_num">${Translate.setLang().playersNum}</span>
                     <div class="menu__switchers">
                         <div class="menu__switcher" id="2">2</div>
